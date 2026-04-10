@@ -1,0 +1,152 @@
+{
+  "id": "horn_of_africa_drought_2022",
+  "name": "Horn of Africa Drought",
+  "year": 2022,
+  "month_start": 1,
+  "month_end": 12,
+  "country": "Somalia, Ethiopia, Kenya",
+  "country_code": "SOM",
+  "hazard_type": "drought",
+  "region": "Southern Somalia, Southern Ethiopia, Eastern Kenya",
+  "bbox": [35, -5, 52, 12],
+  "center": [42, 5],
+  "zoom": 5,
+  "headline": "Five failed rainy seasons. 43,000 dead in Somalia alone. This drought could not have happened without climate change.",
+  "quote": {
+    "text": "What we found is that climate change has made the drought exceptional. These conditions are likely to continue in the future as the climate continues to warm.",
+    "attribution": "Joyce Kimutai, Climate Scientist, Kenya Meteorological Department · WWA study, April 2023"
+  },
+  "attribution": {
+    "likelihood_ratio": 100,
+    "likelihood_ratio_note": "Conservative estimate. The WWA team found the drought would not have occurred at all in a 1.2°C cooler world — the 100x figure understates the true climate signal.",
+    "confidence": "high",
+    "method": "Observational trend analysis and climate model ensemble — 24-month precipitation and evapotranspiration over southern Somalia, southern Ethiopia, eastern Kenya, January 2021 to December 2022",
+    "key_mechanism": "Increased evapotranspiration from higher temperatures was the primary driver — not just reduced rainfall. A warmer atmosphere draws more moisture from soil and plants, intensifying drought even when rainfall is only slightly below average.",
+    "source": "World Weather Attribution",
+    "source_url": "https://www.worldweatherattribution.org/human-induced-climate-change-increased-drought-severity-in-southern-horn-of-africa/",
+    "year_published": 2023,
+    "summary": "This drought would not have happened in a world without human-caused climate change. The combined effect of reduced rainfall and dramatically increased evapotranspiration — driven by higher temperatures — made the drought at least 100 times more likely. Five consecutive failed rainy seasons between 2020 and 2022 were driven primarily by the temperature-driven increase in moisture loss from soils and plants.",
+    "method_explainer": {
+      "what_attribution_science_is": "For droughts, attribution science examines two things together: rainfall deficits and evapotranspiration — the rate at which moisture is lost from soils and plants due to heat. A warmer world loses more moisture even when rainfall is similar, making droughts more severe. Scientists compare these combined conditions across climate models with and without human greenhouse gas emissions.",
+      "how_this_event_was_studied": "WWA scientists analysed a 24-month period from January 2021 to December 2022 across the Southern Horn of Africa. They examined both seasons separately — the March-May long rains and the October-December short rains — and combined. They used observational rainfall records and 19 climate models from Kenya, Ethiopia, Somalia, the Netherlands, Germany, the UK, and the US. The strongest climate signal was in evapotranspiration, not rainfall.",
+      "what_confidence_means": "High confidence because the temperature signal driving evapotranspiration is one of the most robust findings in climate science. The 100x figure is explicitly described as a conservative lower bound — the actual increase in likelihood is likely higher but the models could not reliably estimate beyond that threshold.",
+      "source_url": "https://www.worldweatherattribution.org/human-induced-climate-change-increased-drought-severity-in-southern-horn-of-africa/"
+    }
+  },
+  "human_impact": {
+    "people_affected": 36400000,
+    "people_affected_note": "36.4 million in need of emergency assistance across Ethiopia, Somalia and Kenya per OCHA 2023.",
+    "people_affected_source": "OCHA",
+    "deaths": 43000,
+    "deaths_note": "43,000 estimated deaths in Somalia alone in 2022, of which approximately half were children under five years old. Based on excess mortality analysis by LSHTM researchers. True toll across the region is higher and unknown.",
+    "deaths_source": "London School of Hygiene and Tropical Medicine excess mortality study, cited by Imperial College / WHO",
+    "deaths_source_url": "https://www.imperial.ac.uk/news/244671/without-climate-change-horn-africa-drought/",
+    "displaced": 3300000,
+    "displaced_note": "3.3 million displaced across Kenya, Ethiopia and Somalia per UNHCR. At least 180,000 refugees crossed into drought-stricken areas from Somalia and South Sudan.",
+    "displaced_source": "UNHCR",
+    "economic_loss_usd": null,
+    "economic_loss_note": "No consolidated economic loss figure. Livestock losses, crop failures, and long-term food insecurity impacts are severe but not aggregated into a single assessment.",
+    "malnutrition_children": 942000,
+    "malnutrition_note": "942,000 children aged 6-59 months with acute malnutrition in Somalia alone as of December 2022.",
+    "malnutrition_source": "WHO / UNICEF Somalia",
+    "emitters_share_pct": 1.4,
+    "emitters_share_note": "East Africa's share of global cumulative greenhouse gas emissions — the starkest emissions-to-impact injustice ratio of any event in this dataset.",
+    "emitters_share_source": "Carbon Brief analysis / Our World in Data"
+  },
+  "satellite": {
+    "imagery_type": "rainfall_anomaly",
+    "data_source": "CHIRPS Rainfall Anomaly",
+    "gee_asset_id": "UCSB-CHG/CHIRPS/DAILY",
+    "date_range": ["2021-01-01", "2022-12-31"],
+    "description": "CHIRPS rainfall anomaly showing deviation from 1981-2010 baseline across the Horn of Africa study region",
+    "status": "pending_export"
+  },
+  "photos": [],
+  "at_risk": [
+    {
+      "category": "Pastoralists",
+      "number": "millions",
+      "context": "Across Ethiopia, Kenya and Somalia, pastoralist communities whose entire livelihoods depend on livestock watched their herds die as pasture disappeared and water sources dried up. Livestock are both income and food security — losing them means losing everything."
+    },
+    {
+      "category": "Children under five",
+      "number": "942K",
+      "context": "In Somalia alone, 942,000 children aged 6-59 months were acutely malnourished by December 2022. Half of the estimated 43,000 drought deaths were children under five. Malnutrition at this age causes permanent developmental harm."
+    },
+    {
+      "category": "People in conflict zones",
+      "number": null,
+      "context": "Somalia's ongoing conflict made aid delivery dangerous and inconsistent. State fragility dramatically amplified the climate impact — as the WWA study notes, climate change determines hazard severity, but vulnerability determines human cost."
+    }
+  ],
+  "future_outlook": {
+    "label": "Horn of Africa · current emissions trajectory",
+    "stats": [
+      {
+        "number": "100×",
+        "label": "already more likely than pre-industrial era",
+        "delta": "and rising with every fraction of a degree of warming"
+      },
+      {
+        "number": "2×",
+        "label": "more likely for long rains to fail",
+        "delta": "due to climate change in the March-May season specifically"
+      },
+      {
+        "number": "1.4%",
+        "label": "of global emissions from East Africa",
+        "delta": "bearing the consequences of decisions made elsewhere"
+      }
+    ]
+  },
+  "response": {
+    "gdelt_keywords": ["Horn of Africa drought aid 2023", "Somalia famine 2022", "East Africa drought response"],
+    "gdelt_priority_domains": ["aljazeera.com", "theeastafrican.co.ke", "nation.africa"],
+    "gdelt_date_start": "2021-01-01",
+    "gdelt_date_end": "2024-01-01",
+    "newsapi_query": "Horn of Africa drought Somalia famine",
+    "newsapi_language": "en",
+    "reliefweb_query": "Horn of Africa drought 2022",
+    "reliefweb_country_code": "SOM",
+    "key_outcomes": [
+      {
+        "type": "aid",
+        "description": "The UN Flash Appeal for the Horn of Africa drought was chronically underfunded throughout 2022 and 2023. Despite the scale of the crisis, international attention and funding consistently lagged behind need.",
+        "source": "OCHA",
+        "date": "2022-08-01",
+        "status": "Ongoing",
+        "status_note": "As of 2024, recovery remains incomplete. Recurrent drought seasons have made sustained recovery extremely difficult."
+      },
+      {
+        "type": "policy",
+        "description": "The Horn of Africa drought was prominently cited by advocates for the Loss and Damage Fund at COP27 in November 2022, alongside Pakistan. It represented the case for low-emission, high-vulnerability countries bearing the cost of a crisis they did not cause.",
+        "source": "UNFCCC / V20 coalition",
+        "source_url": "https://unfccc.int/topics/adaptation-and-resilience/workstreams/loss-and-damage",
+        "date": "2022-11-01",
+        "status": "Active"
+      }
+    ]
+  },
+  "curated_coverage": [
+    {
+      "source": "Al Jazeera",
+      "headline": "Global warming made Horn of Africa drought possible — and 100 times more likely",
+      "url": "https://www.aljazeera.com/news/2023/4/27/global-warming-made-horn-of-africa-drought-possible-wwa-study"
+    },
+    {
+      "source": "Carbon Brief",
+      "headline": "Deadly drought in Horn of Africa would not have happened without climate change",
+      "url": "https://www.carbonbrief.org/deadly-drought-in-horn-of-africa-would-not-have-happened-without-climate-change/"
+    },
+    {
+      "source": "The Guardian",
+      "headline": "43,000 estimated dead in Somalia drought — half of them children under five",
+      "url": "https://www.theguardian.com"
+    },
+    {
+      "source": "East African",
+      "headline": "Five failed rains: how climate change turned drought into famine across the Horn",
+      "url": "https://www.theeastafrican.co.ke"
+    }
+  ]
+}

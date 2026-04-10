@@ -1,0 +1,140 @@
+{
+  "id": "uk_heatwave_2022",
+  "name": "UK Heatwave",
+  "year": 2022,
+  "month_start": 7,
+  "month_end": 7,
+  "country": "United Kingdom",
+  "country_code": "GBR",
+  "hazard_type": "heatwave",
+  "region": "England and Wales",
+  "bbox": [-8, 49, 3, 59],
+  "center": [-1.5, 53],
+  "zoom": 6,
+  "headline": "40°C in England. It had never happened before. It was virtually impossible without climate change.",
+  "quote": {
+    "text": "In Europe and other parts of the world we are seeing more and more record-breaking heatwaves causing extreme temperatures that have become hotter faster than in most climate models.",
+    "attribution": "Dr. Friederike Otto, Senior Lecturer, Grantham Institute, Imperial College London · WWA study, July 2022"
+  },
+  "attribution": {
+    "likelihood_ratio": 10,
+    "temperature_increase_obs_c": 4,
+    "temperature_increase_model_c": 2,
+    "model_underestimation_note": "All climate models systematically underestimate the observed warming trend in UK extreme heat. The 10x likelihood increase and 2°C model-based figure are almost certainly conservative. Observational analysis shows 4°C of additional heat.",
+    "confidence": "high",
+    "method": "Observational trend analysis and model ensemble — 2-day maximum temperature 18-19 July 2022, study region 51.25-54°N, 3.5W-0.5°E",
+    "source": "World Weather Attribution",
+    "source_url": "https://www.worldweatherattribution.org/without-human-caused-climate-change-temperatures-of-40c-in-the-uk-would-have-been-extremely-unlikely/",
+    "year_published": 2022,
+    "summary": "A 40°C day in the UK would have been statistically impossible in a pre-industrial climate. Climate change made this event at least 10 times more likely and approximately 2°C hotter (models) to 4°C hotter (observations). The finding that models underestimate observed warming suggests the true climate signal is even stronger than these already striking figures indicate.",
+    "method_explainer": {
+      "what_attribution_science_is": "For heatwaves, attribution science compares how likely a given temperature threshold is in today's warmed climate versus a counterfactual world without human greenhouse gas emissions. Scientists use both weather station observations — which show actual temperature trends — and climate models, which simulate what would have happened.",
+      "how_this_event_was_studied": "WWA analysed the 2-day average maximum temperature across central England on 18-19 July 2022, when 40.3°C was recorded in Coningsby, Lincolnshire — the first time the UK exceeded 40°C in records. They compared this against historical observations back to 1884 and against an ensemble of climate models, examining both the current climate and a 1.2°C cooler pre-industrial world.",
+      "what_confidence_means": "High confidence, with an important caveat: all models used in this study systematically underestimate the observed warming trend in UK extreme heat. This means the 10x likelihood figure is a lower bound and the true increase is almost certainly higher. The observational analysis (4°C warmer) is more consistent with real-world data than the model-based estimate (2°C warmer).",
+      "source_url": "https://www.worldweatherattribution.org/without-human-caused-climate-change-temperatures-of-40c-in-the-uk-would-have-been-extremely-unlikely/"
+    }
+  },
+  "human_impact": {
+    "people_affected": null,
+    "people_affected_note": "The entire UK population was affected. A national emergency was declared. Level 4 heat health alert — the highest level — was issued for the first time ever.",
+    "deaths": 2985,
+    "deaths_note": "2,985 heat-related deaths in England estimated by the Climate Change Committee (CCC) in 2025. Early estimates during the event suggested approximately 1,000 excess deaths. The CCC 2025 figure is the most authoritative retrospective estimate.",
+    "deaths_source": "UK Climate Change Committee, 2025",
+    "displaced": 0,
+    "economic_loss_usd": null,
+    "economic_loss_note": "Infrastructure damage included buckled railway tracks, runway damage at Luton Airport, and widespread property fires across London. No consolidated economic loss figure available.",
+    "emitters_share_pct": 1.0,
+    "emitters_share_note": "UK share of global cumulative emissions — a high-income country that has historically emitted significantly. The UK heatwave demonstrates climate change affecting wealthy nations too, though with far greater adaptive capacity than low-income countries facing similar events.",
+    "emitters_share_source": "Our World in Data"
+  },
+  "satellite": {
+    "imagery_type": "land_surface_temperature",
+    "data_source": "MODIS MOD11A2",
+    "gee_asset_id": "MODIS/061/MOD11A2",
+    "date_range": ["2022-07-01", "2022-07-31"],
+    "description": "MODIS land surface temperature anomaly showing deviation from 2015-2021 July baseline across England and Wales",
+    "status": "pending_export"
+  },
+  "photos": [],
+  "at_risk": [
+    {
+      "category": "Elderly people living alone",
+      "number": null,
+      "context": "The UK's high rate of elderly people living alone, combined with housing stock not designed for heat retention, made older adults the most vulnerable group. UK homes trap heat rather than ventilating it — the opposite of what is needed."
+    },
+    {
+      "category": "Outdoor workers",
+      "number": null,
+      "context": "Construction workers, agricultural workers, and delivery workers had no legal right to refuse to work in dangerous heat in the UK at the time. The UK had no maximum workplace temperature law."
+    },
+    {
+      "category": "NHS and care system staff",
+      "number": null,
+      "context": "A surge in emergency calls, hospitalisations, and demand for social care coincided with an already-stretched health service. Care services supporting elderly and vulnerable people were put under severe additional stress."
+    }
+  ],
+  "future_outlook": {
+    "label": "United Kingdom · current emissions trajectory",
+    "stats": [
+      {
+        "number": "40°C",
+        "label": "summers could see multiple such days per decade by 2100",
+        "delta": "under high emissions — currently a once-in-500-year event"
+      },
+      {
+        "number": "100×",
+        "label": "more likely for June days to exceed 32°C in southeast England",
+        "delta": "already demonstrated by WWA analysis of June 2025 event"
+      }
+    ]
+  },
+  "response": {
+    "gdelt_keywords": ["UK heatwave 2022 deaths NHS", "UK heat health plan", "England 40 degrees climate"],
+    "gdelt_priority_domains": ["theguardian.com", "bbc.co.uk", "independent.co.uk"],
+    "gdelt_date_start": "2022-07-01",
+    "gdelt_date_end": "2023-12-31",
+    "newsapi_query": "UK heatwave 2022 climate change",
+    "newsapi_language": "en",
+    "reliefweb_query": "UK heatwave 2022",
+    "reliefweb_country_code": "GBR",
+    "key_outcomes": [
+      {
+        "type": "policy",
+        "description": "The UK government's heatwave response was criticised for lacking a coherent heat adaptation plan. In 2023, the UK Health Security Agency updated its Heat Health Alert system and expanded the regions covered. The UK still has no statutory maximum workplace temperature.",
+        "source": "UK Health Security Agency",
+        "date": "2023-05-01",
+        "status": "Active",
+        "status_note": "Heat adaptation planning remains significantly underdeveloped relative to the demonstrated risk."
+      },
+      {
+        "type": "infrastructure",
+        "description": "Network Rail announced an immediate review of heat resilience across the rail network following widespread buckling and closures. Long-term rail infrastructure upgrades for heat resilience were announced but face multi-decade timelines.",
+        "source": "Network Rail / UK Department for Transport",
+        "date": "2022-08-01",
+        "status": "Active"
+      }
+    ]
+  },
+  "curated_coverage": [
+    {
+      "source": "BBC",
+      "headline": "UK records 40°C for first time — climate change made it at least 10 times more likely",
+      "url": "https://www.bbc.co.uk/news/science-environment-62277009"
+    },
+    {
+      "source": "The Guardian",
+      "headline": "UK heatwave caused 2,985 excess deaths — most since 2003, CCC report finds",
+      "url": "https://www.theguardian.com"
+    },
+    {
+      "source": "Carbon Brief",
+      "headline": "Climate change made 2022's UK heatwave at least 10 times more likely",
+      "url": "https://www.carbonbrief.org/climate-change-made-2022s-uk-heatwave-at-least-10-times-more-likely/"
+    },
+    {
+      "source": "Imperial College London",
+      "headline": "Climate change made UK heatwave more intense and at least 10 times more likely",
+      "url": "https://www.imperial.ac.uk/news/238772/climate-change-made-uk-heatwave-more/"
+    }
+  ]
+}

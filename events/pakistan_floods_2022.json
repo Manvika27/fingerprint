@@ -1,0 +1,193 @@
+{
+  "id": "pakistan_floods_2022",
+  "name": "Pakistan Floods",
+  "year": 2022,
+  "month_start": 6,
+  "month_end": 10,
+  "country": "Pakistan",
+  "country_code": "PK",
+  "hazard_type": "flood",
+  "region": "Sindh, Balochistan, KPK",
+  "bbox": [60.87, 23.69, 77.83, 36.92],
+  "center": [69.35, 30.38],
+  "zoom": 5,
+
+  "headline": "One-third of Pakistan was underwater",
+  "subheadline": "In the summer of 2022, monsoon rains — supercharged by climate change — submerged an area the size of the United Kingdom. 33 million people lost their homes, crops, and livelihoods in weeks.",
+
+  "quote": {
+    "text": "The water came in the night. We had nothing. My children were on the roof for three days.",
+    "attribution": "Fatima Bibi, farmer · Sindh province · Reuters, September 2022"
+  },
+
+  "photos": [
+  {
+    "file": "Chor_Kamber_village_-_52554868359.jpg",
+    "caption": "Chor Kamber village submerged, Sindh · 2022",
+    "credit": "UNOCHA / Wikimedia Commons"
+  },
+  {
+    "file": "Getting_to_Chor_Kamber_-_52554138592.jpg",
+    "caption": "Reaching flood-affected communities, Sindh · 2022",
+    "credit": "UNOCHA / Wikimedia Commons"
+  }
+  ],
+
+  "attribution": {
+    "likelihood_ratio": 1.75,
+    "likelihood_pct_increase": 75,
+    "confidence": "high",
+    "method": "Fraction of Attributable Risk",
+    "source": "World Weather Attribution",
+    "source_url": "https://www.worldweatherattribution.org/climate-change-likely-increased-extreme-monsoon-rainfall-flooding-highly-vulnerable-communities-in-pakistan/",
+    "year_published": 2022,
+    "summary": "Climate change made the extreme rainfall that caused these floods approximately 75% more likely. The event would still have occurred without climate change but would have been significantly less severe.",
+    "method_explainer": {
+      "what_attribution_science_is": "Attribution science asks a specific question: would this event have happened, or been this severe, in a world without human-caused climate change? Scientists answer it by running climate models thousands of times under two conditions — the world as it is today, and a counterfactual world without the greenhouse gas emissions of the past 150 years. Comparing the results gives a probability ratio.",
+      "how_this_event_was_studied": "For the 2022 Pakistan floods, the World Weather Attribution team analysed how climate change affected extreme monsoon rainfall across the region. They combined observational records going back to 1951 with 20 peer-reviewed climate models. The method used is called the Fraction of Attributable Risk — it calculates what fraction of the event's probability can be attributed to human-caused warming.",
+      "what_confidence_means": "High confidence in this context means the finding was consistent across both observational data and climate models, and that the signal was large enough to be statistically robust. It does not mean certainty — all attribution findings carry uncertainty ranges. The 75% figure represents the central estimate; the true increase in likelihood could be somewhat higher or lower.",
+      "source_url": "https://www.worldweatherattribution.org/climate-change-likely-increased-extreme-monsoon-rainfall-flooding-highly-vulnerable-communities-in-pakistan/"
+    }
+  },
+
+  "human_impact": {
+    "people_affected": 33000000,
+    "deaths": 1739,
+    "deaths_note": "NDMA confirmed figure. Excludes deaths from waterborne disease in weeks following the event, likely a significant undercount.",
+    "deaths_source": "NDMA Pakistan / PDNA 2022",
+    "deaths_source_url": "https://reliefweb.int/report/pakistan/pakistan-floods-2022-post-disaster-needs-assessment",
+    "displaced": 8000000,
+    "displaced_source": "PDNA 2022",
+    "economic_loss_usd": 30000000000,
+    "economic_loss_note": "Combined damages ($14.9B) and economic losses ($15.2B) per World Bank/PDNA. Reconstruction needs add a further $16.3B.",
+    "economic_loss_source": "World Bank / PDNA October 2022",
+    "economic_loss_source_url": "https://www.worldbank.org/en/news/press-release/2022/10/28/pakistan-flood-damages-and-economic-losses-over-usd-30-billion",
+    "gdp_pct": 4.8,
+    "gdp_pct_note": "4.8% of GDP per PDNA. Previous figure of 8.0% was incorrect.",
+    "gdp_usd": 376000000000,
+    "crops_destroyed_hectares": 2200000,
+    "crops_note": "Estimated from PDNA agricultural sector assessment. Treat as approximate.",
+    "emitters_share_pct": 0.5,
+    "emitters_share_source": "Climate Trace / Our World in Data cumulative emissions",
+    "context": {
+      "people_affected": "more than the entire population of Peru",
+      "deaths": "nearly 5 people every hour for 15 weeks",
+      "displaced": "equivalent to all of Switzerland forced from their homes",
+      "economic_loss_usd": "Pakistan's entire education and health budget, four times over"
+    }
+  },
+
+  "at_risk": [
+    {
+      "category": "Agricultural workers",
+      "number": "14.6M",
+      "context": "Livelihoods dependent on the land. 2.2 million hectares of crops were destroyed, collapsing food security for entire communities through the following harvest season."
+    },
+    {
+      "category": "Children under five",
+      "number": "3.9M",
+      "context": "Acute malnutrition and waterborne disease spread rapidly in flood zones. Cholera outbreaks were confirmed across Sindh within weeks of peak inundation."
+    },
+    {
+      "category": "Health facilities destroyed or damaged",
+      "number": "1,460",
+      "context": "Across Sindh and Balochistan, leaving millions without access to healthcare at the moment they needed it most."
+    },
+    {
+      "category": "Homes destroyed or severely damaged",
+      "number": "1.7M",
+      "context": "Predominantly mud-brick construction in rural Sindh offered no resistance to floodwater. Many families were still displaced when the next monsoon season began."
+    }
+  ],
+
+  "future_outlook": {
+    "label": "Indus basin · current emissions trajectory",
+    "stats": [
+      {
+        "number": "2x",
+        "label": "more likely at +2°C global warming",
+        "delta": "compared to today's climate"
+      },
+      {
+        "number": "+47",
+        "label": "extreme rainfall days per year by 2060",
+        "delta": "up from 18 days today"
+      },
+      {
+        "number": "180M",
+        "label": "people at flood risk in the Indus basin by 2070",
+        "delta": "up from 110 million today"
+      }
+    ]
+  },
+
+  "satellite": {
+    "imagery_type": "flood_extent",
+    "data_source": "Sentinel-1 SAR / UNOSAT",
+    "gee_asset_id": "COPERNICUS/S1_GRD",
+    "date_range": ["2022-08-01", "2022-10-01"],
+    "description": "Synthetic aperture radar showing flood extent across Sindh province at peak inundation",
+    "before_image_url": null,
+    "after_image_url": null
+  },
+
+  "curated_coverage": [
+    {
+      "source": "Reuters",
+      "title": "One third of Pakistan is under water as death toll from floods passes 1,000",
+      "url": "https://www.reuters.com/world/asia-pacific/one-third-pakistan-is-under-water-death-toll-floods-passes-1000-2022-08-30/"
+    },
+    {
+      "source": "The Guardian",
+      "title": "Pakistan floods: what caused them and why is the world not paying attention?",
+      "url": "https://www.theguardian.com/world/2022/sep/01/pakistan-floods-what-caused-them-climate-crisis"
+    },
+    {
+      "source": "Dawn",
+      "title": "Flood deaths cross 1,700 as Pakistan begins recovery",
+      "url": "https://www.dawn.com/news/1714809"
+    },
+    {
+      "source": "Al Jazeera",
+      "title": "Pakistan floods: Climate change to blame, not just extreme weather",
+      "url": "https://www.aljazeera.com/news/2022/9/2/pakistan-floods-climate-change-to-blame-not-just-extreme-weather"
+    }
+  ],
+
+  "response": {
+    "gdelt_keywords": ["Pakistan floods 2022 relief", "Pakistan floods aid", "Pakistan floods climate justice"],
+    "gdelt_priority_domains": ["dawn.com", "geo.tv", "thenews.com.pk"],
+    "gdelt_date_start": "2022-08-01",
+    "gdelt_date_end": "2023-06-01",
+    "newsapi_query": "Pakistan floods 2022",
+    "newsapi_sources": "dawn-news,geo-news",
+    "newsapi_language": "en",
+    "reliefweb_query": "Pakistan floods 2022",
+    "reliefweb_country_code": "PAK",
+    "key_outcomes": [
+      {
+        "type": "policy",
+        "description": "The Loss and Damage Fund was formally established at COP27 in Sharm el-Sheikh, November 2022. Pakistan, alongside the G77 and China bloc and the V20 group of climate-vulnerable nations, was among the most prominent advocates for the fund — particularly following the 2022 floods. The fund represents the first formal mechanism in international climate law for addressing climate-driven losses in vulnerable nations.",
+        "source": "UNFCCC",
+        "source_url": "https://unfccc.int/topics/adaptation-and-resilience/workstreams/loss-and-damage",
+        "date": "2022-11-20",
+        "status": "Active",
+        "status_note": "Fund operationalised at COP28, December 2023. As of 2024, pledges total approximately $700M against Pakistan's $30B loss alone."
+      },
+      {
+        "type": "litigation",
+        "description": "Floods cited in at least four active climate liability cases against major emitters",
+        "source": "Climate Litigation Database",
+        "date": "2023-01-01",
+        "status": "Active"
+      },
+      {
+        "type": "aid",
+        "description": "UN Flash Appeal raised $816M for immediate relief",
+        "source": "OCHA",
+        "date": "2022-09-01",
+        "status": "Delivered"
+      }
+    ]
+  }
+}

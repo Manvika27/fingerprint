@@ -1,0 +1,129 @@
+{
+  "id": "cyclones_ana_batsirai_2022",
+  "name": "Cyclones Ana + Batsirai",
+  "year": 2022,
+  "month_start": 1,
+  "month_end": 2,
+  "country": "Madagascar, Mozambique",
+  "country_code": "MDG",
+  "hazard_type": "cyclone",
+  "region": "Madagascar, Mozambique, Malawi",
+  "bbox": [32, -26, 52, -10],
+  "center": [45, -18],
+  "zoom": 5,
+  "headline": "Three cyclones in six weeks. Climate change made every one of them worse.",
+  "quote": {
+    "text": "The sea came and took everything. Our house, our crops, our animals. We had nothing before. Now we have less than nothing.",
+    "attribution": "Farmer, Mananjary district, Madagascar · OCHA field report, February 2022"
+  },
+  "attribution": {
+    "confidence": "medium",
+    "method": "Observational and model-based attribution of 3-day average annual maximum rainfall in regions worst hit by Ana and Batsirai",
+    "finding": "Climate change increased the intensity of extreme rainfall associated with both cyclones. The study examined how human-induced climate change altered the likelihood and intensity of extreme precipitation in the affected regions.",
+    "source": "World Weather Attribution / Pinto et al.",
+    "source_url": "https://climateattribution.org/locale/africa/",
+    "year_published": 2022,
+    "confidence_note": "Medium confidence reflects that tropical cyclone attribution in the Southwest Indian Ocean has more model uncertainty than heatwave or rainfall attribution in well-studied regions. The finding of increased rainfall intensity is consistent with physical expectations from warming.",
+    "summary": "Climate change worsened the heavy rainfall associated with both Tropical Storm Ana and Tropical Cyclone Batsirai, which struck Madagascar and Mozambique in January and February 2022. The region was still recovering from Cyclone Idai (2019) when this sequence struck — compounding years of accumulated climate impacts with no recovery window.",
+    "method_explainer": {
+      "what_attribution_science_is": "For tropical cyclones, attribution science typically focuses on rainfall intensity rather than storm frequency or track, because rainfall is more directly linked to sea surface temperatures — which are unambiguously increasing due to climate change. Warmer oceans provide more energy and moisture to tropical cyclones, producing heavier rainfall.",
+      "how_this_event_was_studied": "Scientists analysed the 3-day average annual maximum rainfall in the regions worst hit by Ana and Batsirai, comparing observed values against climate model simulations with and without human greenhouse gas emissions. The study focused on Madagascar and Mozambique's coastline.",
+      "what_confidence_means": "Medium confidence because tropical cyclone attribution in the Southwest Indian Ocean is complicated by limited historical data and model performance in this specific ocean basin. The finding of increased rainfall intensity is consistent with physical theory and observations, but quantitative uncertainty ranges are wider than for heatwave attribution.",
+      "source_url": "https://climateattribution.org/locale/africa/"
+    }
+  },
+  "human_impact": {
+    "people_affected": 920000,
+    "people_affected_note": "Combined across Madagascar, Mozambique and Malawi for both cyclones. Ana alone affected 570,000; Batsirai affected an additional 350,000+.",
+    "people_affected_source": "OCHA situation reports",
+    "deaths": 230,
+    "deaths_note": "Combined direct deaths from Ana and Batsirai across Madagascar, Mozambique and Malawi. Does not include deaths from disease outbreaks following the cyclones.",
+    "deaths_source": "OCHA / national disaster management authorities",
+    "displaced": 170000,
+    "displaced_source": "OCHA",
+    "economic_loss_usd": null,
+    "economic_loss_note": "No consolidated figure. Madagascar and Mozambique were already among the world's poorest countries and had not recovered from Cyclone Idai 2019.",
+    "emitters_share_pct": 0.3,
+    "emitters_share_note": "Combined emissions share of Madagascar and Mozambique — among the lowest of any two countries combined.",
+    "emitters_share_source": "Our World in Data"
+  },
+  "satellite": {
+    "imagery_type": "flood_extent",
+    "data_source": "Sentinel-1 SAR",
+    "gee_asset_id": "COPERNICUS/S1_GRD",
+    "date_before": "2022-01-01",
+    "date_after": "2022-02-28",
+    "description": "Sentinel-1 SAR flood extent across coastal Madagascar and Mozambique following Batsirai landfall",
+    "status": "pending_export"
+  },
+  "photos": [],
+  "at_risk": [
+    {
+      "category": "Communities still recovering from Idai",
+      "number": null,
+      "context": "Many communities in Mozambique and Madagascar had not rebuilt from Cyclone Idai (2019) when Ana and Batsirai struck. Multiple compounding climate shocks with no recovery window is the defining pattern for low-income countries on the front line."
+    },
+    {
+      "category": "Smallholder farmers",
+      "number": null,
+      "context": "Both cyclones struck during the main growing season, destroying standing crops across large areas. Food insecurity that was already severe from Idai's aftermath was compounded further."
+    },
+    {
+      "category": "Coastal fishing communities",
+      "number": null,
+      "context": "Storm surge and flooding damaged fishing boats, nets and coastal infrastructure that communities depend on for both food and income. Rebuilding requires capital that most households do not have."
+    }
+  ],
+  "future_outlook": {
+    "label": "Southwest Indian Ocean · current emissions trajectory",
+    "stats": [
+      {
+        "number": "40%",
+        "label": "increase in Category 4-5 cyclone frequency projected",
+        "delta": "in the Southwest Indian Ocean by 2100 under high emissions"
+      },
+      {
+        "number": "10-15%",
+        "label": "more rainfall from tropical cyclones by 2100",
+        "delta": "as Indian Ocean sea surface temperatures continue rising"
+      }
+    ]
+  },
+  "response": {
+    "gdelt_keywords": ["Madagascar cyclone 2022 relief", "Mozambique Batsirai aid", "cyclone Ana Madagascar"],
+    "gdelt_priority_domains": ["reliefweb.int", "aljazeera.com", "franceinfo.fr"],
+    "gdelt_date_start": "2022-01-01",
+    "gdelt_date_end": "2022-12-31",
+    "newsapi_query": "Madagascar cyclone Batsirai 2022",
+    "newsapi_language": "en",
+    "reliefweb_query": "Madagascar cyclone Batsirai 2022",
+    "reliefweb_country_code": "MDG",
+    "key_outcomes": [
+      {
+        "type": "aid",
+        "description": "OCHA launched flash appeals for both Ana and Batsirai. Funding responses were partial, reflecting the chronic underfunding of climate disasters in low-profile countries relative to the scale of need.",
+        "source": "OCHA",
+        "date": "2022-02-01",
+        "status": "Delivered",
+        "status_note": "Immediate relief delivered but long-term recovery severely underfunded."
+      }
+    ]
+  },
+  "curated_coverage": [
+    {
+      "source": "Al Jazeera",
+      "headline": "Cyclone Batsirai leaves trail of destruction across Madagascar — thousands displaced",
+      "url": "https://www.aljazeera.com"
+    },
+    {
+      "source": "Reuters",
+      "headline": "Climate change worsened cyclones that struck southern Africa, scientists find",
+      "url": "https://www.reuters.com"
+    },
+    {
+      "source": "OCHA",
+      "headline": "Madagascar: Cyclone Batsirai situation report",
+      "url": "https://reliefweb.int/disaster/tc-2022-000049-mdg"
+    }
+  ]
+}

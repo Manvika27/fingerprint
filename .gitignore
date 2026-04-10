@@ -1,0 +1,30 @@
+# Environment
+.env
+.env.local
+backend/.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+backend/.venv/
+
+# Node
+node_modules/
+frontend/node_modules/
+
+# Build outputs
+frontend/dist/
+frontend/build/
+
+# Large files — satellite imagery goes on Git LFS or stays local
+frontend/public/imagery/*.png
+frontend/public/imagery/*.jpg
+frontend/public/photos/*.jpg
+frontend/public/photos/*.png
+
+# OS
+.DS_Store
+*.log

@@ -1,0 +1,155 @@
+{
+  "id": "india_heatwave_2024",
+  "name": "Asia Heatwave",
+  "year": 2024,
+  "month_start": 4,
+  "month_end": 5,
+  "country": "India",
+  "country_code": "IN",
+  "hazard_type": "heatwave",
+  "region": "India, Bangladesh, Myanmar, Thailand, Vietnam, Cambodia",
+  "bbox": [68.0, 8.0, 97.0, 35.0],
+  "center": [82.0, 22.0],
+  "zoom": 4,
+  "headline": "South Asia baked through its hottest April on record",
+  "quote": {
+    "text": "We used to work from 6am to 6pm. Now we stop at 10am. After that it is impossible — you feel like you are burning from inside.",
+    "attribution": "Construction worker, Delhi · The Guardian, May 2024"
+  },
+  "attribution": {
+    "likelihood_ratio": 45,
+    "likelihood_pct_increase": 4400,
+    "temperature_increase_c": 0.85,
+    "confidence": "medium",
+    "confidence_note": "South Asia analysis in this study used observations only, not a full model ensemble. Consistent with 2022 and 2023 fully-modelled studies which found 30x likelihood increase. The 45x figure is specific to the 2024 observational analysis.",
+    "method": "Observational trend analysis — consistent with 2022/2023 model-based attribution",
+    "source": "World Weather Attribution",
+    "source_url": "https://www.worldweatherattribution.org/climate-change-made-the-deadly-heatwaves-that-hit-millions-of-highly-vulnerable-people-across-asia-more-frequent-and-extreme/",
+    "year_published": 2024,
+    "summary": "Climate change has made April heatwaves of this intensity approximately 45 times more likely across South Asia, and 0.85°C hotter, compared to a pre-industrial climate. The analysis is based on observational data consistent with two previous fully-modelled WWA studies of South Asian heatwaves in 2022 and 2023.",
+    "method_explainer": {
+      "what_attribution_science_is": "Attribution science asks a specific question: would this event have happened, or been this severe, in a world without human-caused climate change? Scientists answer it by running climate models thousands of times under two conditions — the world as it is today, and a counterfactual world without the greenhouse gas emissions of the past 150 years. Comparing the results gives a probability ratio.",
+      "how_this_event_was_studied": "For the 2024 South Asia heatwave, scientists analysed observational temperature records across India, Bangladesh, and neighbouring countries. The South Asia region overlapped with two previous fully-modelled WWA studies from 2022 and 2023 that both found a 30x increase in likelihood — so the 2024 analysis confirmed the climate signal using observations alone rather than re-running the full model ensemble. The 45x figure for 2024 reflects observed data from this specific event.",
+      "what_confidence_means": "Medium confidence reflects that this study used observational analysis rather than a full model ensemble for the South Asia region specifically. The finding is consistent with two previous fully-modelled studies of the same region. The uncertainty range is wider than a fully-modelled study would produce.",
+      "source_url": "https://www.worldweatherattribution.org/climate-change-made-the-deadly-heatwaves-that-hit-millions-of-highly-vulnerable-people-across-asia-more-frequent-and-extreme/"
+    }
+  },
+  "human_impact": {
+    "people_affected": null,
+    "people_affected_note": "No single verified aggregate figure exists. Hundreds of millions of people across South and Southeast Asia were exposed to dangerous heat. The 1.3B figure previously used approximated total population of affected countries — not verified affected persons.",
+    "deaths": null,
+    "deaths_note": "Severely undercounted across all affected countries. Confirmed counts include: Myanmar approximately 1,500 (Radio Free Asia, likely undercount due to political instability), Thailand at least 61 (Thai MOPH through May 10), India 56 official (NDMA March-May, widely acknowledged undercount). True toll likely in the thousands. Heat deaths in the Global South are systematically undercounted.",
+    "deaths_source": "Multiple national health authorities — see deaths_note for breakdown",
+    "displaced": 0,
+    "economic_loss_usd": null,
+    "economic_loss_note": "No consolidated economic loss assessment published. Impacts include: lost agricultural output across multiple countries, reduced labour productivity for hundreds of millions of outdoor workers, school closures affecting tens of millions of students.",
+    "emitters_share_pct": 7.0,
+    "emitters_share_source": "Climate Trace / Our World in Data"
+  },
+  "satellite": {
+    "imagery_type": "land_surface_temperature",
+    "data_source": "MODIS MOD11A2",
+    "gee_asset_id": "MODIS/061/MOD11A2",
+    "date_range": ["2024-04-01", "2024-04-30"],
+    "description": "Land surface temperature anomaly showing deviation from 2015–2023 April baseline"
+  },
+  "photos": [],
+  "at_risk": [
+    {
+      "category": "Outdoor and construction workers",
+      "number": "200M+",
+      "context": "India has the world's largest outdoor workforce. Wet-bulb temperatures in Delhi exceeded safe working thresholds for over 30 consecutive days. Daily wages lost when workers cannot safely work compound food insecurity."
+    },
+    {
+      "category": "Students",
+      "number": "millions",
+      "context": "Schools closed across India, Bangladesh, Thailand and the Philippines as temperatures made classrooms dangerous. In Bangladesh alone, 33 million students were affected by extended closures."
+    },
+    {
+      "category": "People in conflict zones",
+      "number": "1.7M",
+      "context": "The heatwave hit people already displaced by conflict hardest. In Gaza, extreme heat worsened conditions for 1.7 million displaced people with no access to cooling."
+    },
+    {
+      "category": "Farmers in rain-fed agricultural areas",
+      "number": null,
+      "context": "Pre-monsoon heat stress on standing crops across Rajasthan, UP, and Bihar arrived at critical growth stages. Yield losses compounded existing food insecurity."
+    }
+  ],
+  "future_outlook": {
+    "label": "South Asia · current emissions trajectory",
+    "stats": [
+      {
+        "number": "30×",
+        "label": "more likely than in a pre-industrial climate",
+        "delta": "already true today at 1.2°C warming"
+      },
+      {
+        "number": "2–20×",
+        "label": "additional increase in likelihood at +2°C",
+        "delta": "on top of today's already elevated risk"
+      },
+      {
+        "number": "0.5–1.5°C",
+        "label": "hotter at +2°C compared to 2024",
+        "delta": "pushing more regions past survivability thresholds"
+      }
+    ]
+  },
+  "response": {
+    "gdelt_keywords": ["India heatwave 2024 relief", "South Asia heat 2024", "India heat workers 2024"],
+    "gdelt_priority_domains": ["thehindu.com", "indianexpress.com", "hindustantimes.com"],
+    "gdelt_date_start": "2024-04-01",
+    "gdelt_date_end": "2024-08-01",
+    "newsapi_query": "India heatwave 2024",
+    "newsapi_sources": "the-hindu,the-times-of-india",
+    "newsapi_language": "en",
+    "reliefweb_query": "India heatwave 2024",
+    "reliefweb_country_code": "IND",
+    "key_outcomes": [
+      {
+        "type": "policy",
+        "description": "India's National Disaster Management Authority issued revised heat action plan guidelines covering 23 states following the 2024 event",
+        "source": "NDMA India",
+        "date": "2024-06-01",
+        "status": "Active"
+      },
+      {
+        "type": "aid",
+        "description": "WHO and UNICEF issued joint guidance on protecting children and health workers during extreme heat across South and Southeast Asia",
+        "source": "WHO / UNICEF",
+        "date": "2024-05-01",
+        "status": "Delivered"
+      },
+      {
+        "type": "litigation",
+        "description": "Climate accountability advocates cited the 2024 South Asia heatwave in submissions to the International Court of Justice advisory opinion on climate obligations",
+        "source": "ICJ proceedings",
+        "date": "2024-12-01",
+        "status": "Ongoing"
+      }
+    ]
+  },
+  "curated_coverage": [
+    {
+      "source": "The Hindu",
+      "title": "Heatwave toll: How India's outdoor workers are bearing the worst of the climate crisis",
+      "url": "https://www.thehindu.com"
+    },
+    {
+      "source": "BBC",
+      "title": "India heatwave: Millions of workers face impossible choice between income and survival",
+      "url": "https://www.bbc.com"
+    },
+    {
+      "source": "Al Jazeera",
+      "title": "Record April heat across Asia: Who is most at risk and why it keeps getting worse",
+      "url": "https://www.aljazeera.com"
+    },
+    {
+      "source": "Reuters",
+      "title": "South Asia heatwave 30 times more likely due to climate change, scientists find",
+      "url": "https://www.reuters.com"
+    }
+  ]
+}

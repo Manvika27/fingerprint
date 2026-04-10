@@ -1,0 +1,149 @@
+{
+  "id": "canada_wildfires_2023",
+  "name": "Canada Wildfires",
+  "year": 2023,
+  "month_start": 5,
+  "month_end": 8,
+  "country": "Canada",
+  "country_code": "CAN",
+  "hazard_type": "wildfire",
+  "region": "Quebec, British Columbia, Nova Scotia, Alberta",
+  "bbox": [-140, 45, -55, 65],
+  "center": [-95, 55],
+  "zoom": 4,
+  "headline": "Canada burned. The smoke reached New York. Climate change lit the match.",
+  "quote": {
+    "text": "Climate change is greatly increasing the flammability of the fuel available for wildfires. A single spark, regardless of its source, can rapidly turn into a blazing inferno.",
+    "attribution": "Dr. Yan Boulanger, Research Scientist, Natural Resources Canada · WWA study, August 2023"
+  },
+  "attribution": {
+    "likelihood_ratio_season": 7,
+    "likelihood_ratio_peak_weather": 2,
+    "intensity_increase_season_pct": 50,
+    "intensity_increase_peak_pct": 20,
+    "confidence": "high",
+    "method": "Fire Weather Index attribution — cumulative Daily Severity Rating and 7-day maximum FWI over May-July 2023, Quebec study region",
+    "source": "World Weather Attribution",
+    "source_url": "https://www.worldweatherattribution.org/climate-change-more-than-doubled-the-likelihood-of-extreme-fire-weather-conditions-in-eastern-canada/",
+    "year_published": 2023,
+    "summary": "Climate change made the fire-prone weather conditions that drove Canada's 2023 season at least twice as likely and 20-50% more intense. The full season's severity was at least seven times more likely. Canada experienced its warmest May-June since 1940, beating the previous record by 0.8°C.",
+    "method_explainer": {
+      "what_attribution_science_is": "For wildfires, attribution science studies the weather conditions that cause fires to start and spread — not the fires themselves. The key metric is the Fire Weather Index (FWI), which combines temperature, wind speed, relative humidity, and precipitation to estimate fire danger. Scientists compare FWI values in today's climate against a counterfactual world without human greenhouse gas emissions.",
+      "how_this_event_was_studied": "WWA scientists analysed the cumulative Daily Severity Rating — which reflects accumulated fire-conducive conditions from the start of the season to end of July — across the Quebec study region. They also analysed the 7-day maximum FWI to assess peak intensity. Both observational records and climate models were used to compare fire weather in today's warmed climate against pre-industrial conditions.",
+      "what_confidence_means": "High confidence because temperature and humidity trends — the key drivers of fire weather — are well-constrained by climate science. The relationship between warming and drying vegetation is physically robust. The specific percentage increases carry uncertainty ranges, but the direction and broad magnitude of the climate signal are clear.",
+      "source_url": "https://www.worldweatherattribution.org/climate-change-more-than-doubled-the-likelihood-of-extreme-fire-weather-conditions-in-eastern-canada/"
+    }
+  },
+  "human_impact": {
+    "people_affected": null,
+    "people_affected_note": "Smoke affected hundreds of millions across Canada and the northeastern United States. On June 7, New York City AQI reached 341 — hazardous for all residents.",
+    "deaths": 4,
+    "deaths_note": "Four direct deaths confirmed linked to wildfires. Health impacts from smoke exposure across North America are separately significant and not captured in this figure.",
+    "deaths_source": "Canadian Interagency Forest Fire Centre",
+    "displaced": 200000,
+    "displaced_note": "Over 200,000 people evacuated at peak, the highest wildfire evacuation number in Canada since at least 1980.",
+    "displaced_source": "WWA / Canadian government",
+    "economic_loss_usd": null,
+    "economic_loss_note": "Total economic loss not yet consolidated. A single week of wildfire smoke in June 2023 was estimated to have cost Ontario over $1.2 billion CAD in health impacts alone.",
+    "hectares_burned": 15000000,
+    "hectares_burned_note": "15 million hectares burned — more than double the previous Canadian record of 7.6 million hectares set in 1989.",
+    "hectares_burned_source": "Canadian Interagency Forest Fire Centre",
+    "emitters_share_pct": 1.5,
+    "emitters_share_source": "Canada share of global cumulative emissions, Our World in Data"
+  },
+  "satellite": {
+    "imagery_type": "active_fire_burnscar",
+    "data_source": "MODIS MOD14A1 FireMask",
+    "gee_asset_id": "MODIS/061/MOD14A1",
+    "date_range": ["2023-05-01", "2023-08-31"],
+    "focus_region": "Quebec, Canada",
+    "description": "MODIS active fire detections showing fire extent across Quebec and eastern Canada May-August 2023",
+    "status": "pending_export"
+  },
+  "photos": [],
+  "at_risk": [
+    {
+      "category": "Indigenous and fly-in communities",
+      "number": null,
+      "context": "Remote Indigenous communities with no road access faced the hardest evacuation conditions and the most delayed recovery. Many had no option but to wait for air transport while fires approached."
+    },
+    {
+      "category": "People with respiratory conditions",
+      "number": "millions",
+      "context": "Smoke from Canadian fires created hazardous air quality across the northeastern US for days. Children, elderly, and those with asthma or lung disease faced the greatest health risk."
+    },
+    {
+      "category": "Firefighters",
+      "number": "9000+",
+      "context": "Over 9,000 firefighters were deployed at peak, including international crews from Australia, New Zealand, South Africa, France and the US. The scale overwhelmed Canadian fire management capacity."
+    }
+  ],
+  "future_outlook": {
+    "label": "Canada · current emissions trajectory",
+    "stats": [
+      {
+        "number": "2×",
+        "label": "further increase in likelihood of extreme fire seasons at +2°C",
+        "delta": "on top of already elevated risk today"
+      },
+      {
+        "number": "30+",
+        "label": "additional days above critical fire thresholds per year by 2100",
+        "delta": "in Canadian forest biomes under high emissions"
+      },
+      {
+        "number": "8×",
+        "label": "higher CO2 emissions from wildfires in 2023 vs long-term mean",
+        "delta": "creating a dangerous feedback loop"
+      }
+    ]
+  },
+  "response": {
+    "gdelt_keywords": ["Canada wildfires 2023 recovery", "Quebec wildfire Indigenous", "Canada fire smoke health"],
+    "gdelt_priority_domains": ["cbc.ca", "theglobeandmail.com", "nationalpost.com"],
+    "gdelt_date_start": "2023-05-01",
+    "gdelt_date_end": "2024-01-01",
+    "newsapi_query": "Canada wildfires 2023",
+    "newsapi_language": "en",
+    "reliefweb_query": "Canada wildfires 2023",
+    "reliefweb_country_code": "CAN",
+    "key_outcomes": [
+      {
+        "type": "aid",
+        "description": "The Canadian government deployed military resources and coordinated the largest wildfire evacuation in modern Canadian history. International firefighting crews from 12 countries were brought in under bilateral agreements.",
+        "source": "Government of Canada",
+        "date": "2023-06-01",
+        "status": "Delivered"
+      },
+      {
+        "type": "policy",
+        "description": "The 2023 season has prompted federal and provincial reviews of fire management capacity, Indigenous community preparedness, and early warning systems. Several provinces announced funding increases for fire prevention and prescribed burn programs.",
+        "source": "Natural Resources Canada",
+        "date": "2023-10-01",
+        "status": "Active"
+      }
+    ]
+  },
+  "curated_coverage": [
+    {
+      "source": "CBC",
+      "headline": "Canada's 2023 wildfire season shattered every record — here's what scientists learned",
+      "url": "https://www.cbc.ca"
+    },
+    {
+      "source": "The Guardian",
+      "headline": "Climate change made Canada's record wildfires at least twice as likely, study finds",
+      "url": "https://www.theguardian.com"
+    },
+    {
+      "source": "Globe and Mail",
+      "headline": "Indigenous communities say they were left behind in wildfire evacuations",
+      "url": "https://www.theglobeandmail.com"
+    },
+    {
+      "source": "Nature",
+      "headline": "Human-driven climate change increased the likelihood of Canada's 2023 record fire season",
+      "url": "https://www.nature.com/articles/s41612-024-00841-9"
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "id": "hurricane_ian_2022",
+  "name": "Hurricane Ian",
+  "year": 2022,
+  "month_start": 9,
+  "month_end": 9,
+  "country": "USA",
+  "country_code": "USA",
+  "hazard_type": "hurricane",
+  "region": "Southwest Florida, USA",
+  "bbox": [-85, 24, -79, 29],
+  "center": [-82, 26.5],
+  "zoom": 7,
+  "headline": "Florida's costliest hurricane made significantly wetter by climate change",
+  "quote": {
+    "text": "There is nothing left. The whole neighborhood is gone. I've never seen anything like this in my life.",
+    "attribution": "Fort Myers resident · Reuters, September 2022"
+  },
+  "attribution": {
+    "method": "Storyline attribution",
+    "method_note": "Storyline method measures magnitude increase, not probability ratio. It asks: given that this storm occurred, how much worse did climate change make it? This is different from the Fraction of Attributable Risk method used for flood and heatwave events.",
+    "rainfall_increase_pct": 18,
+    "confidence": "high",
+    "confidence_note": "Peer-reviewed and published in IOP Science Environmental Research: Climate. Finding that rainfall increase exceeds Clausius-Clapeyron scaling is robust across multiple hurricane studies.",
+    "source": "Reed & Wehner, Environmental Research: Climate, 2023",
+    "source_url": "https://iopscience.iop.org/article/10.1088/2752-5295/acfd4e",
+    "year_published": 2023,
+    "summary": "Climate change made Hurricane Ian's extreme rainfall approximately 18% heavier — far exceeding the 5-7% increase that basic thermodynamics would predict. A separate Climate Central analysis found Ian was one of three Atlantic hurricanes (2019-2023) that strengthened to Category 5 specifically because of climate-warmed ocean temperatures.",
+    "method_explainer": {
+      "what_attribution_science_is": "For hurricanes, attribution science uses a storyline approach: scientists run the actual storm track through climate models set to today's conditions and to pre-industrial conditions, then compare rainfall totals. This answers the question 'given this storm, how much worse did climate change make it?' — rather than asking how likely the storm was.",
+      "how_this_event_was_studied": "Reed and Wehner ran Hurricane Ian's observed track through an ensemble of high-resolution weather model simulations, initialised on 27 September 2022. They compared rainfall accumulations in the factual world against a counterfactual world with pre-industrial sea surface temperatures and atmospheric conditions. The finding — 18% more rainfall — exceeds what Clausius-Clapeyron thermodynamics would predict, suggesting storm dynamics amplify the climate signal.",
+      "what_confidence_means": "High confidence because the study is peer-reviewed and published, the methodology has been validated across multiple prior hurricanes including Harvey, and the finding is consistent with the direction predicted by climate physics. The 18% is a central estimate; the real-time estimate published during the storm was a more conservative 10%.",
+      "source_url": "https://iopscience.iop.org/article/10.1088/2752-5295/acfd4e"
+    }
+  },
+  "human_impact": {
+    "people_affected": null,
+    "people_affected_note": "No single verified aggregate figure. Southwest Florida communities across Lee, Charlotte, Sarasota and DeSoto counties severely affected.",
+    "deaths": 150,
+    "deaths_note": "Direct deaths from storm. Total death toll including indirect causes estimated at 150+ per Florida Medical Examiners Commission.",
+    "deaths_source": "Florida Medical Examiners Commission / NOAA",
+    "deaths_source_url": "https://www.nhc.noaa.gov/data/tcr/AL092022_Ian.pdf",
+    "displaced": 500000,
+    "displaced_note": "Estimated from power outages and damage reports. Over 2.5 million lost power.",
+    "economic_loss_usd": 110000000000,
+    "economic_loss_note": "$110B insured losses per NOAA NCEI. One of the costliest US hurricanes on record.",
+    "economic_loss_source": "NOAA NCEI Billion-Dollar Weather and Climate Disasters",
+    "economic_loss_source_url": "https://www.ncei.noaa.gov/access/billions/",
+    "emitters_share_pct": 14.5,
+    "emitters_share_source": "US share of global cumulative CO2 emissions, Our World in Data"
+  },
+  "satellite": {
+    "imagery_type": "storm_surge_flood",
+    "data_source": "Sentinel-1 SAR",
+    "gee_asset_id": "COPERNICUS/S1_GRD",
+    "date_before": "2022-09-01",
+    "date_after": "2022-10-01",
+    "description": "Sentinel-1 SAR showing storm surge flood extent across Southwest Florida before and after landfall",
+    "status": "pending_export"
+  },
+  "photos": [],
+  "at_risk": [
+    {
+      "category": "Mobile home residents",
+      "number": "~800K",
+      "context": "Lee County alone has one of the highest concentrations of mobile homes in the US. These structures offer little protection against Category 4 winds and storm surge. Many residents did not or could not evacuate."
+    },
+    {
+      "category": "Uninsured and underinsured homeowners",
+      "number": "unknown",
+      "context": "Florida's property insurance crisis had left many homeowners without adequate coverage before Ian struck. Many are still in legal disputes over claim payments years later."
+    },
+    {
+      "category": "Fishing and tourism communities",
+      "number": null,
+      "context": "Pine Island, Fort Myers Beach and Sanibel Island — communities whose economies depend entirely on fishing and tourism — were effectively destroyed. Recovery has been uneven."
+    }
+  ],
+  "future_outlook": {
+    "label": "Gulf Coast · current emissions trajectory",
+    "stats": [
+      {
+        "number": "13%",
+        "label": "more rainfall from major Gulf hurricanes by 2100",
+        "delta": "under high emissions scenario, NOAA projections"
+      },
+      {
+        "number": "2-3×",
+        "label": "more likely for storms to rapidly intensify near landfall",
+        "delta": "as Gulf of Mexico warming accelerates"
+      },
+      {
+        "number": "+0.3m",
+        "label": "sea level rise in Southwest Florida by 2050",
+        "delta": "amplifying storm surge from future storms"
+      }
+    ]
+  },
+  "response": {
+    "gdelt_keywords": ["Hurricane Ian recovery Florida 2023", "Hurricane Ian FEMA aid", "Fort Myers Beach rebuild"],
+    "gdelt_priority_domains": ["miamiherald.com", "tampabay.com", "sun-sentinel.com"],
+    "gdelt_date_start": "2022-09-28",
+    "gdelt_date_end": "2024-01-01",
+    "newsapi_query": "Hurricane Ian Florida recovery",
+    "newsapi_language": "en",
+    "reliefweb_query": "Hurricane Ian Florida 2022",
+    "reliefweb_country_code": "USA",
+    "key_outcomes": [
+      {
+        "type": "aid",
+        "description": "FEMA approved over $1 billion in individual assistance for Ian survivors, making it one of the largest individual assistance programs in FEMA history. However, many low-income and uninsured residents reported difficulties navigating the claims process.",
+        "source": "FEMA",
+        "source_url": "https://www.fema.gov/disaster/4673",
+        "date": "2022-10-01",
+        "status": "Delivered",
+        "status_note": "Funds disbursed but access inequities documented by housing advocates."
+      },
+      {
+        "type": "policy",
+        "description": "Florida's property insurance market, already in crisis before Ian, saw multiple insurers become insolvent in 2023. The state legislature passed emergency insurance reforms in December 2022, though their effectiveness remains contested.",
+        "source": "Florida Office of Insurance Regulation",
+        "date": "2022-12-01",
+        "status": "Active"
+      },
+      {
+        "type": "litigation",
+        "description": "Thousands of disputed insurance claims led to litigation surge in Florida courts. Policyholders reported widespread claim denials and underpayments from insurers citing wind vs water damage disputes.",
+        "source": "Florida Courts / Miami Herald reporting",
+        "date": "2023-01-01",
+        "status": "Active"
+      }
+    ]
+  },
+  "curated_coverage": [
+    {
+      "source": "Tampa Bay Times",
+      "headline": "Two years after Ian, Fort Myers Beach is still rebuilding — but who gets to come back?",
+      "url": "https://www.tampabay.com"
+    },
+    {
+      "source": "Miami Herald",
+      "headline": "Ian survivors still fighting insurance companies as storm anniversary approaches",
+      "url": "https://www.miamiherald.com"
+    },
+    {
+      "source": "ProPublica",
+      "headline": "The insurance industry helped create Florida's climate risk — now it's abandoning the state",
+      "url": "https://www.propublica.org"
+    },
+    {
+      "source": "Reuters",
+      "headline": "Hurricane Ian made 18% wetter by climate change, peer-reviewed study finds",
+      "url": "https://www.reuters.com"
+    }
+  ]
+}
