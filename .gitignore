@@ -137,3 +137,25 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+backend/.venv/
+
+# Environment secrets
+.env
+.env.local
+backend/.env
+
+# Satellite imagery
+frontend/public/imagery/*.png
+frontend/public/imagery/*.jpg
+frontend/public/photos/*.jpg
+frontend/public/photos/*.png
+
+# OS
+.DS_Store
