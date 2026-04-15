@@ -8,31 +8,35 @@
   "country_code": "PK",
   "hazard_type": "flood",
   "region": "Sindh, Balochistan, KPK",
-  "bbox": [60.87, 23.69, 77.83, 36.92],
-  "center": [69.35, 30.38],
+  "bbox": [
+    60.87,
+    23.69,
+    77.83,
+    36.92
+  ],
+  "center": [
+    69.35,
+    30.38
+  ],
   "zoom": 5,
-
   "headline": "One-third of Pakistan was underwater",
   "subheadline": "In the summer of 2022, monsoon rains — supercharged by climate change — submerged an area the size of the United Kingdom. 33 million people lost their homes, crops, and livelihoods in weeks.",
-
   "quote": {
     "text": "The water came in the night. We had nothing. My children were on the roof for three days.",
     "attribution": "Fatima Bibi, farmer · Sindh province · Reuters, September 2022"
   },
-
   "photos": [
-  {
-    "file": "Chor_Kamber_village_-_52554868359.jpg",
-    "caption": "Chor Kamber village submerged, Sindh · 2022",
-    "credit": "UNOCHA / Wikimedia Commons"
-  },
-  {
-    "file": "Getting_to_Chor_Kamber_-_52554138592.jpg",
-    "caption": "Reaching flood-affected communities, Sindh · 2022",
-    "credit": "UNOCHA / Wikimedia Commons"
-  }
+    {
+      "file": "Chor_Kamber_village_-_52554868359.jpg",
+      "caption": "Chor Kamber village submerged, Sindh · 2022",
+      "credit": "UNOCHA / Wikimedia Commons"
+    },
+    {
+      "file": "Getting_to_Chor_Kamber_-_52554138592.jpg",
+      "caption": "Reaching flood-affected communities, Sindh · 2022",
+      "credit": "UNOCHA / Wikimedia Commons"
+    }
   ],
-
   "attribution": {
     "likelihood_ratio": 1.75,
     "likelihood_pct_increase": 75,
@@ -49,7 +53,6 @@
       "source_url": "https://www.worldweatherattribution.org/climate-change-likely-increased-extreme-monsoon-rainfall-flooding-highly-vulnerable-communities-in-pakistan/"
     }
   },
-
   "human_impact": {
     "people_affected": 33000000,
     "deaths": 1739,
@@ -76,7 +79,6 @@
       "economic_loss_usd": "Pakistan's entire education and health budget, four times over"
     }
   },
-
   "at_risk": [
     {
       "category": "Agricultural workers",
@@ -99,7 +101,6 @@
       "context": "Predominantly mud-brick construction in rural Sindh offered no resistance to floodwater. Many families were still displaced when the next monsoon season began."
     }
   ],
-
   "future_outlook": {
     "label": "Indus basin · current emissions trajectory",
     "stats": [
@@ -120,17 +121,18 @@
       }
     ]
   },
-
   "satellite": {
     "imagery_type": "flood_extent",
     "data_source": "Sentinel-1 SAR / UNOSAT",
     "gee_asset_id": "COPERNICUS/S1_GRD",
-    "date_range": ["2022-08-01", "2022-10-01"],
+    "date_range": [
+      "2022-08-01",
+      "2022-10-01"
+    ],
     "description": "Synthetic aperture radar showing flood extent across Sindh province at peak inundation",
     "before_image_url": null,
     "after_image_url": null
   },
-
   "curated_coverage": [
     {
       "source": "Reuters",
@@ -153,10 +155,17 @@
       "url": "https://www.aljazeera.com/news/2022/9/2/pakistan-floods-climate-change-to-blame-not-just-extreme-weather"
     }
   ],
-
   "response": {
-    "gdelt_keywords": ["Pakistan floods 2022 relief", "Pakistan floods aid", "Pakistan floods climate justice"],
-    "gdelt_priority_domains": ["dawn.com", "geo.tv", "thenews.com.pk"],
+    "gdelt_keywords": [
+      "Pakistan floods 2022 relief",
+      "Pakistan floods aid",
+      "Pakistan floods climate justice"
+    ],
+    "gdelt_priority_domains": [
+      "dawn.com",
+      "geo.tv",
+      "thenews.com.pk"
+    ],
     "gdelt_date_start": "2022-08-01",
     "gdelt_date_end": "2023-06-01",
     "newsapi_query": "Pakistan floods 2022",
@@ -188,6 +197,7 @@
         "date": "2022-09-01",
         "status": "Delivered"
       }
-    ]
+    ],
+    "accountability_summary": "Three years on, the Loss and Damage Fund exists — a historic first. But pledges of $700M cover roughly 2% of what Pakistan lost in a single season."
   }
 }

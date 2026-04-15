@@ -8,8 +8,16 @@
   "country_code": "IN",
   "hazard_type": "heatwave",
   "region": "India, Bangladesh, Myanmar, Thailand, Vietnam, Cambodia",
-  "bbox": [68.0, 8.0, 97.0, 35.0],
-  "center": [82.0, 22.0],
+  "bbox": [
+    68.0,
+    8.0,
+    97.0,
+    35.0
+  ],
+  "center": [
+    82.0,
+    22.0
+  ],
   "zoom": 4,
   "headline": "South Asia baked through its hottest April on record",
   "quote": {
@@ -50,7 +58,10 @@
     "imagery_type": "land_surface_temperature",
     "data_source": "MODIS MOD11A2",
     "gee_asset_id": "MODIS/061/MOD11A2",
-    "date_range": ["2024-04-01", "2024-04-30"],
+    "date_range": [
+      "2024-04-01",
+      "2024-04-30"
+    ],
     "description": "Land surface temperature anomaly showing deviation from 2015–2023 April baseline"
   },
   "photos": [],
@@ -97,8 +108,16 @@
     ]
   },
   "response": {
-    "gdelt_keywords": ["India heatwave 2024 relief", "South Asia heat 2024", "India heat workers 2024"],
-    "gdelt_priority_domains": ["thehindu.com", "indianexpress.com", "hindustantimes.com"],
+    "gdelt_keywords": [
+      "India heatwave 2024 relief",
+      "South Asia heat 2024",
+      "India heat workers 2024"
+    ],
+    "gdelt_priority_domains": [
+      "thehindu.com",
+      "indianexpress.com",
+      "hindustantimes.com"
+    ],
     "gdelt_date_start": "2024-04-01",
     "gdelt_date_end": "2024-08-01",
     "newsapi_query": "India heatwave 2024",
@@ -128,7 +147,8 @@
         "date": "2024-12-01",
         "status": "Ongoing"
       }
-    ]
+    ],
+    "accountability_summary": "Heat action plans were updated across South Asia following 2024. Outdoor workers still have no legal protection from dangerous heat in most affected countries."
   },
   "curated_coverage": [
     {

@@ -8,8 +8,16 @@
   "country_code": "CAN",
   "hazard_type": "wildfire",
   "region": "Quebec, British Columbia, Nova Scotia, Alberta",
-  "bbox": [-140, 45, -55, 65],
-  "center": [-95, 55],
+  "bbox": [
+    -140,
+    45,
+    -55,
+    65
+  ],
+  "center": [
+    -95,
+    55
+  ],
   "zoom": 4,
   "headline": "Canada burned. The smoke reached New York. Climate change lit the match.",
   "quote": {
@@ -55,12 +63,26 @@
     "imagery_type": "active_fire_burnscar",
     "data_source": "MODIS MOD14A1 FireMask",
     "gee_asset_id": "MODIS/061/MOD14A1",
-    "date_range": ["2023-05-01", "2023-08-31"],
+    "date_range": [
+      "2023-05-01",
+      "2023-08-31"
+    ],
     "focus_region": "Quebec, Canada",
     "description": "MODIS active fire detections showing fire extent across Quebec and eastern Canada May-August 2023",
-    "status": "pending_export"
+    "status": "ready"
   },
-  "photos": [],
+  "photos": [    
+    {
+      "file": "canada_wildfires_1.jpg",
+      "caption": "caption1",
+      "credit": "Wikimedia Commons"
+    },
+    {
+      "file": "canada_wildfires_2.jpg",
+      "caption": "caption2",
+      "credit": "Wikimedia Commons"
+    }
+  ],
   "at_risk": [
     {
       "category": "Indigenous and fly-in communities",
@@ -99,8 +121,16 @@
     ]
   },
   "response": {
-    "gdelt_keywords": ["Canada wildfires 2023 recovery", "Quebec wildfire Indigenous", "Canada fire smoke health"],
-    "gdelt_priority_domains": ["cbc.ca", "theglobeandmail.com", "nationalpost.com"],
+    "gdelt_keywords": [
+      "Canada wildfires 2023 recovery",
+      "Quebec wildfire Indigenous",
+      "Canada fire smoke health"
+    ],
+    "gdelt_priority_domains": [
+      "cbc.ca",
+      "theglobeandmail.com",
+      "nationalpost.com"
+    ],
     "gdelt_date_start": "2023-05-01",
     "gdelt_date_end": "2024-01-01",
     "newsapi_query": "Canada wildfires 2023",
@@ -122,7 +152,8 @@
         "date": "2023-10-01",
         "status": "Active"
       }
-    ]
+    ],
+    "accountability_summary": "Canada's fire management capacity was overwhelmed in 2023. Federal reviews were announced. The 2024 season was also severe — structural change has not kept pace with the risk."
   },
   "curated_coverage": [
     {

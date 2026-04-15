@@ -8,8 +8,16 @@
   "country_code": "MDG",
   "hazard_type": "cyclone",
   "region": "Madagascar, Mozambique, Malawi",
-  "bbox": [32, -26, 52, -10],
-  "center": [45, -18],
+  "bbox": [
+    32,
+    -26,
+    52,
+    -10
+  ],
+  "center": [
+    45,
+    -18
+  ],
   "zoom": 5,
   "headline": "Three cyclones in six weeks. Climate change made every one of them worse.",
   "quote": {
@@ -90,8 +98,16 @@
     ]
   },
   "response": {
-    "gdelt_keywords": ["Madagascar cyclone 2022 relief", "Mozambique Batsirai aid", "cyclone Ana Madagascar"],
-    "gdelt_priority_domains": ["reliefweb.int", "aljazeera.com", "franceinfo.fr"],
+    "gdelt_keywords": [
+      "Madagascar cyclone 2022 relief",
+      "Mozambique Batsirai aid",
+      "cyclone Ana Madagascar"
+    ],
+    "gdelt_priority_domains": [
+      "reliefweb.int",
+      "aljazeera.com",
+      "franceinfo.fr"
+    ],
     "gdelt_date_start": "2022-01-01",
     "gdelt_date_end": "2022-12-31",
     "newsapi_query": "Madagascar cyclone Batsirai 2022",
@@ -107,7 +123,8 @@
         "status": "Delivered",
         "status_note": "Immediate relief delivered but long-term recovery severely underfunded."
       }
-    ]
+    ],
+    "accountability_summary": "Madagascar and Mozambique received emergency aid. Both countries were still recovering from Cyclone Idai (2019) when these storms struck. The recovery window between disasters is closing."
   },
   "curated_coverage": [
     {

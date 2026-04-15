@@ -8,8 +8,16 @@
   "country_code": "GBR",
   "hazard_type": "heatwave",
   "region": "England and Wales",
-  "bbox": [-8, 49, 3, 59],
-  "center": [-1.5, 53],
+  "bbox": [
+    -8,
+    49,
+    3,
+    59
+  ],
+  "center": [
+    -1.5,
+    53
+  ],
   "zoom": 6,
   "headline": "40°C in England. It had never happened before. It was virtually impossible without climate change.",
   "quote": {
@@ -22,7 +30,7 @@
     "temperature_increase_model_c": 2,
     "model_underestimation_note": "All climate models systematically underestimate the observed warming trend in UK extreme heat. The 10x likelihood increase and 2°C model-based figure are almost certainly conservative. Observational analysis shows 4°C of additional heat.",
     "confidence": "high",
-    "method": "Observational trend analysis and model ensemble — 2-day maximum temperature 18-19 July 2022, study region 51.25-54°N, 3.5W-0.5°E",
+    "method": "Observational trend analysis and model ensemble — 2-day maximum temperature 18-19 July 2022",
     "source": "World Weather Attribution",
     "source_url": "https://www.worldweatherattribution.org/without-human-caused-climate-change-temperatures-of-40c-in-the-uk-would-have-been-extremely-unlikely/",
     "year_published": 2022,
@@ -51,7 +59,10 @@
     "imagery_type": "land_surface_temperature",
     "data_source": "MODIS MOD11A2",
     "gee_asset_id": "MODIS/061/MOD11A2",
-    "date_range": ["2022-07-01", "2022-07-31"],
+    "date_range": [
+      "2022-07-01",
+      "2022-07-31"
+    ],
     "description": "MODIS land surface temperature anomaly showing deviation from 2015-2021 July baseline across England and Wales",
     "status": "pending_export"
   },
@@ -89,8 +100,16 @@
     ]
   },
   "response": {
-    "gdelt_keywords": ["UK heatwave 2022 deaths NHS", "UK heat health plan", "England 40 degrees climate"],
-    "gdelt_priority_domains": ["theguardian.com", "bbc.co.uk", "independent.co.uk"],
+    "gdelt_keywords": [
+      "UK heatwave 2022 deaths NHS",
+      "UK heat health plan",
+      "England 40 degrees climate"
+    ],
+    "gdelt_priority_domains": [
+      "theguardian.com",
+      "bbc.co.uk",
+      "independent.co.uk"
+    ],
     "gdelt_date_start": "2022-07-01",
     "gdelt_date_end": "2023-12-31",
     "newsapi_query": "UK heatwave 2022 climate change",
@@ -113,7 +132,8 @@
         "date": "2022-08-01",
         "status": "Active"
       }
-    ]
+    ],
+    "accountability_summary": "The UK still has no maximum workplace temperature law. Heatwave preparedness has improved but remains inadequate for the frequency of extreme heat now projected."
   },
   "curated_coverage": [
     {

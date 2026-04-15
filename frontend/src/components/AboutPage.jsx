@@ -136,7 +136,6 @@ export default function AboutPage({ onBack }) {
         }}>
           <div style={{ fontSize: 15, fontWeight: 500, color: "#2C2C2A", marginBottom: 4 }}>Manvika Athwani</div>
           <div style={{ fontSize: 13, color: "#5F5E5A", lineHeight: 1.7 }}>
-            MSc student · University of Edinburgh<br />
             Stack: FastAPI · LangGraph · Claude · React · Vite<br />
             Built as part of coursework exploring how AI tools can make scientific evidence more accessible.
             Inspired by HeatWatch and the World Weather Attribution group's commitment to public communication.

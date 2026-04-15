@@ -8,8 +8,16 @@
   "country_code": "USA",
   "hazard_type": "hurricane",
   "region": "Southwest Florida, USA",
-  "bbox": [-85, 24, -79, 29],
-  "center": [-82, 26.5],
+  "bbox": [
+    -85,
+    24,
+    -79,
+    29
+  ],
+  "center": [
+    -82,
+    26.5
+  ],
   "zoom": 7,
   "headline": "Florida's costliest hurricane made significantly wetter by climate change",
   "quote": {
@@ -97,8 +105,16 @@
     ]
   },
   "response": {
-    "gdelt_keywords": ["Hurricane Ian recovery Florida 2023", "Hurricane Ian FEMA aid", "Fort Myers Beach rebuild"],
-    "gdelt_priority_domains": ["miamiherald.com", "tampabay.com", "sun-sentinel.com"],
+    "gdelt_keywords": [
+      "Hurricane Ian recovery Florida 2023",
+      "Hurricane Ian FEMA aid",
+      "Fort Myers Beach rebuild"
+    ],
+    "gdelt_priority_domains": [
+      "miamiherald.com",
+      "tampabay.com",
+      "sun-sentinel.com"
+    ],
     "gdelt_date_start": "2022-09-28",
     "gdelt_date_end": "2024-01-01",
     "newsapi_query": "Hurricane Ian Florida recovery",
@@ -129,7 +145,8 @@
         "date": "2023-01-01",
         "status": "Active"
       }
-    ]
+    ],
+    "accountability_summary": "Florida's insurance market collapsed after Ian. Many residents are still uninsured or in legal disputes. The storm accelerated a crisis that existed before it arrived."
   },
   "curated_coverage": [
     {

@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import HeatwaveThermometer from "./metaphors/HeatwaveThermometer.jsx";
+import DroughtMoisture from "./metaphors/DroughtMoisture.jsx";
 
 // ─── Custom before/after slider (replaces react-compare-image) ────────────────
 
@@ -69,6 +71,26 @@ function BeforeAfterSlider({ leftImage, rightImage }) {
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
+const HAZARD_COLORS = {
+  flood:     "#185FA5",
+  heatwave:  "#854F0B",
+  hurricane: "#534AB7",
+  wildfire:  "#8B3A0F",
+  drought:   "#4a2508",
+  cyclone:   "#0F6E56",
+};
+
+const HAZARD_BG = {
+  flood:     "#E6F1FB",
+  heatwave:  "#FAEEDA",
+  hurricane: "#EEEDFE",
+  wildfire:  "#FEF0E6",
+  drought:   "#F5EDE4",
+  cyclone:   "#E1F5EE",
+};
+
+const HAZARD_TYPES = ["all", "flood", "heatwave", "hurricane", "wildfire", "drought", "cyclone"];
+
 const HAZARD_BADGE_STYLE = {
   flood:     { bg: "rgba(55,138,221,0.2)",  color: "#85B7EB",  border: "rgba(55,138,221,0.25)" },
   heatwave:  { bg: "rgba(239,159,39,0.2)",  color: "#F5C97A",  border: "rgba(239,159,39,0.25)" },
@@ -113,11 +135,12 @@ const STATUS_STYLE = {
 
 // ─── Tiny helpers ─────────────────────────────────────────────────────────────
 
-const SectionLabel = ({ children }) => (
+const SectionLabel = ({ children, dark }) => (
   <div style={{
-    fontSize: 12, fontWeight: 500, color: "#444441",
-    textTransform: "uppercase", letterSpacing: "0.08em",
-    marginBottom: "1rem", marginTop: "2rem",
+    fontSize: 13, fontWeight: 600,
+    color: dark ? "rgba(255,255,255,0.4)" : "#888780",
+    textTransform: "uppercase", letterSpacing: "0.12em",
+    marginBottom: "0.875rem",
   }}>
     {children}
   </div>
@@ -214,7 +237,14 @@ function PhotoFrame({ photo, height }) {
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
 
 function Sidebar({ currentEvent, events, onSelect, onBack, onAbout }) {
-  const groupMap = events.reduce((acc, e) => {
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [sortOrder, setSortOrder] = useState("desc");
+
+  const filteredEvents = events
+    .filter(e => activeFilter === "all" || e.hazard_type === activeFilter)
+    .sort((a, b) => sortOrder === "desc" ? b.year - a.year : a.year - b.year);
+
+  const groupMap = filteredEvents.reduce((acc, e) => {
     if (!acc[e.country]) acc[e.country] = [];
     acc[e.country].push(e);
     return acc;
@@ -246,6 +276,37 @@ function Sidebar({ currentEvent, events, onSelect, onBack, onAbout }) {
         </button>
         <div style={{ fontSize: 15, fontWeight: 500, color: "#2C2C2A" }}>Fingerprint</div>
         <div style={{ fontSize: 11, color: "#B4B2A9", marginTop: 2 }}>Climate attribution explorer</div>
+      </div>
+
+      {/* Filter bar */}
+      <div style={{
+        display: "flex", flexWrap: "wrap", gap: 5,
+        padding: "0.75rem 1rem 0.5rem",
+        borderBottom: "0.5px solid #F1EFE8",
+      }}>
+        {HAZARD_TYPES.map(type => (
+          <button
+            key={type}
+            onClick={() => setActiveFilter(type)}
+            style={{
+              fontSize: 10, padding: "3px 9px", borderRadius: 99,
+              border: "0.5px solid",
+              borderColor: activeFilter === type ? (HAZARD_COLORS[type] ?? "#888780") : "#D3D1C7",
+              background: activeFilter === type ? (HAZARD_BG[type] ?? "#F1EFE8") : "transparent",
+              color: activeFilter === type ? (HAZARD_COLORS[type] ?? "#444441") : "#888780",
+              cursor: "pointer", fontWeight: activeFilter === type ? 500 : 400,
+              textTransform: "capitalize",
+            }}
+          >{type === "all" ? "All events" : type}</button>
+        ))}
+        <button
+          onClick={() => setSortOrder(s => s === "desc" ? "asc" : "desc")}
+          style={{
+            fontSize: 10, padding: "3px 9px", borderRadius: 99,
+            border: "0.5px solid #D3D1C7", background: "transparent",
+            color: "#888780", cursor: "pointer", marginLeft: "auto",
+          }}
+        >{sortOrder === "desc" ? "Newest first" : "Oldest first"}</button>
       </div>
 
       <div style={{ flex: 1, overflowY: "auto", padding: "0.75rem 0.75rem", display: "flex", flexDirection: "column" }}>
@@ -333,24 +394,41 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
   const [history, setHistory] = useState([]);
   const [satelliteReady, setSatelliteReady] = useState(false);
   const [satelliteError, setSatelliteError] = useState(false);
+  const [satelliteAfterOnly, setSatelliteAfterOnly] = useState(false);
   const [methodExpanded, setMethodExpanded] = useState(false);
   const [pressPackOpen, setPressPackOpen] = useState(false);
   const [pressPackData, setPressPackData] = useState(null);
   const [pressPackLoading, setPressPackLoading] = useState(false);
   const scrollRef = useRef(null);
 
-  // Preload satellite images to detect failures before passing to ReactCompareImage
+  // Preload satellite images to detect failures before passing to BeforeAfterSlider
   useEffect(() => {
     setSatelliteReady(false);
     setSatelliteError(false);
+    setSatelliteAfterOnly(false);
     const beforeSrc = `/imagery/${event.id}_before.png`;
     const afterSrc  = `/imagery/${event.id}_after.png`;
-    let loaded = 0;
-    let failed = false;
-    function onLoad() { loaded++; if (loaded === 2 && !failed) setSatelliteReady(true); }
-    function onError() { if (!failed) { failed = true; setSatelliteError(true); } }
-    const b = new Image(); b.onload = onLoad; b.onerror = onError; b.src = beforeSrc;
-    const a = new Image(); a.onload = onLoad; a.onerror = onError; a.src = afterSrc;
+    let beforeOk = false;
+    let afterOk  = false;
+    let beforeDone = false;
+    let afterDone  = false;
+
+    function check() {
+      if (!beforeDone || !afterDone) return;
+      if (beforeOk && afterOk) { setSatelliteReady(true); }
+      else if (!beforeOk && afterOk) { setSatelliteAfterOnly(true); }
+      else { setSatelliteError(true); }
+    }
+
+    const b = new Image();
+    b.onload  = () => { beforeOk = true;  beforeDone = true; check(); };
+    b.onerror = () => { beforeOk = false; beforeDone = true; check(); };
+    b.src = beforeSrc;
+
+    const a = new Image();
+    a.onload  = () => { afterOk = true;  afterDone = true; check(); };
+    a.onerror = () => { afterOk = false; afterDone = true; check(); };
+    a.src = afterSrc;
   }, [event.id]);
 
   useEffect(() => {
@@ -465,6 +543,8 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
           </button>
           {satelliteReady ? (
             <BeforeAfterSlider leftImage={beforeUrl} rightImage={afterUrl} />
+          ) : satelliteAfterOnly ? (
+            <img src={afterUrl} alt={event.satellite?.description} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
           ) : (
             <div style={{
               width: "100%", height: "100%",
@@ -513,43 +593,69 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
               {event.headline ?? event.name}
             </div>
             <div style={{ fontSize: 9, color: "rgba(255,255,255,0.25)" }}>
-              {event.satellite?.data_source}{satelliteReady ? " · drag to compare" : ""} · {event.satellite?.description}
+              {event.satellite?.data_source}{satelliteReady ? " · drag to compare" : satelliteAfterOnly ? " · post-event imagery" : ""} · {event.satellite?.description}
             </div>
           </div>
         </div>
 
         {/* ── Section 2: Injustice bar ── */}
-        <div style={{
-          background: "#0d1f2d", padding: "1.25rem 1.75rem",
-          display: "grid", gridTemplateColumns: "1fr 32px 1fr",
-          alignItems: "center", borderBottom: "0.5px solid rgba(255,255,255,0.06)",
-          flexShrink: 0,
-        }}>
-          <div>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 38, color: "#F09595", lineHeight: 1 }}>
-              {impact.emitters_share_pct}%
+        {(() => {
+          const rightStat = impact.people_affected != null
+            ? { value: fmtNum(impact.people_affected), label: "people lost homes, crops, and livelihoods" }
+            : impact.deaths != null
+            ? { value: impact.deaths.toLocaleString(), label: "deaths recorded" }
+            : impact.displaced != null
+            ? { value: fmtNum(impact.displaced), label: "people displaced" }
+            : null;
+
+          return (
+            <div style={{
+              background: "#0d1f2d", padding: "1.25rem 1.75rem",
+              display: "grid",
+              gridTemplateColumns: rightStat ? "1fr 32px 1fr" : "auto 1fr",
+              alignItems: "center", borderBottom: "0.5px solid rgba(255,255,255,0.06)",
+              flexShrink: 0,
+            }}>
+              <div>
+                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 38, color: "#F09595", lineHeight: 1 }}>
+                  {impact.emitters_share_pct}%
+                </div>
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 4, lineHeight: 1.4 }}>
+                  of global cumulative emissions<br />from {event.country}
+                </div>
+              </div>
+              {rightStat ? (
+                <>
+                  <div style={{ textAlign: "center" }}>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <path d="M4 10h12M12 6l4 4-4 4" stroke="#F09595" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 38, color: "#5DCAA5", lineHeight: 1 }}>
+                      {rightStat.value}
+                    </div>
+                    <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 4, lineHeight: 1.4 }}>
+                      {rightStat.label}
+                    </div>
+                    <div style={{ fontSize: 10, color: "rgba(255,255,255,0.22)", marginTop: 3, fontStyle: "italic", lineHeight: 1.4 }}>
+                      The countries most responsible bore none of this cost.
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div style={{ paddingLeft: "1.5rem" }}>
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", lineHeight: 1.5 }}>
+                    of global cumulative emissions from {event.country} — yet bore 100% of the cost of this disaster.
+                  </div>
+                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.22)", marginTop: 4, fontStyle: "italic", lineHeight: 1.4 }}>
+                    The countries most responsible bore none of this cost.
+                  </div>
+                </div>
+              )}
             </div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 4, lineHeight: 1.4 }}>
-              of global cumulative emissions<br />from {event.country}
-            </div>
-          </div>
-          <div style={{ textAlign: "center" }}>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M4 10h12M12 6l4 4-4 4" stroke="#F09595" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
-          <div>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 38, color: "#5DCAA5", lineHeight: 1 }}>
-              {impact.people_affected != null ? fmtNum(impact.people_affected) : "—"}
-            </div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 4, lineHeight: 1.4 }}>
-              people lost homes,<br />crops, and livelihoods
-            </div>
-            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.22)", marginTop: 3, fontStyle: "italic", lineHeight: 1.4 }}>
-              The countries most responsible bore none of this cost.
-            </div>
-          </div>
-        </div>
+          );
+        })()}
 
         {/* ── Section 3: Pull quote ── */}
         {event.quote && (
@@ -572,14 +678,16 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
           </div>
         )}
 
-        {/* ── Sections 4+ on light background ── */}
-        <div style={{ padding: "0 1.75rem 6rem", flex: 1 }}>
+        {/* ── Sections 4+ ── */}
+        <div style={{ flex: 1 }}>
 
           {/* Section 4: The science */}
-          <SectionLabel top="1.75rem">The science</SectionLabel>
+          <div style={{ background: "#F7FDFB", borderTop: "0.5px solid #E1F5EE", padding: "2rem 1.75rem" }}>
+          <SectionLabel>The science</SectionLabel>
           <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start" }}>
-            {/* Left column */}
-            <div style={{ flexShrink: 0 }}>
+            {/* Left column: number block + thermometer for heatwave */}
+            <div style={{ display: "flex", alignItems: "flex-start", gap: "3rem" }}>
+            <div style={{ flex: 1 }}>
               {/* Case A: standard likelihood_pct_increase */}
               {event.attribution.likelihood_pct_increase != null && (
                 <>
@@ -642,6 +750,17 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                 {event.attribution.source}, {event.attribution.year_published}
               </div>
             </div>
+            {event.hazard_type === 'heatwave' && (
+              <div style={{ flexShrink: 0 }}>
+                <HeatwaveThermometer event={event} />
+              </div>
+            )}
+            {event.hazard_type === 'drought' && (
+              <div style={{ flexShrink: 0 }}>
+                <DroughtMoisture event={event} />
+              </div>
+            )}
+            </div>{/* end inner flex row */}
             {/* Right column — prose */}
             <div style={{
               fontSize: 13, color: "#444441", lineHeight: 1.85,
@@ -704,12 +823,13 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
               </div>
             )}
           </div>
+          </div>{/* end science section */}
 
           {/* Section 5: From the ground */}
           {event.photos?.length > 0 && (
-            <>
+            <div style={{ background: "white", borderTop: "0.5px solid #F1EFE8", padding: "2rem 1.75rem" }}>
               <SectionLabel>From the ground</SectionLabel>
-              <div style={{ marginBottom: "1.75rem" }}>
+              <div>
                 <img
                   src={`/imagery/${event.photos[0].file}`}
                   alt={event.photos[0].caption}
@@ -737,43 +857,41 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                   Photos: {[...new Set(event.photos.map(p => p.credit))].join(" / ")} · Wikimedia Commons · CC BY 4.0
                 </div>
               </div>
-            </>
+            </div>
           )}
 
           {/* Section 6: Human impact */}
+          <div style={{ background: "#FAFAF8", borderTop: "0.5px solid #F1EFE8", padding: "2rem 1.75rem" }}>
           <SectionLabel>Human impact</SectionLabel>
           <div style={{ marginBottom: "1.75rem" }}>
 
             {/* Deaths row */}
-            <div style={{ padding: "1rem 0", borderBottom: "0.5px solid #F1EFE8" }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: 8 }}>
-                {impact.deaths != null ? (
-                  <div style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: 36, fontWeight: 400, color: "#A32D2D", lineHeight: 1, minWidth: "fit-content",
-                  }}>
+            <div style={{ padding: "0.875rem 0", borderBottom: "0.5px solid #F1EFE8" }}>
+              {impact.deaths != null ? (
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: 8 }}>
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, fontWeight: 400, color: "#A32D2D", lineHeight: 1 }}>
                     {impact.deaths.toLocaleString()}
                   </div>
-                ) : (
-                  <div style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: 28, fontWeight: 400, color: "#888780", lineHeight: 1,
-                  }}>
-                    undetermined
+                  <div>
+                    <div style={{ fontSize: 13, color: "#2C2C2A" }}>deaths recorded</div>
+                    {impact.deaths_source && (
+                      <div style={{ fontSize: 10, color: "#B4B2A9", marginTop: 2 }}>{impact.deaths_source}</div>
+                    )}
                   </div>
-                )}
-                <div>
-                  <div style={{ fontSize: 13, color: "#2C2C2A" }}>deaths recorded</div>
-                  {impact.deaths_source && (
-                    <div style={{ fontSize: 10, color: "#B4B2A9", marginTop: 2 }}>{impact.deaths_source}</div>
-                  )}
                 </div>
-              </div>
+              ) : (
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                  <span style={{ fontSize: 11, padding: "3px 10px", background: "#F1EFE8", color: "#888780", borderRadius: 99, fontWeight: 500, flexShrink: 0 }}>
+                    Not yet assessed
+                  </span>
+                  <div style={{ fontSize: 13, color: "#2C2C2A" }}>deaths recorded</div>
+                </div>
+              )}
               {impact.deaths_note && (
                 <div style={{
                   fontSize: 12, color: "#5F5E5A", lineHeight: 1.6,
                   padding: "8px 10px", background: "#FFF8E6",
-                  borderRadius: 6, borderLeft: "2px solid #EF9F27",
+                  borderRadius: 6, borderLeft: "2px solid #EF9F27", marginTop: 8,
                 }}>
                   {impact.deaths_note}
                 </div>
@@ -781,44 +899,42 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
             </div>
 
             {/* People affected row */}
-            <div style={{ padding: "1rem 0", borderBottom: "0.5px solid #F1EFE8" }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: 8 }}>
-                {impact.people_affected != null ? (
-                  <div style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: 36, fontWeight: 400, color: "#2C2C2A", lineHeight: 1, minWidth: "fit-content",
-                  }}>
-                    {fmtNum(impact.people_affected)}
+            <div style={{ padding: "0.875rem 0", borderBottom: "0.5px solid #F1EFE8" }}>
+              {impact.people_affected != null ? (
+                <>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: 8 }}>
+                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, fontWeight: 400, color: "#2C2C2A", lineHeight: 1 }}>
+                      {fmtNum(impact.people_affected)}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 13, color: "#2C2C2A" }}>people affected</div>
+                      {impact.context?.people_affected && (
+                        <div style={{ fontSize: 10, color: "#B4B2A9", marginTop: 2 }}>{impact.context.people_affected}</div>
+                      )}
+                    </div>
                   </div>
-                ) : (
-                  <div style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: 28, fontWeight: 400, color: "#888780", lineHeight: 1,
-                  }}>
-                    unverified
-                  </div>
-                )}
-                <div>
-                  <div style={{ fontSize: 13, color: "#2C2C2A" }}>people affected</div>
-                  {impact.context?.people_affected && impact.people_affected != null && (
-                    <div style={{ fontSize: 10, color: "#B4B2A9", marginTop: 2 }}>{impact.context.people_affected}</div>
+                  {impact.people_affected_note && (
+                    <div style={{ fontSize: 12, color: "#5F5E5A", lineHeight: 1.6 }}>{impact.people_affected_note}</div>
                   )}
-                </div>
-              </div>
-              {impact.people_affected_note && (
-                <div style={{
-                  fontSize: 12, color: "#5F5E5A", lineHeight: 1.6,
-                  padding: "8px 10px", background: "#FFF8E6",
-                  borderRadius: 6, borderLeft: "2px solid #EF9F27",
-                }}>
-                  {impact.people_affected_note}
+                </>
+              ) : (
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                  <span style={{ fontSize: 11, padding: "3px 10px", background: "#F1EFE8", color: "#888780", borderRadius: 99, fontWeight: 500, flexShrink: 0 }}>
+                    Not yet assessed
+                  </span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 13, color: "#2C2C2A" }}>people affected</div>
+                    {impact.people_affected_note && (
+                      <div style={{ fontSize: 12, color: "#5F5E5A", marginTop: 2, lineHeight: 1.6 }}>{impact.people_affected_note}</div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
 
             {/* Hectares burned row — wildfires only */}
             {impact.hectares_burned != null && (
-              <div style={{ padding: "1rem 0", borderBottom: "0.5px solid #F1EFE8" }}>
+              <div style={{ padding: "0.875rem 0", borderBottom: "0.5px solid #F1EFE8" }}>
                 <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: 8 }}>
                   <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, fontWeight: 400, color: "#2C2C2A", lineHeight: 1, minWidth: "fit-content" }}>
                     {fmtNum(impact.hectares_burned)} ha
@@ -834,37 +950,35 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
             )}
 
             {/* Economic loss row */}
-            <div style={{ padding: "1rem 0", borderBottom: "0.5px solid #F1EFE8" }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: 8 }}>
-                {impact.economic_loss_usd != null ? (
-                  <div style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: 36, fontWeight: 400, color: "#2C2C2A", lineHeight: 1, minWidth: "fit-content",
-                  }}>
-                    {fmtNum(impact.economic_loss_usd, "$")}
+            <div style={{ padding: "0.875rem 0", borderBottom: "0.5px solid #F1EFE8" }}>
+              {impact.economic_loss_usd != null ? (
+                <>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: 8 }}>
+                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, fontWeight: 400, color: "#2C2C2A", lineHeight: 1 }}>
+                      {fmtNum(impact.economic_loss_usd, "$")}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 13, color: "#2C2C2A" }}>economic loss</div>
+                      {impact.gdp_pct != null && (
+                        <div style={{ fontSize: 10, color: "#B4B2A9", marginTop: 2 }}>{impact.gdp_pct}% of annual GDP</div>
+                      )}
+                    </div>
                   </div>
-                ) : (
-                  <div style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: 28, fontWeight: 400, color: "#888780", lineHeight: 1,
-                  }}>
-                    not yet assessed
-                  </div>
-                )}
-                <div>
-                  <div style={{ fontSize: 13, color: "#2C2C2A" }}>economic loss</div>
-                  {impact.gdp_pct != null && (
-                    <div style={{ fontSize: 10, color: "#B4B2A9", marginTop: 2 }}>{impact.gdp_pct}% of annual GDP</div>
+                  {impact.economic_loss_note && (
+                    <div style={{ fontSize: 12, color: "#5F5E5A", lineHeight: 1.6 }}>{impact.economic_loss_note}</div>
                   )}
-                </div>
-              </div>
-              {impact.economic_loss_note && (
-                <div style={{
-                  fontSize: 12, color: "#5F5E5A", lineHeight: 1.6,
-                  padding: "8px 10px", background: "#FFF8E6",
-                  borderRadius: 6, borderLeft: "2px solid #EF9F27",
-                }}>
-                  {impact.economic_loss_note}
+                </>
+              ) : (
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                  <span style={{ fontSize: 11, padding: "3px 10px", background: "#F1EFE8", color: "#888780", borderRadius: 99, fontWeight: 500, flexShrink: 0 }}>
+                    Not yet assessed
+                  </span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 13, color: "#2C2C2A" }}>economic loss</div>
+                    {impact.economic_loss_note && (
+                      <div style={{ fontSize: 12, color: "#5F5E5A", marginTop: 2, lineHeight: 1.6 }}>{impact.economic_loss_note}</div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
@@ -905,117 +1019,145 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
               </>
             </div>
           </div>
+          </div>{/* end human impact section */}
 
           {/* Section 7: Who was most at risk */}
           {event.at_risk?.length > 0 && (
-            <>
+            <div style={{ background: "white", borderTop: "0.5px solid #F1EFE8", padding: "2rem 1.75rem" }}>
               <SectionLabel>Who was most at risk</SectionLabel>
-              <div style={{ marginBottom: "1.75rem" }}>
+              <div>
                 {event.at_risk.map((item, i) => (
                   <div key={i} style={{
-                    display: "grid", gridTemplateColumns: "1fr auto", gap: "1rem",
-                    alignItems: "start",
-                    marginBottom: "1.25rem", paddingBottom: "1.25rem",
+                    marginBottom: "0.875rem", paddingBottom: "0.875rem",
                     borderBottom: i < event.at_risk.length - 1 ? "0.5px solid #F1EFE8" : "none",
                   }}>
-                    <div>
-                      <div style={{
-                        fontSize: 9, fontWeight: 500, color: "#B4B2A9",
-                        textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4,
-                      }}>{item.category}</div>
-                      <div style={{ fontSize: 12, color: "#5F5E5A", lineHeight: 1.6 }}>{item.context}</div>
-                    </div>
                     {item.number != null && (
-                      <div style={{
-                        fontFamily: "'Playfair Display', serif",
-                        fontSize: 32, fontWeight: 400, color: "#2C2C2A",
-                        lineHeight: 1, textAlign: "right", whiteSpace: "nowrap",
-                      }}>{item.number}</div>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: 4 }}>
+                        <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 32, fontWeight: 400, color: "#2C2C2A", lineHeight: 1 }}>{item.number}</div>
+                        <div style={{ fontSize: 9, fontWeight: 500, color: "#B4B2A9", textTransform: "uppercase", letterSpacing: "0.1em" }}>{item.category}</div>
+                      </div>
                     )}
+                    {item.number == null && (
+                      <div style={{ fontSize: 9, fontWeight: 500, color: "#B4B2A9", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>{item.category}</div>
+                    )}
+                    <div style={{ fontSize: 12, color: "#5F5E5A", lineHeight: 1.6 }}>{item.context}</div>
                   </div>
                 ))}
               </div>
-            </>
+            </div>
           )}
 
           {/* Section 8: Future outlook */}
           {event.future_outlook && (
-            <>
-              <SectionLabel>Future outlook</SectionLabel>
+            <div style={{ background: "#0d1f2d", padding: "2rem 1.75rem" }}>
+              <SectionLabel dark>Future outlook</SectionLabel>
               <div style={{
-                background: "#0d1f2d", borderRadius: 10,
-                border: "0.5px solid rgba(255,255,255,0.06)", borderLeft: "3px solid #1D9E75",
-                padding: "1.25rem", marginBottom: "1.75rem",
-              }}>
-                <div style={{
-                  fontSize: 9, fontWeight: 500, color: "rgba(255,255,255,0.35)",
-                  textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: "1rem",
-                }}>{event.future_outlook.label}</div>
-                {event.future_outlook.stats.map((stat, i) => (
-                  <div key={i} style={{
-                    display: "flex", alignItems: "baseline", gap: "0.75rem",
-                    paddingBottom: i < event.future_outlook.stats.length - 1 ? "0.875rem" : 0,
-                    marginBottom: i < event.future_outlook.stats.length - 1 ? "0.875rem" : 0,
-                    borderBottom: i < event.future_outlook.stats.length - 1 ? "0.5px solid rgba(255,255,255,0.06)" : "none",
-                  }}>
-                    <div style={{
-                      fontFamily: "'Playfair Display', serif",
-                      fontSize: 28, color: "#5DCAA5", minWidth: 60,
-                    }}>{stat.number}</div>
-                    <div>
-                      <div style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", lineHeight: 1.3 }}>{stat.label}</div>
-                      <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>{stat.delta}</div>
-                    </div>
+                fontSize: 9, fontWeight: 500, color: "rgba(255,140,60,0.5)",
+                textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: "1rem",
+              }}>Projected risk · {event.future_outlook.label.split("·").slice(1).join("·").trim() || event.future_outlook.label}</div>
+              {event.future_outlook.stats
+                .filter(stat => stat.number !== `${impact.emitters_share_pct}%`)
+                .map((stat, i, arr) => (
+                <div key={i} style={{
+                  display: "flex", alignItems: "baseline", gap: "0.75rem",
+                  paddingBottom: i < arr.length - 1 ? "0.875rem" : 0,
+                  marginBottom: i < arr.length - 1 ? "0.875rem" : 0,
+                  borderBottom: i < arr.length - 1 ? "0.5px solid rgba(255,255,255,0.06)" : "none",
+                }}>
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 28, color: "#EF9F27", minWidth: 60 }}>{stat.number}</div>
+                  <div>
+                    <div style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", lineHeight: 1.3 }}>{stat.label}</div>
+                    <div style={{ fontSize: 11, color: "rgba(255,180,80,0.5)", marginTop: 2 }}>{stat.delta}</div>
                   </div>
-                ))}
-              </div>
-            </>
+                </div>
+              ))}
+            </div>
           )}
 
           {/* Section 9: What followed */}
           {event.response?.key_outcomes?.length > 0 && (
-            <>
+            <div style={{ background: "#F9F7F4", borderTop: "0.5px solid #EDE9E0", padding: "2rem 1.75rem" }}>
               <SectionLabel>What followed</SectionLabel>
-              <div style={{ marginBottom: "1.75rem" }}>
+              <div>
                 {event.response.key_outcomes.map((outcome, i) => {
                   const statusStyle = STATUS_STYLE[outcome.status] ?? STATUS_STYLE.Ongoing;
+                  const typeLabel = { policy: "Policy", litigation: "Legal", aid: "Aid & Response" };
+                  const typeColor = { policy: "#1D9E75", litigation: "#534AB7", aid: "#BA7517" };
+                  const bgColor = { policy: "#F0FBF7", litigation: "#F2F1FE", aid: "#FEF8EE" };
                   return (
                     <div key={i} style={{
-                      display: "flex", gap: 12,
-                      marginBottom: i < event.response.key_outcomes.length - 1 ? "1rem" : 0,
-                      paddingBottom: i < event.response.key_outcomes.length - 1 ? "1rem" : 0,
-                      borderBottom: i < event.response.key_outcomes.length - 1 ? "0.5px solid #F1EFE8" : "none",
-                      alignItems: "flex-start",
+                      padding: "1rem 1.25rem",
+                      background: bgColor[outcome.type] ?? "#F9F9F7",
+                      borderRadius: 8,
+                      borderLeft: "2px solid #E8E6E0",
+                      marginBottom: 10,
                     }}>
                       <div style={{
-                        width: 8, height: 8, borderRadius: "50%", flexShrink: 0, marginTop: 5,
-                        background: OUTCOME_DOT[outcome.type] ?? "#9CA3AF",
-                      }} />
-                      <div>
-                        <div style={{ fontSize: 10, color: "#B4B2A9", marginBottom: 2 }}>{outcome.date}</div>
-                        <div style={{ fontSize: 13, color: "#2C2C2A", lineHeight: 1.6 }}>{outcome.description}</div>
-                        {outcome.status_note && (
-                          <div style={{
-                            fontSize: 12, color: "#5F5E5A", lineHeight: 1.6,
-                            marginTop: 6, fontStyle: "italic",
-                          }}>
-                            {outcome.status_note}
-                          </div>
-                        )}
-                        <div style={{ fontSize: 10, color: "#B4B2A9", marginTop: 4 }}>{outcome.source}</div>
-                        {outcome.status && (
-                          <span style={{
-                            fontSize: 10, padding: "2px 7px", borderRadius: 99, fontWeight: 500,
-                            display: "inline-block", marginTop: 4,
-                            background: statusStyle.bg, color: statusStyle.color,
-                          }}>{outcome.status}</span>
-                        )}
+                        display: "flex", alignItems: "center",
+                        justifyContent: "space-between", marginBottom: 8,
+                      }}>
+                        <div style={{
+                          fontSize: 10, fontWeight: 500,
+                          color: typeColor[outcome.type] ?? "#888780",
+                          textTransform: "uppercase", letterSpacing: "0.08em",
+                        }}>
+                          {typeLabel[outcome.type] ?? outcome.type}
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                          {outcome.status && (
+                            <span style={{
+                              fontSize: 10, padding: "2px 7px", borderRadius: 99,
+                              fontWeight: 500,
+                              background: statusStyle.bg, color: statusStyle.color,
+                            }}>{outcome.status}</span>
+                          )}
+                          <span style={{ fontSize: 10, color: "#B4B2A9" }}>{outcome.date}</span>
+                        </div>
                       </div>
+
+                      <div style={{
+                        fontSize: 13, color: "#2C2C2A",
+                        lineHeight: 1.7, marginBottom: outcome.status_note ? 8 : 0,
+                      }}>
+                        {outcome.description}
+                      </div>
+
+                      {outcome.status_note && (
+                        <div style={{
+                          fontSize: 12, color: "#5F5E5A",
+                          lineHeight: 1.6, marginTop: 6,
+                          paddingTop: 6,
+                          borderTop: "0.5px solid rgba(0,0,0,0.06)",
+                          fontStyle: "italic",
+                        }}>
+                          {outcome.status_note}
+                        </div>
+                      )}
+
+                      {outcome.source_url ? (
+                        <a href={outcome.source_url} target="_blank" rel="noopener noreferrer"
+                          style={{ fontSize: 10, color: "#B4B2A9", marginTop: 6, display: "block", textDecoration: "none" }}>
+                          {outcome.source} →
+                        </a>
+                      ) : (
+                        <div style={{ fontSize: 10, color: "#B4B2A9", marginTop: 6 }}>{outcome.source}</div>
+                      )}
                     </div>
                   );
                 })}
+
+                {event.response?.accountability_summary && (
+                  <div style={{
+                    marginTop: 12, padding: "0.875rem 1.25rem",
+                    background: "#0d1f2d", borderRadius: 8,
+                    fontSize: 13, color: "rgba(255,255,255,0.7)",
+                    lineHeight: 1.7, fontStyle: "italic",
+                  }}>
+                    {event.response.accountability_summary}
+                  </div>
+                )}
               </div>
-            </>
+            </div>
           )}
 
           {/* Section 10: Recent coverage */}
@@ -1024,18 +1166,18 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
               ? articles
               : (event.curated_coverage ?? []);
             if (articlesLoading) return (
-              <>
+              <div style={{ background: "white", borderTop: "0.5px solid #F1EFE8", padding: "2rem 1.75rem 6rem" }}>
                 <SectionLabel>Recent coverage</SectionLabel>
-                <div style={{ marginBottom: "1.75rem" }}>
+                <div>
                   {[1,2,3].map(i => <div key={i} style={{ height: 36, borderRadius: 4, background: "#F1EFE8", marginBottom: 8 }} />)}
                 </div>
-              </>
+              </div>
             );
-            if (displayArticles.length === 0) return null;
+            if (displayArticles.length === 0) return <div style={{ paddingBottom: "6rem" }} />;
             return (
-              <>
+              <div style={{ background: "white", borderTop: "0.5px solid #F1EFE8", padding: "2rem 1.75rem 6rem" }}>
                 <SectionLabel>Recent coverage</SectionLabel>
-                <div style={{ marginBottom: "1.75rem" }}>
+                <div>
                   {displayArticles.map((article, i) => (
                     <div key={i} style={{
                       display: "grid", gridTemplateColumns: "auto 1fr", gap: "0.75rem",
@@ -1058,7 +1200,7 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                     </div>
                   ))}
                 </div>
-              </>
+              </div>
             );
           })()}
 

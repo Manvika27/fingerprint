@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Globe from "react-globe.gl";
 
 const HAZARD_COLORS = {
@@ -32,6 +32,14 @@ function pointLabel(d) {
 
 export default function GlobeLanding({ events, onSelect }) {
   const globeRef = useRef();
+  const [pointAlt, setPointAlt] = useState(0.01);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setPointAlt(a => a === 0.01 ? 0.03 : 0.01);
+    }, 1500);
+    return () => clearInterval(id);
+  }, []);
 
   function handleGlobeReady() {
     const ctrl = globeRef.current.controls();
@@ -65,9 +73,10 @@ export default function GlobeLanding({ events, onSelect }) {
           pointLat={(d) => d.center[1]}
           pointLng={(d) => d.center[0]}
           pointColor={pointColor}
-          pointAltitude={0.05}
-          pointRadius={2.5}
-          pointResolution={12}
+          pointAltitude={pointAlt}
+          pointRadius={0.6}
+          pointResolution={16}
+          pointsMerge={false}
           pointLabel={pointLabel}
           onPointClick={(d) => onSelect(d)}
           enablePointerInteraction={true}
@@ -76,18 +85,21 @@ export default function GlobeLanding({ events, onSelect }) {
       </div>
 
       <div style={{ textAlign: "center" }}>
+        <div style={{ fontSize: 10, color: "#3a4f5a", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "0.6rem" }}>
+          Climate attribution science, made navigable
+        </div>
+
         <div style={{
           fontFamily: "'Playfair Display', Georgia, serif",
           fontSize: 28, fontStyle: "italic",
           color: "#ffffff", lineHeight: 1.45,
-          marginBottom: "0.75rem",
+          marginBottom: "0.6rem",
         }}>
-          Every event has a fingerprint.<br />
-          Every fingerprint has a cost.
+          Every extreme weather event has a fingerprint<br /> See how climate change shaped real world disasters.
         </div>
 
         <div style={{ fontSize: 13, color: "#6b7f8a", lineHeight: 1.6, marginBottom: "1rem" }}>
-          Climate attribution science,<br />made navigable.
+          The attribution science, the human cost, and what followed.
         </div>
 
         <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "0.875rem", maxWidth: 360 }}>
@@ -99,8 +111,11 @@ export default function GlobeLanding({ events, onSelect }) {
           ))}
         </div>
 
-        <div style={{ fontSize: 11, color: "#3a4f5a", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-          Click an event to explore
+        <div style={{
+          fontSize: 11, color: "rgba(255,255,255,0.25)",
+          textAlign: "center", marginTop: "0.5rem"
+        }}>
+          7 events selected for early access · expanding to cover all major disasters from the 2020s
         </div>
       </div>
     </div>

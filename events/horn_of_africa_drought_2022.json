@@ -8,8 +8,16 @@
   "country_code": "SOM",
   "hazard_type": "drought",
   "region": "Southern Somalia, Southern Ethiopia, Eastern Kenya",
-  "bbox": [35, -5, 52, 12],
-  "center": [42, 5],
+  "bbox": [
+    35,
+    -5,
+    52,
+    12
+  ],
+  "center": [
+    42,
+    5
+  ],
   "zoom": 5,
   "headline": "Five failed rainy seasons. 43,000 dead in Somalia alone. This drought could not have happened without climate change.",
   "quote": {
@@ -57,7 +65,10 @@
     "imagery_type": "rainfall_anomaly",
     "data_source": "CHIRPS Rainfall Anomaly",
     "gee_asset_id": "UCSB-CHG/CHIRPS/DAILY",
-    "date_range": ["2021-01-01", "2022-12-31"],
+    "date_range": [
+      "2021-01-01",
+      "2022-12-31"
+    ],
     "description": "CHIRPS rainfall anomaly showing deviation from 1981-2010 baseline across the Horn of Africa study region",
     "status": "pending_export"
   },
@@ -100,8 +111,16 @@
     ]
   },
   "response": {
-    "gdelt_keywords": ["Horn of Africa drought aid 2023", "Somalia famine 2022", "East Africa drought response"],
-    "gdelt_priority_domains": ["aljazeera.com", "theeastafrican.co.ke", "nation.africa"],
+    "gdelt_keywords": [
+      "Horn of Africa drought aid 2023",
+      "Somalia famine 2022",
+      "East Africa drought response"
+    ],
+    "gdelt_priority_domains": [
+      "aljazeera.com",
+      "theeastafrican.co.ke",
+      "nation.africa"
+    ],
     "gdelt_date_start": "2021-01-01",
     "gdelt_date_end": "2024-01-01",
     "newsapi_query": "Horn of Africa drought Somalia famine",
@@ -125,7 +144,8 @@
         "date": "2022-11-01",
         "status": "Active"
       }
-    ]
+    ],
+    "accountability_summary": "The humanitarian response reached millions but the structural causes — emissions from wealthy nations, chronic underfunding of adaptation — remain unaddressed."
   },
   "curated_coverage": [
     {
