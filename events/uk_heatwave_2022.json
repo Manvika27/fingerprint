@@ -66,7 +66,23 @@
     "description": "MODIS land surface temperature anomaly showing deviation from 2015-2021 July baseline across England and Wales",
     "status": "pending_export"
   },
-  "photos": [],
+  "photos": [
+    {
+      "file": "uk_heatwave_1.jpg",
+      "caption": "caption1",
+      "credit": "Wikimedia Commons"
+    },
+    {
+      "file": "uk_heatwave_2.jpg",
+      "caption": "caption2",
+      "credit": "Wikimedia Commons"
+    },
+    {
+      "file": "uk_heatwave_3.jpg",
+      "caption": "caption1",
+      "credit": "Wikimedia Commons"
+    }
+  ],
   "at_risk": [
     {
       "category": "Elderly people living alone",

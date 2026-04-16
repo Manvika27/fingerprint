@@ -1,0 +1,98 @@
+[
+  {
+    "id": "australia_bushfires_2019",
+    "name": "Australia Bushfires",
+    "year": 2019,
+    "country": "Australia",
+    "hazard_type": "wildfire",
+    "center": [134, -25],
+    "zoom": 4,
+    "stub": true,
+    "attribution_headline": "Climate change made fire conditions at least twice as likely",
+    "source_url": "https://www.worldweatherattribution.org/climate-change-made-the-black-summer-bushfires-more-likely/"
+  },
+  {
+    "id": "pacific_northwest_heatwave_2021",
+    "name": "Pacific Northwest Heatwave",
+    "year": 2021,
+    "country": "USA, Canada",
+    "hazard_type": "heatwave",
+    "center": [-121, 47],
+    "zoom": 5,
+    "stub": true,
+    "attribution_headline": "Virtually impossible without climate change — made 150 times more likely",
+    "source_url": "https://www.worldweatherattribution.org/western-north-american-extreme-heat-virtually-impossible-without-human-caused-climate-change/"
+  },
+  {
+    "id": "germany_floods_2021",
+    "name": "Germany Floods",
+    "year": 2021,
+    "country": "Germany, Belgium",
+    "hazard_type": "flood",
+    "center": [7, 50.5],
+    "zoom": 6,
+    "stub": true,
+    "attribution_headline": "Climate change made extreme rainfall 1.2 to 9 times more likely",
+    "source_url": "https://www.worldweatherattribution.org/heavy-rainfall-which-led-to-severe-flooding-in-western-europe-made-more-likely-by-climate-change/"
+  },
+  {
+    "id": "siberia_heatwave_2020",
+    "name": "Siberia Heatwave",
+    "year": 2020,
+    "country": "Russia",
+    "hazard_type": "heatwave",
+    "center": [100, 65],
+    "zoom": 4,
+    "stub": true,
+    "attribution_headline": "At least 600 times more likely due to climate change",
+    "source_url": "https://www.worldweatherattribution.org/siberian-heatwave-of-2020-almost-impossible-without-climate-change/"
+  },
+  {
+    "id": "hawaii_wildfires_2023",
+    "name": "Lahaina Wildfire",
+    "year": 2023,
+    "country": "USA",
+    "hazard_type": "wildfire",
+    "center": [-156.6, 20.9],
+    "zoom": 8,
+    "stub": true,
+    "attribution_headline": "Climate change increased fire weather likelihood and wind-driven fire risk",
+    "source_url": "https://www.worldweatherattribution.org/climate-change-more-than-doubled-the-likelihood-of-the-fire-weather-conditions-that-contributed-to-the-lahaina-fire/"
+  },
+  {
+    "id": "libya_floods_2023",
+    "name": "Libya Floods",
+    "year": 2023,
+    "country": "Libya",
+    "hazard_type": "flood",
+    "center": [21, 32],
+    "zoom": 6,
+    "stub": true,
+    "attribution_headline": "Climate change made the extreme rainfall at least 50 times more likely",
+    "source_url": "https://www.worldweatherattribution.org/human-induced-climate-change-increased-rainfall-associated-with-mediterranean-cyclone-daniel/"
+  },
+  {
+    "id": "brazil_floods_2024",
+    "name": "Brazil Floods",
+    "year": 2024,
+    "country": "Brazil",
+    "hazard_type": "flood",
+    "center": [-52, -30],
+    "zoom": 5,
+    "stub": true,
+    "attribution_headline": "Climate change made the extreme rainfall more likely and more intense",
+    "source_url": "https://www.worldweatherattribution.org/climate-change-increased-rainfall-that-led-to-catastrophic-flooding-in-rio-grande-do-sul-brazil/"
+  },
+  {
+    "id": "mediterranean_heatwave_2023",
+    "name": "Mediterranean Heatwave",
+    "year": 2023,
+    "country": "Italy, Greece, Spain",
+    "hazard_type": "heatwave",
+    "center": [15, 40],
+    "zoom": 5,
+    "stub": true,
+    "attribution_headline": "Climate change made the heatwave 2.5 times more likely",
+    "source_url": "https://www.worldweatherattribution.org/attribution-of-the-record-breaking-july-2023-heatwave/"
+  }
+]

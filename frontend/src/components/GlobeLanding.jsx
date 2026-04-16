@@ -20,19 +20,21 @@ const LEGEND = [
 ];
 
 function pointColor(d) {
-  return HAZARD_COLORS[d.hazard_type] ?? "#AAAAAA";
+  const base = HAZARD_COLORS[d.hazard_type] ?? "#AAAAAA";
+  return d.stub ? base + "99" : base;
 }
 
 function pointLabel(d) {
   return `<div style="background:rgba(10,22,40,0.92);color:white;padding:6px 10px;border-radius:6px;font-family:Inter,sans-serif;font-size:12px;border:0.5px solid rgba(255,255,255,0.15)">
     <strong>${d.name}</strong><br/>
-    <span style="font-size:10px;color:#6b7f8a">${d.country} · ${d.year}</span>
+    <span style="font-size:10px;color:#6b7f8a">${d.country} · ${d.year}${d.stub ? ' · preview' : ''}</span>
   </div>`;
 }
 
 export default function GlobeLanding({ events, onSelect }) {
   const globeRef = useRef();
   const [pointAlt, setPointAlt] = useState(0.01);
+  const [stubModal, setStubModal] = useState(null);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -51,6 +53,23 @@ export default function GlobeLanding({ events, onSelect }) {
 
   function stopRotate()   { if (globeRef.current) globeRef.current.controls().autoRotate = false; }
   function resumeRotate() { if (globeRef.current) globeRef.current.controls().autoRotate = true; }
+
+  function handlePointClick(d) {
+    if (d.stub) {
+      stopRotate();
+      setStubModal(d);
+    } else {
+      onSelect(d);
+    }
+  }
+
+  function closeModal() {
+    setStubModal(null);
+    resumeRotate();
+  }
+
+  const fullEventCount = events.filter(e => !e.stub).length;
+  const stubCount = events.filter(e => e.stub).length;
 
   return (
     <div style={{
@@ -74,11 +93,11 @@ export default function GlobeLanding({ events, onSelect }) {
           pointLng={(d) => d.center[0]}
           pointColor={pointColor}
           pointAltitude={pointAlt}
-          pointRadius={0.6}
+          pointRadius={(d) => d.stub ? 1 : 1}
           pointResolution={16}
           pointsMerge={false}
           pointLabel={pointLabel}
-          onPointClick={(d) => onSelect(d)}
+          onPointClick={handlePointClick}
           enablePointerInteraction={true}
           onGlobeReady={handleGlobeReady}
         />
@@ -115,9 +134,74 @@ export default function GlobeLanding({ events, onSelect }) {
           fontSize: 11, color: "rgba(255,255,255,0.25)",
           textAlign: "center", marginTop: "0.5rem"
         }}>
-          7 events selected for early access · expanding to cover all major disasters from the 2020s
+          {fullEventCount} events with full analysis · {stubCount} more in preview · expanding to cover all major disasters from the 2020s
         </div>
       </div>
+
+      {/* Stub modal backdrop */}
+      {stubModal && (
+        <>
+          <div
+            onClick={closeModal}
+            style={{
+              position: 'fixed', inset: 0,
+              background: 'rgba(0,0,0,0.4)',
+              zIndex: 999,
+            }}
+          />
+          <div style={{
+            position: 'fixed',
+            top: '50%', left: '50%',
+            transform: 'translate(-50%, -50%)',
+            background: '#0d1f2d',
+            border: '0.5px solid rgba(255,255,255,0.15)',
+            borderRadius: 12,
+            padding: '1.5rem',
+            maxWidth: 320,
+            width: 'calc(100vw - 3rem)',
+            zIndex: 1000,
+          }}>
+            <div style={{
+              fontSize: 10, fontWeight: 500,
+              color: HAZARD_COLORS[stubModal.hazard_type] ?? '#AAAAAA',
+              textTransform: 'uppercase', letterSpacing: '0.08em',
+              marginBottom: 8,
+            }}>
+              {stubModal.hazard_type} · {stubModal.country} · {stubModal.year}
+            </div>
+            <div style={{
+              fontSize: 15, color: 'rgba(255,255,255,0.9)',
+              fontFamily: "'Playfair Display', serif",
+              lineHeight: 1.4, marginBottom: 12,
+            }}>
+              {stubModal.attribution_headline}
+            </div>
+            <a
+              href={stubModal.source_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontSize: 12, color: '#1D9E75', display: 'block', marginBottom: 8 }}
+            >
+              Read the WWA study →
+            </a>
+            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>
+              Full event analysis coming soon
+            </div>
+            <button
+              onClick={closeModal}
+              style={{
+                position: 'absolute', top: 12, right: 12,
+                background: 'none', border: 'none',
+                color: 'rgba(255,255,255,0.4)',
+                cursor: 'pointer', fontSize: 16,
+                lineHeight: 1, padding: 0,
+              }}
+            >
+              ×
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -37,7 +37,7 @@ def load_event(event_id: str) -> dict:
 def list_events():
     events = []
     for filename in sorted(os.listdir(EVENTS_DIR)):
-        if not filename.endswith(".json") or filename.endswith("_enrichment.json"):
+        if not filename.endswith(".json") or filename.endswith("_enrichment.json") or filename == "stubs.json":
             continue
         path = os.path.join(EVENTS_DIR, filename)
         try:
@@ -53,6 +53,16 @@ def list_events():
             })
         except Exception:
             continue
+
+    stubs_path = os.path.join(EVENTS_DIR, "stubs.json")
+    if os.path.exists(stubs_path):
+        try:
+            with open(stubs_path) as f:
+                stubs = json.load(f)
+            events.extend(stubs)
+        except Exception:
+            pass
+
     return events
 
 

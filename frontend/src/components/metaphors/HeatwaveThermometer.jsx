@@ -33,6 +33,24 @@ export default function HeatwaveThermometer({ event }) {
   const fillY = tempToY(filled);
 
   return (
+    <div>
+    <div style={{ marginBottom: 16 }}>
+      <div style={{
+        fontFamily: "'Playfair Display', serif",
+        fontSize: 52, color: '#EF9F27',
+        lineHeight: 1, fontWeight: 400,
+      }}>
+        {event.attribution?.likelihood_ratio
+          ? `${event.attribution.likelihood_ratio}×`
+          : event.attribution?.likelihood_pct_increase
+          ? `+${event.attribution.likelihood_pct_increase}%`
+          : '10×'
+        }
+      </div>
+      <div style={{ fontSize: 13, color: '#2C2C2A', fontWeight: 500, marginTop: 4 }}>
+        more likely due to climate change
+      </div>
+    </div>
     <div style={{
       display: 'flex', alignItems: 'center', gap: '2rem',
       padding: '1.5rem 0', marginBottom: '1rem'
@@ -91,6 +109,7 @@ export default function HeatwaveThermometer({ event }) {
           The gap between the lines is the climate signal — heat that would not have existed without human emissions.
         </div>
       </div>
+    </div>
     </div>
   );
 }

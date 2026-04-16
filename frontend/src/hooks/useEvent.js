@@ -26,17 +26,24 @@ export function useFullEvents() {
   useEffect(() => {
     fetch("/api/events")
       .then((r) => r.json())
-      .then((list) =>
-        Promise.all(
-          list.map((e) =>
-            fetch(`/api/events/${e.id}`)
+      .then(async (list) => {
+        const stubs = list.filter((e) => e.stub === true);
+        const fullIds = list.filter((e) => !e.stub).map((e) => e.id);
+
+        const fullEvents = await Promise.all(
+          fullIds.map((id) =>
+            fetch(`/api/events/${id}`)
               .then((r) => r.json())
               .catch(() => null)
           )
-        )
-      )
-      // Drop any events that 404'd (no JSON file yet) — they have no center/hazard_type
-      .then((results) => setEvents(results.filter((e) => e && e.center)))
+        );
+
+        return [
+          ...fullEvents.filter((e) => e && e.center),
+          ...stubs.filter((e) => e.center),
+        ];
+      })
+      .then((allPoints) => setEvents(allPoints))
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
   }, []);

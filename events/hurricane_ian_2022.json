@@ -66,7 +66,23 @@
     "description": "Sentinel-1 SAR showing storm surge flood extent across Southwest Florida before and after landfall",
     "status": "pending_export"
   },
-  "photos": [],
+  "photos": [
+    {
+      "file": "Flooded_highway_due_to_Ian.jpg",
+      "caption": "Flooded highway due to Hurricane Ian, Florida · 2022",
+      "credit": "Wikimedia Commons"
+    },
+    {
+      "file": "Hurricane_Ian_damage_in_Englewood_01.jpg",
+      "caption": "Flooded highway due to Hurricane Ian, Florida · 2022",
+      "credit": "Wikimedia Commons"
+    },
+    {
+      "file": "Hurricane_Ian_damage_in_Englewood_04.jpg",
+      "caption": "Flooded highway due to Hurricane Ian, Florida · 2022",
+      "credit": "Wikimedia Commons"
+    }
+  ],
   "at_risk": [
     {
       "category": "Mobile home residents",

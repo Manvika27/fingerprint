@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import HeatwaveThermometer from "./metaphors/HeatwaveThermometer.jsx";
 import DroughtMoisture from "./metaphors/DroughtMoisture.jsx";
+import WildfireGrid from "./metaphors/WildfireGrid.jsx";
+import FloodGauge from "./metaphors/FloodGauge.jsx";
+import HurricaneRainfall from "./metaphors/HurricaneRainfall.jsx";
 
 // ─── Custom before/after slider (replaces react-compare-image) ────────────────
 
@@ -131,6 +134,15 @@ const STATUS_STYLE = {
   Ongoing:   { bg: "#E1F5EE", color: "#0F6E56" },
   Delivered: { bg: "#EAF3DE", color: "#3B6D11" },
   Stalled:   { bg: "#F1EFE8", color: "#5F5E5A" },
+};
+
+const heroTheme = {
+  flood:     { accent: "#185FA5" },
+  heatwave:  { accent: "#854F0B" },
+  hurricane: { accent: "#534AB7" },
+  wildfire:  { accent: "#8B3A0F" },
+  drought:   { accent: "#4a2508" },
+  cyclone:   { accent: "#0F6E56" },
 };
 
 // ─── Tiny helpers ─────────────────────────────────────────────────────────────
@@ -513,6 +525,7 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
     navigator.clipboard.writeText(text);
   }
 
+  const hasMetaphor = ['flood', 'heatwave', 'wildfire', 'hurricane'].includes(event.hazard_type);
   const badgeStyle = HAZARD_BADGE_STYLE[event.hazard_type] ?? HAZARD_BADGE_STYLE.flood;
   const impact = event.human_impact ?? {};
   const beforeUrl = `/imagery/${event.id}_before.png`;
@@ -598,83 +611,66 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
           </div>
         </div>
 
-        {/* ── Section 2: Injustice bar ── */}
-        {(() => {
-          const rightStat = impact.people_affected != null
-            ? { value: fmtNum(impact.people_affected), label: "people lost homes, crops, and livelihoods" }
-            : impact.deaths != null
-            ? { value: impact.deaths.toLocaleString(), label: "deaths recorded" }
-            : impact.displaced != null
-            ? { value: fmtNum(impact.displaced), label: "people displaced" }
-            : null;
-
-          return (
-            <div style={{
-              background: "#0d1f2d", padding: "1.25rem 1.75rem",
-              display: "grid",
-              gridTemplateColumns: rightStat ? "1fr 32px 1fr" : "auto 1fr",
-              alignItems: "center", borderBottom: "0.5px solid rgba(255,255,255,0.06)",
-              flexShrink: 0,
-            }}>
-              <div>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 38, color: "#F09595", lineHeight: 1 }}>
-                  {impact.emitters_share_pct}%
-                </div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 4, lineHeight: 1.4 }}>
-                  of global cumulative emissions<br />from {event.country}
-                </div>
-              </div>
-              {rightStat ? (
-                <>
-                  <div style={{ textAlign: "center" }}>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                      <path d="M4 10h12M12 6l4 4-4 4" stroke="#F09595" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 38, color: "#5DCAA5", lineHeight: 1 }}>
-                      {rightStat.value}
-                    </div>
-                    <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 4, lineHeight: 1.4 }}>
-                      {rightStat.label}
-                    </div>
-                    <div style={{ fontSize: 10, color: "rgba(255,255,255,0.22)", marginTop: 3, fontStyle: "italic", lineHeight: 1.4 }}>
-                      The countries most responsible bore none of this cost.
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <div style={{ paddingLeft: "1.5rem" }}>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", lineHeight: 1.5 }}>
-                    of global cumulative emissions from {event.country} — yet bore 100% of the cost of this disaster.
-                  </div>
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.22)", marginTop: 4, fontStyle: "italic", lineHeight: 1.4 }}>
-                    The countries most responsible bore none of this cost.
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        })()}
-
-        {/* ── Section 3: Pull quote ── */}
+        {/* ── Section 2: Pull quote ── */}
         {event.quote && (
           <div style={{
             background: "#0d1f2d", padding: "1.25rem 1.75rem 1.5rem",
             borderBottom: "0.5px solid rgba(255,255,255,0.06)", flexShrink: 0,
           }}>
-            <blockquote style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 16, fontStyle: "italic",
-              color: "rgba(255,255,255,0.8)", lineHeight: 1.65,
-              paddingLeft: "1rem", borderLeft: "2px solid #1D9E75",
-              margin: 0,
-            }}>
-              "{event.quote.text}"
-            </blockquote>
-            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 8, paddingLeft: "1rem" }}>
-              {event.quote.attribution}
-            </div>
+            {event.context && (
+              <div style={{
+                fontSize: 14,
+                color: "rgba(255,255,255,0.75)",
+                lineHeight: 1.8,
+                marginBottom: "1.25rem",
+                maxWidth: 760,
+              }}>
+                {event.context}
+              </div>
+            )}
+            {(() => {
+              const isScientist = /Scientist|Professor|Dr\.|Lecturer|Director|Department/i
+                .test(event.quote.attribution ?? "");
+              return (
+                <>
+                  <blockquote style={{
+                    fontFamily: "'Playfair Display', serif",
+                    fontStyle: "italic",
+                    fontSize: isScientist ? 14 : 18,
+                    color: isScientist ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.9)",
+                    lineHeight: 1.6,
+                    borderLeft: isScientist ? "2px solid rgba(255,255,255,0.15)" : "2px solid rgba(255,255,255,0.3)",
+                    paddingLeft: "1.25rem",
+                    marginBottom: "0.75rem",
+                    margin: 0,
+                  }}>
+                    "{event.quote.text}"
+                  </blockquote>
+                  <div style={{
+                    fontSize: isScientist ? 11 : 12,
+                    color: isScientist ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.5)",
+                    marginTop: 8,
+                    paddingLeft: "1.25rem",
+                  }}>
+                    {event.quote.attribution}
+                  </div>
+                </>
+              );
+            })()}
+            {impact.emitters_share_pct && (
+              <div style={{
+                fontSize: 12,
+                color: "rgba(255,255,255,0.35)",
+                marginTop: "1.5rem",
+                letterSpacing: "0.01em",
+              }}>
+                {event.country} contributed{" "}
+                <span style={{ color: "rgba(255,120,100,0.7)", fontWeight: 500 }}>
+                  {impact.emitters_share_pct}%
+                </span>
+                {" "}of global cumulative greenhouse gas emissions
+              </div>
+            )}
           </div>
         )}
 
@@ -684,83 +680,118 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
           {/* Section 4: The science */}
           <div style={{ background: "#F7FDFB", borderTop: "0.5px solid #E1F5EE", padding: "2rem 1.75rem" }}>
           <SectionLabel>The science</SectionLabel>
-          <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start" }}>
-            {/* Left column: number block + thermometer for heatwave */}
-            <div style={{ display: "flex", alignItems: "flex-start", gap: "3rem" }}>
-            <div style={{ flex: 1 }}>
-              {/* Case A: standard likelihood_pct_increase */}
-              {event.attribution.likelihood_pct_increase != null && (
-                <>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 88, fontWeight: 400, color: "#1D9E75", lineHeight: 1 }}>
-                    +{event.attribution.likelihood_pct_increase}%
-                  </div>
-                  <div style={{ fontSize: 14, color: "#5F5E5A", marginTop: 4 }}>more likely due to climate change</div>
-                </>
-              )}
-              {/* Case B: storyline — rainfall_increase_pct only */}
-              {event.attribution.rainfall_increase_pct != null && event.attribution.likelihood_pct_increase == null && (
-                <>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 88, fontWeight: 400, color: "#1D9E75", lineHeight: 1 }}>
-                    +{event.attribution.rainfall_increase_pct}%
-                  </div>
-                  <div style={{ fontSize: 14, color: "#5F5E5A", marginTop: 4 }}>heavier rainfall due to climate change</div>
-                  <div style={{ fontSize: 11, color: "#B4B2A9", marginTop: 6, lineHeight: 1.5, maxWidth: 160 }}>
-                    Storyline method — measures intensity increase rather than likelihood change
-                  </div>
-                </>
-              )}
-              {/* Case C: dual wildfire findings */}
-              {event.attribution.likelihood_ratio_season != null && (
-                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                  <div>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 56, fontWeight: 400, color: "#1D9E75", lineHeight: 1 }}>
-                      {event.attribution.likelihood_ratio_season}×
+          <div style={{ display: "flex", alignItems: "flex-start", gap: "2rem", marginBottom: "1.5rem" }}>
+            {/* Left column: attribution number (non-metaphor events) OR metaphor component */}
+            {!hasMetaphor && (
+              <div style={{ flex: 1 }}>
+                {/* Case A: standard likelihood_pct_increase */}
+                {event.attribution.likelihood_pct_increase != null && (
+                  <>
+                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 88, fontWeight: 400, color: "#1D9E75", lineHeight: 1 }}>
+                      +{event.attribution.likelihood_pct_increase}%
                     </div>
-                    <div style={{ fontSize: 12, color: "#5F5E5A", marginTop: 2 }}>more likely — season severity</div>
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 56, fontWeight: 400, color: "#1D9E75", lineHeight: 1 }}>
-                      {event.attribution.likelihood_ratio_peak_weather}×
+                    <div style={{ fontSize: 14, color: "#5F5E5A", marginTop: 4 }}>more likely due to climate change</div>
+                  </>
+                )}
+                {/* Case B: storyline — rainfall_increase_pct only */}
+                {event.attribution.rainfall_increase_pct != null && event.attribution.likelihood_pct_increase == null && (
+                  <>
+                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 88, fontWeight: 400, color: "#1D9E75", lineHeight: 1 }}>
+                      +{event.attribution.rainfall_increase_pct}%
                     </div>
-                    <div style={{ fontSize: 12, color: "#5F5E5A", marginTop: 2 }}>more likely — peak fire weather</div>
+                    <div style={{ fontSize: 14, color: "#5F5E5A", marginTop: 4 }}>heavier rainfall due to climate change</div>
+                    <div style={{ fontSize: 11, color: "#B4B2A9", marginTop: 6, lineHeight: 1.5, maxWidth: 160 }}>
+                      Storyline method — measures intensity increase rather than likelihood change
+                    </div>
+                  </>
+                )}
+                {/* Case C: dual wildfire findings */}
+                {event.attribution.likelihood_ratio_season != null && (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                    <div>
+                      <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 56, fontWeight: 400, color: "#1D9E75", lineHeight: 1 }}>
+                        {event.attribution.likelihood_ratio_season}×
+                      </div>
+                      <div style={{ fontSize: 12, color: "#5F5E5A", marginTop: 2 }}>more likely — season severity</div>
+                    </div>
+                    <div>
+                      <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 56, fontWeight: 400, color: "#1D9E75", lineHeight: 1 }}>
+                        {event.attribution.likelihood_ratio_peak_weather}×
+                      </div>
+                      <div style={{ fontSize: 12, color: "#5F5E5A", marginTop: 2 }}>more likely — peak fire weather</div>
+                    </div>
                   </div>
-                </div>
-              )}
-              {/* Case D: qualitative finding only (cyclones) */}
-              {event.attribution.finding != null && event.attribution.likelihood_ratio == null && event.attribution.likelihood_pct_increase == null && event.attribution.rainfall_increase_pct == null && event.attribution.likelihood_ratio_season == null && (
-                <div style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: 22, fontWeight: 400, color: "#1D9E75", lineHeight: 1.4, maxWidth: 200,
-                }}>
-                  Rainfall intensity increased
-                </div>
-              )}
-              {/* Standard likelihood_ratio (e.g. drought, uk heatwave) — only if no pct already shown */}
-              {event.attribution.likelihood_ratio != null && event.attribution.likelihood_pct_increase == null && event.attribution.likelihood_ratio_season == null && (
-                <>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 88, fontWeight: 400, color: "#1D9E75", lineHeight: 1 }}>
-                    {event.attribution.likelihood_ratio}×
+                )}
+                {/* Case D: qualitative finding only (cyclones) */}
+                {event.attribution.finding != null && event.attribution.likelihood_ratio == null && event.attribution.likelihood_pct_increase == null && event.attribution.rainfall_increase_pct == null && event.attribution.likelihood_ratio_season == null && (
+                  <div style={{
+                    fontFamily: "'Playfair Display', serif",
+                    fontSize: 22, fontWeight: 400, color: "#1D9E75", lineHeight: 1.4, maxWidth: 200,
+                  }}>
+                    Rainfall intensity increased
                   </div>
-                  <div style={{ fontSize: 14, color: "#5F5E5A", marginTop: 4 }}>more likely due to climate change</div>
-                </>
-              )}
-              <div style={{ fontSize: 11, color: "#B4B2A9", marginTop: 8, lineHeight: 1.6 }}>
-                {event.attribution.confidence} confidence<br />
-                {event.attribution.method}<br />
-                {event.attribution.source}, {event.attribution.year_published}
-              </div>
-            </div>
-            {event.hazard_type === 'heatwave' && (
-              <div style={{ flexShrink: 0 }}>
-                <HeatwaveThermometer event={event} />
+                )}
+                {/* Standard likelihood_ratio (e.g. drought, uk heatwave) */}
+                {event.attribution.likelihood_ratio != null && event.attribution.likelihood_pct_increase == null && event.attribution.likelihood_ratio_season == null && (
+                  <>
+                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 88, fontWeight: 400, color: "#1D9E75", lineHeight: 1 }}>
+                      {event.attribution.likelihood_ratio}×
+                    </div>
+                    <div style={{ fontSize: 14, color: "#5F5E5A", marginTop: 4 }}>more likely due to climate change</div>
+                  </>
+                )}
+                <div style={{ fontSize: 11, color: "#B4B2A9", marginTop: 8, lineHeight: 1.6 }}>
+                  {event.attribution.confidence} confidence<br />
+                  {event.attribution.method}<br />
+                  {event.attribution.source}, {event.attribution.year_published}
+                </div>
               </div>
             )}
+            {hasMetaphor && event.hazard_type !== 'wildfire' && (
+              <div style={{ flex: 1, minWidth: 0 }}>
+                {event.hazard_type === 'heatwave' && <HeatwaveThermometer event={event} />}
+                {event.hazard_type === 'flood' && <FloodGauge event={event} />}
+                {event.hazard_type === 'hurricane' && <HurricaneRainfall event={event} />}
+                <div style={{ fontSize: 11, color: "#B4B2A9", marginTop: 4, lineHeight: 1.6 }}>
+                  {event.attribution.confidence} confidence<br />
+                  {event.attribution.method}<br />
+                  {event.attribution.source}, {event.attribution.year_published}
+                </div>
+              </div>
+            )}
+            {/* Wildfire: grid + stat column side by side, then prose */}
+            {event.hazard_type === 'wildfire' && (
+              <>
+                <div style={{ flex: '0 0 auto', maxWidth: 220 }}>
+                  <WildfireGrid event={event} />
+                  <div style={{ fontSize: 11, color: "#B4B2A9", marginTop: 4, lineHeight: 1.6 }}>
+                    {event.attribution.confidence} confidence<br />
+                    {event.attribution.method}<br />
+                    {event.attribution.source}, {event.attribution.year_published}
+                  </div>
+                </div>
+                <div style={{ flex: '0 0 auto', width: 120, paddingTop: 4 }}>
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 52, color: '#EF9F27', fontWeight: 400, lineHeight: 1 }}>
+                    7×
+                  </div>
+                  <div style={{ fontSize: 13, color: '#2C2C2A', fontWeight: 500, marginTop: 4 }}>
+                    more likely
+                  </div>
+                  <div style={{ fontSize: 12, color: '#5F5E5A', lineHeight: 1.6, marginTop: 8 }}>
+                    A season this severe was a once-in-20-year event. Climate change made it happen now.
+                  </div>
+                  <div style={{ marginTop: 12, padding: '8px 10px', background: '#FEF3E2', borderRadius: 6, fontSize: 11, color: '#854F0B', lineHeight: 1.5 }}>
+                    15M hectares burned —<br/>double Canada's previous record
+                  </div>
+                </div>
+              </>
+            )}
+            {/* Drought gets its own metaphor outside the main layout split */}
             {event.hazard_type === 'drought' && (
               <div style={{ flexShrink: 0 }}>
                 <DroughtMoisture event={event} />
               </div>
             )}
-            </div>{/* end inner flex row */}
             {/* Right column — prose */}
             <div style={{
               fontSize: 13, color: "#444441", lineHeight: 1.85,
@@ -794,17 +825,24 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
             {methodExpanded && (
               <div style={{
                 marginTop: 8, padding: "1rem 1.25rem",
-                background: "#F7FDFB", borderRadius: 8,
-                border: "0.5px solid #9FE1CB",
+                background: "#F9F8F6", borderRadius: 8,
+                border: "0.5px solid #E8E6E0",
               }}>
+                <div style={{ fontSize: 12, color: "#5F5E5A", marginBottom: 12, lineHeight: 1.6 }}>
+                  Attribution science compares today's climate against a counterfactual world without human emissions.{" "}
+                  <a href="https://www.worldweatherattribution.org/about/" target="_blank" rel="noopener noreferrer"
+                    style={{ color: "#1D9E75" }}>
+                    How WWA studies work →
+                  </a>
+                </div>
                 {[
-                  { label: "What attribution science is", key: "what_attribution_science_is" },
                   { label: "How this event was studied", key: "how_this_event_was_studied" },
                   { label: "What the confidence level means", key: "what_confidence_means" },
                 ].map(({ label, key }) => (
                   <div key={key} style={{ marginBottom: 14 }}>
                     <div style={{
-                      fontSize: 10, fontWeight: 500, color: "#0F6E56",
+                      fontSize: 10, fontWeight: 500,
+                      color: heroTheme[event.hazard_type]?.accent ?? "#888780",
                       textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4,
                     }}>{label}</div>
                     <div style={{ fontSize: 13, color: "#444441", lineHeight: 1.7 }}>
@@ -864,160 +902,94 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
           <div style={{ background: "#FAFAF8", borderTop: "0.5px solid #F1EFE8", padding: "2rem 1.75rem" }}>
           <SectionLabel>Human impact</SectionLabel>
           <div style={{ marginBottom: "1.75rem" }}>
+            {(() => {
+              const h = impact;
 
-            {/* Deaths row */}
-            <div style={{ padding: "0.875rem 0", borderBottom: "0.5px solid #F1EFE8" }}>
-              {impact.deaths != null ? (
-                <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: 8 }}>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, fontWeight: 400, color: "#A32D2D", lineHeight: 1 }}>
-                    {impact.deaths.toLocaleString()}
-                  </div>
-                  <div>
-                    <div style={{ fontSize: 13, color: "#2C2C2A" }}>deaths recorded</div>
-                    {impact.deaths_source && (
-                      <div style={{ fontSize: 10, color: "#B4B2A9", marginTop: 2 }}>{impact.deaths_source}</div>
-                    )}
-                  </div>
-                </div>
-              ) : (
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                  <span style={{ fontSize: 11, padding: "3px 10px", background: "#F1EFE8", color: "#888780", borderRadius: 99, fontWeight: 500, flexShrink: 0 }}>
-                    Not yet assessed
-                  </span>
-                  <div style={{ fontSize: 13, color: "#2C2C2A" }}>deaths recorded</div>
-                </div>
-              )}
-              {impact.deaths_note && (
-                <div style={{
-                  fontSize: 12, color: "#5F5E5A", lineHeight: 1.6,
-                  padding: "8px 10px", background: "#FFF8E6",
-                  borderRadius: 6, borderLeft: "2px solid #EF9F27", marginTop: 8,
-                }}>
-                  {impact.deaths_note}
-                </div>
-              )}
-            </div>
+              const headlineStat = (() => {
+                if (h.deaths) return { value: h.deaths.toLocaleString(), label: "deaths recorded", note: h.deaths_note, color: "#A32D2D" };
+                if (h.people_affected) return { value: fmtNum(h.people_affected), label: "people affected", note: h.people_affected_note, color: "#2C2C2A" };
+                if (h.hectares_burned) return { value: fmtNum(h.hectares_burned) + " ha", label: "forest burned", note: h.hectares_burned_note, color: "#BA7517" };
+                return null;
+              })();
 
-            {/* People affected row */}
-            <div style={{ padding: "0.875rem 0", borderBottom: "0.5px solid #F1EFE8" }}>
-              {impact.people_affected != null ? (
+              const supportingStats = (() => {
+                const all = [];
+                if (h.deaths && h.people_affected) all.push({ value: fmtNum(h.people_affected), label: "people affected" });
+                if (h.deaths && h.hectares_burned) all.push({ value: fmtNum(h.hectares_burned) + " ha", label: "forest burned" });
+                if (!h.deaths && h.people_affected && h.hectares_burned) all.push({ value: fmtNum(h.hectares_burned) + " ha", label: "forest burned" });
+                if (h.displaced) all.push({ value: fmtNum(h.displaced), label: "people displaced" });
+                if (h.economic_loss_usd) all.push({ value: fmtNum(h.economic_loss_usd, "$"), label: "economic loss" });
+                return all.slice(0, 3);
+              })();
+
+              return (
                 <>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: 8 }}>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, fontWeight: 400, color: "#2C2C2A", lineHeight: 1 }}>
-                      {fmtNum(impact.people_affected)}
+                  {!headlineStat && (
+                    <div style={{ padding: "1rem 0 1rem", borderBottom: "0.5px solid #F1EFE8", marginBottom: "1rem" }}>
+                      <div style={{
+                        fontSize: 14, color: "#5F5E5A", lineHeight: 1.8,
+                        borderLeft: "2px solid #E8E6E0", paddingLeft: "0.875rem",
+                      }}>
+                        Death toll across affected countries remains unconfirmed. Hundreds of deaths reported across India, Bangladesh, Thailand, Myanmar and Cambodia — heat deaths in the Global South are severely undercounted, and official figures represent a fraction of true mortality.
+                      </div>
                     </div>
-                    <div>
-                      <div style={{ fontSize: 13, color: "#2C2C2A" }}>people affected</div>
-                      {impact.context?.people_affected && (
-                        <div style={{ fontSize: 10, color: "#B4B2A9", marginTop: 2 }}>{impact.context.people_affected}</div>
+                  )}
+                  {headlineStat && (
+                    <div style={{ padding: "1.25rem 0", borderBottom: "0.5px solid #F1EFE8", marginBottom: "1rem" }}>
+                      <div style={{
+                        fontFamily: "'Playfair Display', serif",
+                        fontSize: 52, fontWeight: 400,
+                        color: headlineStat.color, lineHeight: 1, marginBottom: 4,
+                      }}>
+                        {headlineStat.value}
+                      </div>
+                      <div style={{ fontSize: 14, color: "#2C2C2A", marginBottom: headlineStat.note ? 6 : 0 }}>
+                        {headlineStat.label}
+                      </div>
+                      {headlineStat.note && (
+                        <div style={{ fontSize: 12, color: "#5F5E5A", lineHeight: 1.6, marginTop: 4 }}>
+                          {headlineStat.note}
+                        </div>
                       )}
                     </div>
-                  </div>
-                  {impact.people_affected_note && (
-                    <div style={{ fontSize: 12, color: "#5F5E5A", lineHeight: 1.6 }}>{impact.people_affected_note}</div>
+                  )}
+
+                  {supportingStats.length > 0 && (
+                    <div style={{ display: "flex", gap: 0, marginBottom: "1rem" }}>
+                      {supportingStats.map((stat, i) => (
+                        <div key={i} style={{
+                          flex: 1,
+                          padding: "0.75rem 1rem",
+                          borderRight: i < supportingStats.length - 1 ? "0.5px solid #F1EFE8" : "none",
+                        }}>
+                          <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, color: "#2C2C2A", lineHeight: 1 }}>
+                            {stat.value}
+                          </div>
+                          <div style={{ fontSize: 11, color: "#888780", marginTop: 3 }}>
+                            {stat.label}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {h.emitters_share_pct && (
+                    <div style={{
+                      fontSize: 12, color: "#5F5E5A",
+                      paddingLeft: "0.75rem",
+                      borderLeft: "2px solid #E8E6E0",
+                      marginTop: "0.5rem",
+                    }}>
+                      {event.country} contributed{" "}
+                      <span style={{ color: "#A32D2D", fontWeight: 500 }}>
+                        {h.emitters_share_pct}%
+                      </span>
+                      {" "}of global cumulative emissions
+                    </div>
                   )}
                 </>
-              ) : (
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                  <span style={{ fontSize: 11, padding: "3px 10px", background: "#F1EFE8", color: "#888780", borderRadius: 99, fontWeight: 500, flexShrink: 0 }}>
-                    Not yet assessed
-                  </span>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 13, color: "#2C2C2A" }}>people affected</div>
-                    {impact.people_affected_note && (
-                      <div style={{ fontSize: 12, color: "#5F5E5A", marginTop: 2, lineHeight: 1.6 }}>{impact.people_affected_note}</div>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Hectares burned row — wildfires only */}
-            {impact.hectares_burned != null && (
-              <div style={{ padding: "0.875rem 0", borderBottom: "0.5px solid #F1EFE8" }}>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: 8 }}>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, fontWeight: 400, color: "#2C2C2A", lineHeight: 1, minWidth: "fit-content" }}>
-                    {fmtNum(impact.hectares_burned)} ha
-                  </div>
-                  <div>
-                    <div style={{ fontSize: 13, color: "#2C2C2A" }}>forest burned</div>
-                    {impact.hectares_burned_note && (
-                      <div style={{ fontSize: 10, color: "#B4B2A9", marginTop: 2 }}>{impact.hectares_burned_note}</div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Economic loss row */}
-            <div style={{ padding: "0.875rem 0", borderBottom: "0.5px solid #F1EFE8" }}>
-              {impact.economic_loss_usd != null ? (
-                <>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: 8 }}>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, fontWeight: 400, color: "#2C2C2A", lineHeight: 1 }}>
-                      {fmtNum(impact.economic_loss_usd, "$")}
-                    </div>
-                    <div>
-                      <div style={{ fontSize: 13, color: "#2C2C2A" }}>economic loss</div>
-                      {impact.gdp_pct != null && (
-                        <div style={{ fontSize: 10, color: "#B4B2A9", marginTop: 2 }}>{impact.gdp_pct}% of annual GDP</div>
-                      )}
-                    </div>
-                  </div>
-                  {impact.economic_loss_note && (
-                    <div style={{ fontSize: 12, color: "#5F5E5A", lineHeight: 1.6 }}>{impact.economic_loss_note}</div>
-                  )}
-                </>
-              ) : (
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                  <span style={{ fontSize: 11, padding: "3px 10px", background: "#F1EFE8", color: "#888780", borderRadius: 99, fontWeight: 500, flexShrink: 0 }}>
-                    Not yet assessed
-                  </span>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 13, color: "#2C2C2A" }}>economic loss</div>
-                    {impact.economic_loss_note && (
-                      <div style={{ fontSize: 12, color: "#5F5E5A", marginTop: 2, lineHeight: 1.6 }}>{impact.economic_loss_note}</div>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div style={{
-              fontSize: 13, color: "#5F5E5A", lineHeight: 1.6,
-              padding: "0.875rem 1rem", background: "#FFF8E6",
-              borderRadius: 8, borderLeft: "2px solid #EF9F27", marginTop: "1rem",
-            }}>
-              {event.country} contributed <strong style={{ color: "#854F0B" }}>{impact.emitters_share_pct}%</strong> of global cumulative greenhouse gas emissions. The countries responsible for the most emissions faced none of these consequences.
-            </div>
-          </div>
-
-          {/* Injustice callout */}
-          <div style={{
-            background: "#0d1f2d", borderRadius: 10,
-            padding: "1.25rem 1.5rem", margin: "1.5rem 0",
-            display: "flex", alignItems: "center", gap: "1.5rem",
-          }}>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 42, color: "#F09595", lineHeight: 1, flexShrink: 0 }}>
-              {impact.emitters_share_pct}%
-            </div>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ flexShrink: 0 }}>
-              <path d="M4 10h12M12 6l4 4-4 4" stroke="#F09595" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 42, color: "#5DCAA5", lineHeight: 1, flexShrink: 0 }}>
-              {impact.people_affected != null ? fmtNum(impact.people_affected) : "—"}
-            </div>
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>
-              <>
-                <span style={{ display: "block", fontSize: 13, color: "rgba(255,255,255,0.85)", fontWeight: 500, marginBottom: 2 }}>
-                  of global emissions came from {event.country}
-                </span>
-                {impact.people_affected != null
-                  ? `yet ${fmtNum(impact.people_affected)} people bore the full human cost of a crisis they did not cause.`
-                  : "yet the people who paid the price contributed almost nothing to causing it."
-                }
-              </>
-            </div>
+              );
+            })()}
           </div>
           </div>{/* end human impact section */}
 
@@ -1025,22 +997,31 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
           {event.at_risk?.length > 0 && (
             <div style={{ background: "white", borderTop: "0.5px solid #F1EFE8", padding: "2rem 1.75rem" }}>
               <SectionLabel>Who was most at risk</SectionLabel>
-              <div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: "1.75rem" }}>
                 {event.at_risk.map((item, i) => (
                   <div key={i} style={{
-                    marginBottom: "0.875rem", paddingBottom: "0.875rem",
-                    borderBottom: i < event.at_risk.length - 1 ? "0.5px solid #F1EFE8" : "none",
+                    background: "white",
+                    border: "0.5px solid #E8E6E0",
+                    borderTop: `3px solid ${heroTheme[event.hazard_type]?.accent ?? "#888780"}`,
+                    borderRadius: "0 0 8px 8px",
+                    padding: "1rem 1.125rem",
                   }}>
-                    {item.number != null && (
-                      <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: 4 }}>
-                        <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 32, fontWeight: 400, color: "#2C2C2A", lineHeight: 1 }}>{item.number}</div>
-                        <div style={{ fontSize: 9, fontWeight: 500, color: "#B4B2A9", textTransform: "uppercase", letterSpacing: "0.1em" }}>{item.category}</div>
+                    <div style={{
+                      fontFamily: "'Playfair Display', serif",
+                      fontSize: 20, fontWeight: 400,
+                      color: "#2C2C2A", lineHeight: 1.2,
+                      marginBottom: 6,
+                    }}>
+                      {item.category}
+                    </div>
+                    {item.number && item.number !== "null" && (
+                      <div style={{ fontSize: 13, fontWeight: 500, color: "#888780", marginBottom: 6 }}>
+                        {item.number}
                       </div>
                     )}
-                    {item.number == null && (
-                      <div style={{ fontSize: 9, fontWeight: 500, color: "#B4B2A9", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>{item.category}</div>
-                    )}
-                    <div style={{ fontSize: 12, color: "#5F5E5A", lineHeight: 1.6 }}>{item.context}</div>
+                    <div style={{ fontSize: 12, color: "#5F5E5A", lineHeight: 1.65 }}>
+                      {item.context}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1083,13 +1064,12 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                   const statusStyle = STATUS_STYLE[outcome.status] ?? STATUS_STYLE.Ongoing;
                   const typeLabel = { policy: "Policy", litigation: "Legal", aid: "Aid & Response" };
                   const typeColor = { policy: "#1D9E75", litigation: "#534AB7", aid: "#BA7517" };
-                  const bgColor = { policy: "#F0FBF7", litigation: "#F2F1FE", aid: "#FEF8EE" };
                   return (
                     <div key={i} style={{
                       padding: "1rem 1.25rem",
-                      background: bgColor[outcome.type] ?? "#F9F9F7",
+                      background: "#F9F7F4",
                       borderRadius: 8,
-                      borderLeft: "2px solid #E8E6E0",
+                      borderLeft: `3px solid ${typeColor[outcome.type] ?? "#E8E6E0"}`,
                       marginBottom: 10,
                     }}>
                       <div style={{
