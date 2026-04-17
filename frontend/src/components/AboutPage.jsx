@@ -1,9 +1,9 @@
 const ABOUT_STYLE = { fontFamily: "Inter, sans-serif", background: "#FAFAF8", minHeight: "100vh" };
 
 const SOURCES_TABLE = [
-  ["Attribution science", "World Weather Attribution — peer-reviewed rapid attribution studies published within days to weeks of major events."],
+  ["Attribution science", "World Weather Attribution – peer-reviewed rapid attribution studies published within days to weeks of major events."],
   ["Impact figures", "PDNA (Post-Disaster Needs Assessment) reports, NDMA national disaster management authorities, EM-DAT international disaster database."],
-  ["Humanitarian situation", "ReliefWeb — UN OCHA's database of situation reports, filtered to the event date window."],
+  ["Humanitarian situation", "ReliefWeb – UN OCHA's database of situation reports, filtered to the event date window."],
   ["Emissions responsibility", "Climate Trace and Our World in Data cumulative historical emissions, used for 'who is responsible' questions."],
   ["Press & context", "Curated articles from national and international press, hand-selected and linked with original source URLs."],
   ["Future risk", "IPCC AR6, regional climate projections, and event-specific model outputs where available."],
@@ -57,7 +57,7 @@ export default function AboutPage({ onBack }) {
         <div style={{ fontSize: 15, color: "#5F5E5A", lineHeight: 1.7, marginBottom: "3rem" }}>
           Fingerprint makes climate attribution science navigable. When an extreme weather disaster strikes,
           scientists can now determine how much climate change worsened it. This tool puts that science in
-          one place — alongside the human cost, the accountability that followed, and what comes next.
+          one place – alongside the human cost, the accountability that followed, and what comes next.
         </div>
 
         {/* Who this is for */}
@@ -108,7 +108,7 @@ export default function AboutPage({ onBack }) {
         }}>
           {[
             "Attribution science is fast-moving. Findings published within weeks of an event are preliminary. Where a more recent study supersedes an earlier one, we note this. If you find a more recent or more rigorous study for any event, please report it.",
-            "Death tolls are systematically undercounted, particularly in the Global South. Official figures from national disaster management authorities are floors, not totals. Heat-related deaths are the most severely undercounted — excess mortality studies consistently find multiples of the official confirmed figure.",
+            "Death tolls are systematically undercounted, particularly in the Global South. Official figures from national disaster management authorities are floors, not totals. Heat-related deaths are the most severely undercounted – excess mortality studies consistently find multiples of the official confirmed figure.",
             "Economic loss figures combine direct damages and indirect economic losses as reported in official assessments (World Bank, PDNA). Reconstruction costs are separate and typically higher. These figures do not capture long-term development losses, human capital loss, or loss and damage in the climate justice sense.",
             "This tool is built by one person for a university project. It is not affiliated with World Weather Attribution, the UN, or any government body. Every effort has been made to source figures accurately, but errors are possible. If you find one, please report it.",
           ].map((para, i) => (
@@ -125,7 +125,7 @@ export default function AboutPage({ onBack }) {
           (scripts/enrich_event.py) queries ReliefWeb's situation report database filtered to each
           event's date window, and uses an LLM to extract figures not captured in official assessments.
           All extracted figures are reviewed before being incorporated into the event data. The event
-          JSONs are the source of truth — they are versioned and open for inspection.
+          JSONs are the source of truth – they are versioned and open for inspection.
         </p>
 
         {/* Built by */}
@@ -134,8 +134,10 @@ export default function AboutPage({ onBack }) {
           background: "white", border: "0.5px solid #E8E6E0",
           borderRadius: 10, padding: "1.25rem 1.5rem", marginBottom: "3rem",
         }}>
-          <div style={{ fontSize: 15, fontWeight: 500, color: "#2C2C2A", marginBottom: 4 }}>Manvika Athwani</div>
-          <div style={{ fontSize: 13, color: "#5F5E5A", lineHeight: 1.7 }}>
+          <div style={{ fontSize: 15, fontWeight: 500, color: "#2C2C2A", marginBottom: 4 }}>Manvika Athwani, Sankalp Dubey</div>
+          <div style={{ fontSize: 12, color: "#5F5E5A", marginTop: 6 }}>
+          </div>
+          <div style={{ fontSize: 13, color: "#5F5E5A", lineHeight: 1.7, marginTop: 8 }}>
             Stack: FastAPI · LangGraph · Claude · React · Vite<br />
             Built as part of coursework exploring how AI tools can make scientific evidence more accessible.
             Inspired by HeatWatch and the World Weather Attribution group's commitment to public communication.
@@ -167,7 +169,7 @@ export default function AboutPage({ onBack }) {
           borderTop: "0.5px solid #E8E6E0", paddingTop: "1.5rem",
         }}>
           Fingerprint is an open project. All event data is available for non-commercial use with attribution.
-          If you find an error in any figure, please report it — accuracy is the point.
+          If you find an error in any figure, please report it – accuracy is the point.
         </div>
 
       </div>

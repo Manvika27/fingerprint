@@ -46,7 +46,7 @@ export default function EventHeader({ event }) {
               <p className="text-xs text-red-500 leading-tight">people affected<br />bore the full cost</p>
             </div>
             <p className="text-xs text-red-600 italic ml-auto hidden sm:block">
-              The countries most responsible for emissions caused this — yet faced none of it.
+              The countries most responsible for emissions caused this – yet faced none of it.
             </p>
           </div>
         </div>
@@ -59,7 +59,7 @@ export default function EventHeader({ event }) {
             "{event.story_quote.text}"
           </p>
           <footer className="mt-1 text-xs text-gray-400">
-            — {event.story_quote.attribution}
+            – {event.story_quote.attribution}
           </footer>
         </blockquote>
       )}

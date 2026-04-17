@@ -1,0 +1,117 @@
+{
+  "event_id": "pakistan_floods_2022",
+  "enrichment_date": "2026-04-07T21:09:10.813570",
+  "status": "PENDING_REVIEW",
+  "instructions": "Review this file carefully before incorporating any figures into the main event JSON. Every figure here comes from news aggregation and LLM extraction \u2014 not from verified official sources. Add source URLs to anything you incorporate.",
+  "official_figures": {
+    "deaths": 1739,
+    "people_affected": 33000000,
+    "source": "PDNA 2022 / EMDAT",
+    "source_url": null
+  },
+  "news_aggregated": {
+    "news_reported_deaths": {
+      "figure": 1739,
+      "range_low": 1000,
+      "range_high": 1739,
+      "sources": [
+        {
+          "name": "Reuters",
+          "url": "https://www.reuters.com/world/asia-pacific/one-third-pakistan-is-under-water-death-toll-floods-passes-1000-2022-08-30/",
+          "figure_mentioned": 1000
+        },
+        {
+          "name": "Dawn",
+          "url": "https://www.dawn.com/news/1714809",
+          "figure_mentioned": 1700
+        },
+        {
+          "name": "Disasters Emergency Committee",
+          "url": "https://reliefweb.int/report/pakistan/real-time-response-review-report-dec-pakistan-floods-2022-appeal-april-2023-enur",
+          "figure_mentioned": 1739
+        }
+      ],
+      "notes": "Death toll progressed from over 1,000 in August 2022 to over 1,700 by September, with final official count of 1,739 confirmed by DEC report"
+    },
+    "underreporting_evidence": [],
+    "additional_figures": [
+      {
+        "type": "injured",
+        "figure": "nearly 13,000",
+        "source": "Disasters Emergency Committee",
+        "url": "https://reliefweb.int/report/pakistan/real-time-response-review-report-dec-pakistan-floods-2022-appeal-april-2023-enur"
+      },
+      {
+        "type": "post-flood deaths from ongoing flooding",
+        "figure": "19 people died since April 2023",
+        "source": "UN Office for the Coordination of Humanitarian Affairs",
+        "url": "https://reliefweb.int/report/pakistan/pakistan-2022-monsoon-floods-situation-report-no-16-8-may-2023"
+      },
+      {
+        "type": "post-flood injured",
+        "figure": "more than 10 injured since April 2023",
+        "source": "UN Office for the Coordination of Humanitarian Affairs",
+        "url": "https://reliefweb.int/report/pakistan/pakistan-2022-monsoon-floods-situation-report-no-16-8-may-2023"
+      },
+      {
+        "type": "severe acute malnutrition rate",
+        "figure": "14% of children aged 6-23 months",
+        "source": "UN Office for the Coordination of Humanitarian Affairs",
+        "url": "https://reliefweb.int/report/pakistan/pakistan-2022-monsoon-floods-situation-report-no-16-8-may-2023"
+      },
+      {
+        "type": "moderate acute malnutrition",
+        "figure": "one-third of children aged 6-23 months",
+        "source": "UN Office for the Coordination of Humanitarian Affairs",
+        "url": "https://reliefweb.int/report/pakistan/pakistan-2022-monsoon-floods-situation-report-no-16-8-may-2023"
+      },
+      {
+        "type": "economic losses",
+        "figure": "exceeded $30 billion",
+        "source": "Disasters Emergency Committee",
+        "url": "https://reliefweb.int/report/pakistan/real-time-response-review-report-dec-pakistan-floods-2022-appeal-april-2023-enur"
+      },
+      {
+        "type": "homes destroyed",
+        "figure": "over one million",
+        "source": "World Health Organization",
+        "url": "https://reliefweb.int/report/pakistan/it-was-just-perfect-storm-malaria-pakistan-responds-surge-cases-following-2022-floods"
+      },
+      {
+        "type": "crops flooded",
+        "figure": "2 million acres",
+        "source": "World Health Organization",
+        "url": "https://reliefweb.int/report/pakistan/it-was-just-perfect-storm-malaria-pakistan-responds-surge-cases-following-2022-floods"
+      }
+    ],
+    "data_quality_notes": "Data appears comprehensive with consistent death toll reporting across sources. Additional health impacts from malnutrition and ongoing flooding deaths suggest longer-term mortality effects beyond the official count period. Malaria outbreak described as worst since 1973 indicates significant disease-related impacts not captured in immediate flood deaths."
+  },
+  "gdelt_articles_found": 4,
+  "reliefweb_reports_found": 15,
+  "top_articles": [
+    {
+      "title": "One third of Pakistan is under water as death toll from floods passes 1,000",
+      "url": "https://www.reuters.com/world/asia-pacific/one-third-pakistan-is-under-water-death-toll-floods-passes-1000-2022-08-30/",
+      "domain": "www.reuters.com",
+      "date": null
+    },
+    {
+      "title": "Pakistan floods: what caused them and why is the world not paying attention?",
+      "url": "https://www.theguardian.com/world/2022/sep/01/pakistan-floods-what-caused-them-climate-crisis",
+      "domain": "www.theguardian.com",
+      "date": null
+    },
+    {
+      "title": "Flood deaths cross 1,700 as Pakistan begins recovery",
+      "url": "https://www.dawn.com/news/1714809",
+      "domain": "www.dawn.com",
+      "date": null
+    },
+    {
+      "title": "Pakistan floods: Climate change to blame, not just extreme weather",
+      "url": "https://www.aljazeera.com/news/2022/9/2/pakistan-floods-climate-change-to-blame-not-just-extreme-weather",
+      "domain": "www.aljazeera.com",
+      "date": null
+    }
+  ]
+}

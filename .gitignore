@@ -151,11 +151,5 @@ backend/.venv/
 .env.local
 backend/.env
 
-# Satellite imagery
-frontend/public/imagery/*.png
-frontend/public/imagery/*.jpg
-frontend/public/photos/*.jpg
-frontend/public/photos/*.png
-
 # OS
 .DS_Store

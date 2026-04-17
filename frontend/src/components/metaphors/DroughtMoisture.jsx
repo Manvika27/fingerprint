@@ -14,10 +14,7 @@ export default function DroughtMoisture({ event }) {
   const barH = 28;
 
   return (
-    <div style={{
-      display: 'flex', alignItems: 'flex-start',
-      gap: '2rem', padding: '1rem 0'
-    }}>
+    <div style={{ padding: '1rem 0' }}>
       <div style={{ flexShrink: 0 }}>
         <div style={{ marginBottom: 16 }}>
           <div style={{
@@ -90,21 +87,6 @@ export default function DroughtMoisture({ event }) {
         }}>
           Warmer temperatures pull moisture from soil and plants —<br/>
           droughts become severe even when rainfall is only slightly below average.
-        </div>
-      </div>
-
-      <div style={{ paddingTop: 4 }}>
-        <div style={{
-          fontSize: 28, fontFamily: "'Playfair Display', serif",
-          color: '#D85A30', fontWeight: 400, lineHeight: 1
-        }}>
-          100×
-        </div>
-        <div style={{
-          fontSize: 12, color: '#5F5E5A',
-          marginTop: 4, lineHeight: 1.5, maxWidth: 160
-        }}>
-          more likely than before industrial emissions — a conservative estimate
         </div>
       </div>
     </div>

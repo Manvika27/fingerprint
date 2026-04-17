@@ -10,7 +10,6 @@ import HurricaneRainfall from "./metaphors/HurricaneRainfall.jsx";
 function BeforeAfterSlider({ leftImage, rightImage }) {
   const [position, setPosition] = useState(50);
   const containerRef = useRef(null);
-  const dragging = useRef(false);
 
   const updatePosition = useCallback((clientX) => {
     if (!containerRef.current) return;
@@ -20,29 +19,17 @@ function BeforeAfterSlider({ leftImage, rightImage }) {
   }, []);
 
   useEffect(() => {
-    function onMove(e) {
-      if (!dragging.current) return;
-      updatePosition(e.touches ? e.touches[0].clientX : e.clientX);
-    }
-    function onUp() { dragging.current = false; }
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-    window.addEventListener("touchmove", onMove);
-    window.addEventListener("touchend", onUp);
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseup", onUp);
-      window.removeEventListener("touchmove", onMove);
-      window.removeEventListener("touchend", onUp);
-    };
+    function onTouchMove(e) { updatePosition(e.touches[0].clientX); }
+    window.addEventListener("touchmove", onTouchMove);
+    return () => window.removeEventListener("touchmove", onTouchMove);
   }, [updatePosition]);
 
   return (
     <div
       ref={containerRef}
-      style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", userSelect: "none", cursor: "col-resize" }}
-      onMouseDown={e => { dragging.current = true; updatePosition(e.clientX); }}
-      onTouchStart={e => { dragging.current = true; updatePosition(e.touches[0].clientX); }}
+      style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", userSelect: "none", cursor: "crosshair" }}
+      onMouseMove={e => updatePosition(e.clientX)}
+      onTouchStart={e => updatePosition(e.touches[0].clientX)}
     >
       {/* After image (full, underneath) */}
       <img src={rightImage} alt="After" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
@@ -411,6 +398,7 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
   const [pressPackOpen, setPressPackOpen] = useState(false);
   const [pressPackData, setPressPackData] = useState(null);
   const [pressPackLoading, setPressPackLoading] = useState(false);
+  const [showBar, setShowBar] = useState(false);
   const scrollRef = useRef(null);
 
   // Preload satellite images to detect failures before passing to BeforeAfterSlider
@@ -459,8 +447,17 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
     setMethodExpanded(false);
     setPressPackOpen(false);
     setPressPackData(null);
+    setShowBar(false);
     if (scrollRef.current) scrollRef.current.scrollTop = 0;
   }, [event.id]);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const handleScroll = () => setShowBar(el.scrollTop > 400);
+    el.addEventListener('scroll', handleScroll);
+    return () => el.removeEventListener('scroll', handleScroll);
+  }, []);
 
   async function handleAsk() {
     if (!question.trim() || asking) return;
@@ -539,7 +536,7 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
       <div ref={scrollRef} style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column" }}>
 
         {/* ── Section 1: Satellite hero ── */}
-        <div style={{ height: 280, position: "relative", overflow: "hidden", flexShrink: 0 }}>
+        <div style={{ height: 420, position: "relative", overflow: "hidden", flexShrink: 0 }}>
           <button
             onClick={handlePressPackClick}
             style={{
@@ -617,60 +614,69 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
             background: "#0d1f2d", padding: "1.25rem 1.75rem 1.5rem",
             borderBottom: "0.5px solid rgba(255,255,255,0.06)", flexShrink: 0,
           }}>
-            {event.context && (
-              <div style={{
-                fontSize: 14,
-                color: "rgba(255,255,255,0.75)",
-                lineHeight: 1.8,
-                marginBottom: "1.25rem",
-                maxWidth: 760,
-              }}>
-                {event.context}
-              </div>
-            )}
             {(() => {
               const isScientist = /Scientist|Professor|Dr\.|Lecturer|Director|Department/i
-                .test(event.quote.attribution ?? "");
+                .test(event.quote?.attribution ?? "");
               return (
-                <>
-                  <blockquote style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontStyle: "italic",
-                    fontSize: isScientist ? 14 : 18,
-                    color: isScientist ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.9)",
-                    lineHeight: 1.6,
-                    borderLeft: isScientist ? "2px solid rgba(255,255,255,0.15)" : "2px solid rgba(255,255,255,0.3)",
-                    paddingLeft: "1.25rem",
-                    marginBottom: "0.75rem",
-                    margin: 0,
-                  }}>
-                    "{event.quote.text}"
-                  </blockquote>
-                  <div style={{
-                    fontSize: isScientist ? 11 : 12,
-                    color: isScientist ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.5)",
-                    marginTop: 8,
-                    paddingLeft: "1.25rem",
-                  }}>
-                    {event.quote.attribution}
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "2fr 1fr",
+                  gap: "2rem",
+                  padding: "0.25rem 0 0",
+                }}>
+                  <div>
+                    {event.context && (
+                      <div style={{
+                        fontSize: 13,
+                        color: "rgba(255,255,255,0.65)",
+                        lineHeight: 1.75,
+                        marginBottom: "1rem",
+                      }}>
+                        {event.context}
+                      </div>
+                    )}
+                    {event.quote && (
+                      <blockquote style={{
+                        borderLeft: `2px solid ${isScientist ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.3)"}`,
+                        paddingLeft: "1.25rem",
+                        margin: 0,
+                      }}>
+                        <div style={{
+                          fontSize: isScientist ? 13 : 17,
+                          fontFamily: "'Playfair Display', serif",
+                          fontStyle: "italic",
+                          color: isScientist ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.88)",
+                          lineHeight: 1.6,
+                          marginBottom: 6,
+                        }}>
+                          "{event.quote.text}"
+                        </div>
+                        <div style={{
+                          fontSize: isScientist ? 11 : 12,
+                          color: "rgba(255,255,255,0.35)",
+                        }}>
+                          {event.quote.attribution}
+                        </div>
+                      </blockquote>
+                    )}
+                    {impact.emitters_share_pct && (
+                      <div style={{
+                        fontSize: 12,
+                        color: "rgba(255,255,255,0.3)",
+                        marginTop: "1.25rem",
+                      }}>
+                        {event.country} contributed{" "}
+                        <span style={{ color: "rgba(255,120,100,0.65)", fontWeight: 500 }}>
+                          {impact.emitters_share_pct}%
+                        </span>
+                        {" "}of global cumulative greenhouse gas emissions
+                      </div>
+                    )}
                   </div>
-                </>
+                  <div />
+                </div>
               );
             })()}
-            {impact.emitters_share_pct && (
-              <div style={{
-                fontSize: 12,
-                color: "rgba(255,255,255,0.35)",
-                marginTop: "1.5rem",
-                letterSpacing: "0.01em",
-              }}>
-                {event.country} contributed{" "}
-                <span style={{ color: "rgba(255,120,100,0.7)", fontWeight: 500 }}>
-                  {impact.emitters_share_pct}%
-                </span>
-                {" "}of global cumulative greenhouse gas emissions
-              </div>
-            )}
           </div>
         )}
 
@@ -678,7 +684,7 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
         <div style={{ flex: 1 }}>
 
           {/* Section 4: The science */}
-          <div style={{ background: "#F7FDFB", borderTop: "0.5px solid #E1F5EE", padding: "2rem 1.75rem" }}>
+          <div style={{ background: "#FAFAF8", borderTop: "0.5px solid #E1F5EE", padding: "2rem 1.75rem" }}>
           <SectionLabel>The science</SectionLabel>
           <div style={{ display: "flex", alignItems: "flex-start", gap: "2rem", marginBottom: "1.5rem" }}>
             {/* Left column: attribution number (non-metaphor events) OR metaphor component */}
@@ -693,7 +699,7 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                     <div style={{ fontSize: 14, color: "#5F5E5A", marginTop: 4 }}>more likely due to climate change</div>
                   </>
                 )}
-                {/* Case B: storyline — rainfall_increase_pct only */}
+                {/* Case B: storyline – rainfall_increase_pct only */}
                 {event.attribution.rainfall_increase_pct != null && event.attribution.likelihood_pct_increase == null && (
                   <>
                     <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 88, fontWeight: 400, color: "#1D9E75", lineHeight: 1 }}>
@@ -701,7 +707,7 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                     </div>
                     <div style={{ fontSize: 14, color: "#5F5E5A", marginTop: 4 }}>heavier rainfall due to climate change</div>
                     <div style={{ fontSize: 11, color: "#B4B2A9", marginTop: 6, lineHeight: 1.5, maxWidth: 160 }}>
-                      Storyline method — measures intensity increase rather than likelihood change
+                      Storyline method – measures intensity increase rather than likelihood change
                     </div>
                   </>
                 )}
@@ -712,13 +718,13 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                       <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 56, fontWeight: 400, color: "#1D9E75", lineHeight: 1 }}>
                         {event.attribution.likelihood_ratio_season}×
                       </div>
-                      <div style={{ fontSize: 12, color: "#5F5E5A", marginTop: 2 }}>more likely — season severity</div>
+                      <div style={{ fontSize: 12, color: "#5F5E5A", marginTop: 2 }}>more likely – season severity</div>
                     </div>
                     <div>
                       <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 56, fontWeight: 400, color: "#1D9E75", lineHeight: 1 }}>
                         {event.attribution.likelihood_ratio_peak_weather}×
                       </div>
-                      <div style={{ fontSize: 12, color: "#5F5E5A", marginTop: 2 }}>more likely — peak fire weather</div>
+                      <div style={{ fontSize: 12, color: "#5F5E5A", marginTop: 2 }}>more likely – peak fire weather</div>
                     </div>
                   </div>
                 )}
@@ -759,10 +765,10 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                 </div>
               </div>
             )}
-            {/* Wildfire: grid + stat column side by side, then prose */}
+            {/* Wildfire: self-contained 3-column layout */}
             {event.hazard_type === 'wildfire' && (
-              <>
-                <div style={{ flex: '0 0 auto', maxWidth: 220 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', flex: 1, minWidth: 0 }}>
+                <div style={{ flexShrink: 0, width: 240 }}>
                   <WildfireGrid event={event} />
                   <div style={{ fontSize: 11, color: "#B4B2A9", marginTop: 4, lineHeight: 1.6 }}>
                     {event.attribution.confidence} confidence<br />
@@ -770,21 +776,24 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                     {event.attribution.source}, {event.attribution.year_published}
                   </div>
                 </div>
-                <div style={{ flex: '0 0 auto', width: 120, paddingTop: 4 }}>
+                <div style={{ flexShrink: 0, width: 180, paddingTop: 4 }}>
                   <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 52, color: '#EF9F27', fontWeight: 400, lineHeight: 1 }}>
                     7×
                   </div>
                   <div style={{ fontSize: 13, color: '#2C2C2A', fontWeight: 500, marginTop: 4 }}>
                     more likely
                   </div>
-                  <div style={{ fontSize: 12, color: '#5F5E5A', lineHeight: 1.6, marginTop: 8 }}>
+                  <div style={{ fontSize: 10, color: '#5F5E5A', lineHeight: 1.6, marginTop: 8, maxWidth: 220 }}>
                     A season this severe was a once-in-20-year event. Climate change made it happen now.
                   </div>
                   <div style={{ marginTop: 12, padding: '8px 10px', background: '#FEF3E2', borderRadius: 6, fontSize: 11, color: '#854F0B', lineHeight: 1.5 }}>
-                    15M hectares burned —<br/>double Canada's previous record
+                    15M hectares burned – double Canada's previous record
                   </div>
                 </div>
-              </>
+                <div style={{ flex: 1, fontSize: 13, color: "#444441", lineHeight: 1.85, borderLeft: "0.5px solid #E8E6E0", paddingLeft: "2rem", paddingTop: "0.5rem" }}>
+                  {event.attribution.summary}
+                </div>
+              </div>
             )}
             {/* Drought gets its own metaphor outside the main layout split */}
             {event.hazard_type === 'drought' && (
@@ -792,14 +801,16 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                 <DroughtMoisture event={event} />
               </div>
             )}
-            {/* Right column — prose */}
-            <div style={{
-              fontSize: 13, color: "#444441", lineHeight: 1.85,
-              borderLeft: "0.5px solid #E8E6E0", paddingLeft: "2rem",
-              paddingTop: "0.5rem", flex: 1,
-            }}>
-              {event.attribution.summary}
-            </div>
+            {/* Right column – prose (wildfire handles its own prose inside its block) */}
+            {event.hazard_type !== 'wildfire' && (
+              <div style={{
+                fontSize: 13, color: "#444441", lineHeight: 1.85,
+                borderLeft: "0.5px solid #E8E6E0", paddingLeft: "2rem",
+                paddingTop: "0.5rem", flex: 1,
+              }}>
+                {event.attribution.summary}
+              </div>
+            )}
           </div>
 
           {/* Methodology expander */}
@@ -872,8 +883,9 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                   src={`/imagery/${event.photos[0].file}`}
                   alt={event.photos[0].caption}
                   style={{
-                    width: "100%", height: "auto", maxHeight: 400,
-                    objectFit: "cover", borderRadius: 6, display: "block",
+                    width: "100%", height: "auto", maxHeight: "380px",
+                    objectFit: "cover", objectPosition: "center top",
+                    borderRadius: "6px", display: "block",
                   }}
                 />
                 {event.photos.length > 1 && (
@@ -884,8 +896,9 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                         src={`/imagery/${photo.file}`}
                         alt={photo.caption}
                         style={{
-                          width: "100%", height: "auto", maxHeight: 220,
-                          objectFit: "cover", borderRadius: 6,
+                          width: "100%", aspectRatio: "16/9",
+                          objectFit: "cover", objectPosition: "center",
+                          borderRadius: "6px",
                         }}
                       />
                     ))}
@@ -930,7 +943,7 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                         fontSize: 14, color: "#5F5E5A", lineHeight: 1.8,
                         borderLeft: "2px solid #E8E6E0", paddingLeft: "0.875rem",
                       }}>
-                        Death toll across affected countries remains unconfirmed. Hundreds of deaths reported across India, Bangladesh, Thailand, Myanmar and Cambodia — heat deaths in the Global South are severely undercounted, and official figures represent a fraction of true mortality.
+                        Death toll across affected countries remains unconfirmed. Hundreds of deaths reported across India, Bangladesh, Thailand, Myanmar and Cambodia – heat deaths in the Global South are severely undercounted, and official figures represent a fraction of true mortality.
                       </div>
                     </div>
                   )}
@@ -938,7 +951,7 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                     <div style={{ padding: "1.25rem 0", borderBottom: "0.5px solid #F1EFE8", marginBottom: "1rem" }}>
                       <div style={{
                         fontFamily: "'Playfair Display', serif",
-                        fontSize: 52, fontWeight: 400,
+                        fontSize: 65, fontWeight: 400,
                         color: headlineStat.color, lineHeight: 1, marginBottom: 4,
                       }}>
                         {headlineStat.value}
@@ -962,10 +975,10 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                           padding: "0.75rem 1rem",
                           borderRight: i < supportingStats.length - 1 ? "0.5px solid #F1EFE8" : "none",
                         }}>
-                          <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, color: "#2C2C2A", lineHeight: 1 }}>
+                          <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 34, color: "#2C2C2A", lineHeight: 1 }}>
                             {stat.value}
                           </div>
-                          <div style={{ fontSize: 11, color: "#888780", marginTop: 3 }}>
+                          <div style={{ fontSize: 12, color: "#5F5E5A", marginTop: 3 }}>
                             {stat.label}
                           </div>
                         </div>
@@ -973,34 +986,30 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                     </div>
                   )}
 
-                  {h.emitters_share_pct && (
-                    <div style={{
-                      fontSize: 12, color: "#5F5E5A",
-                      paddingLeft: "0.75rem",
-                      borderLeft: "2px solid #E8E6E0",
-                      marginTop: "0.5rem",
-                    }}>
-                      {event.country} contributed{" "}
-                      <span style={{ color: "#A32D2D", fontWeight: 500 }}>
-                        {h.emitters_share_pct}%
-                      </span>
-                      {" "}of global cumulative emissions
-                    </div>
-                  )}
                 </>
               );
             })()}
           </div>
           </div>{/* end human impact section */}
 
+          {event.justice_framing && (
+            <div style={{ margin: '0 0 0', padding: '1.5rem 1.75rem', background: '#2C1810' }}>
+              <div style={{ fontSize: 15, color: 'rgba(255,220,180,0.9)', lineHeight: 1.85, fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}>
+                {event.justice_framing}
+              </div>
+            </div>
+          )}
+
           {/* Section 7: Who was most at risk */}
           {event.at_risk?.length > 0 && (
             <div style={{ background: "white", borderTop: "0.5px solid #F1EFE8", padding: "2rem 1.75rem" }}>
               <SectionLabel>Who was most at risk</SectionLabel>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: "1.75rem" }}>
-                {event.at_risk.map((item, i) => (
+                {(() => {
+                  const cardBg = ['#F5F8FC', '#F5FCF8', '#FCF8F5'];
+                  return event.at_risk.slice(0, 3).map((item, i) => (
                   <div key={i} style={{
-                    background: "white",
+                    background: cardBg[i] ?? "white",
                     border: "0.5px solid #E8E6E0",
                     borderTop: `3px solid ${heroTheme[event.hazard_type]?.accent ?? "#888780"}`,
                     borderRadius: "0 0 8px 8px",
@@ -1023,7 +1032,8 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                       {item.context}
                     </div>
                   </div>
-                ))}
+                  ));
+                })()}
               </div>
             </div>
           )}
@@ -1140,14 +1150,14 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
             </div>
           )}
 
-          {/* Section 10: Recent coverage */}
+          {/* Section 10: In the news */}
           {(() => {
             const displayArticles = articles.length > 0
               ? articles
               : (event.curated_coverage ?? []);
             if (articlesLoading) return (
               <div style={{ background: "white", borderTop: "0.5px solid #F1EFE8", padding: "2rem 1.75rem 6rem" }}>
-                <SectionLabel>Recent coverage</SectionLabel>
+                <SectionLabel>In the news</SectionLabel>
                 <div>
                   {[1,2,3].map(i => <div key={i} style={{ height: 36, borderRadius: 4, background: "#F1EFE8", marginBottom: 8 }} />)}
                 </div>
@@ -1156,7 +1166,7 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
             if (displayArticles.length === 0) return <div style={{ paddingBottom: "6rem" }} />;
             return (
               <div style={{ background: "white", borderTop: "0.5px solid #F1EFE8", padding: "2rem 1.75rem 6rem" }}>
-                <SectionLabel>Recent coverage</SectionLabel>
+                <SectionLabel>In the news</SectionLabel>
                 <div>
                   {displayArticles.map((article, i) => (
                     <div key={i} style={{
@@ -1186,13 +1196,17 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
 
         </div>
 
-        {/* ── Question bar — sticky bottom ── */}
+        {/* ── Question bar – sticky bottom ── */}
 
         <div style={{
           position: "sticky", bottom: 0,
-          borderTop: "0.5px solid #E8E6E0",
+          borderTop: "0.5px solid rgba(255,255,255,0.1)",
           padding: "1rem 1.75rem",
-          background: "#FAFAF8", zIndex: 20,
+          background: "#0d1f2d", zIndex: 20,
+          opacity: showBar ? 1 : 0,
+          transform: showBar ? 'translateY(0)' : 'translateY(20px)',
+          transition: 'opacity 0.3s ease, transform 0.3s ease',
+          pointerEvents: showBar ? 'auto' : 'none',
         }}>
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 8 }}>
             {[
@@ -1204,8 +1218,8 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
             ].map(q => (
               <button key={q} onClick={() => setQuestion(q)} style={{
                 fontSize: 11, padding: "4px 10px", borderRadius: 99,
-                border: "0.5px solid #D3D1C7", color: "#5F5E5A",
-                background: "#FAFAF8", cursor: "pointer",
+                border: "0.5px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.65)",
+                background: "rgba(255,255,255,0.06)", cursor: "pointer",
               }}>{q}</button>
             ))}
           </div>
@@ -1217,8 +1231,8 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
               placeholder="Ask a question about this event..."
               style={{
                 flex: 1, padding: "8px 12px", fontSize: 13,
-                border: "0.5px solid #D3D1C7", borderRadius: 8,
-                background: "white", color: "#2C2C2A",
+                border: "0.5px solid rgba(255,255,255,0.15)", borderRadius: 8,
+                background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.85)",
                 fontFamily: "Inter, sans-serif", outline: "none",
               }}
             />
@@ -1227,7 +1241,7 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
               disabled={asking || !question.trim()}
               style={{
                 padding: "8px 18px",
-                background: asking || !question.trim() ? "#B4B2A9" : "#1D9E75",
+                background: asking || !question.trim() ? "rgba(255,255,255,0.15)" : "#1D9E75",
                 color: "white", border: "none", borderRadius: 8,
                 fontSize: 13, fontWeight: 500, cursor: asking ? "wait" : "pointer",
                 transition: "background 0.15s",
@@ -1238,13 +1252,13 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
           </div>
           {answer && (
             <div style={{
-              marginTop: 12, padding: "1rem", background: "white",
-              borderRadius: 8, border: "0.5px solid #E8E6E0",
-              fontSize: 13, color: "#2C2C2A", lineHeight: 1.65,
+              marginTop: 12, padding: "1rem", background: "rgba(255,255,255,0.06)",
+              borderRadius: 8, border: "0.5px solid rgba(255,255,255,0.1)",
+              fontSize: 13, color: "rgba(255,255,255,0.8)", lineHeight: 1.65,
             }}>
               <div>{answer.answer}</div>
               {answer.sources?.length > 0 && (
-                <div style={{ fontSize: 11, color: "#B4B2A9", marginTop: 8 }}>
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 8 }}>
                   Sources: {answer.sources.join(" · ")}
                 </div>
               )}

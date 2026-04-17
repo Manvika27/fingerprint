@@ -121,7 +121,7 @@ export default function GlobeLanding({ events, onSelect }) {
           The attribution science, the human cost, and what followed.
         </div>
 
-        <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "0.875rem", maxWidth: 360 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "12px 20px", maxWidth: 600, margin: "0 auto 0.875rem" }}>
           {LEGEND.map(({ label, color }) => (
             <div key={label} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: "#6b7f8a" }}>
               <span style={{ color, fontSize: 15 }}>●</span>

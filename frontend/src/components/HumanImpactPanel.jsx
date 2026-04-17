@@ -76,7 +76,7 @@ export default function HumanImpactPanel({ human_impact, country }) {
           />
         </div>
         <p className="text-xs text-gray-400 italic">
-          Contributed {pct}% of the emissions that made this event worse — bore 100% of the cost.
+          Contributed {pct}% of the emissions that made this event worse – bore 100% of the cost.
         </p>
       </div>
 

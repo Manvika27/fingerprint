@@ -61,7 +61,7 @@ export default function HurricaneRainfall({ event }) {
               `}</style>
             </defs>
 
-            {/* Left bar — baseline */}
+            {/* Left bar – baseline */}
             <rect x="0" y="0" width={barW} height={barH}
               rx="4" fill="#EEEDFE" stroke="#AFA9EC" strokeWidth="0.5" />
             <rect
@@ -74,7 +74,7 @@ export default function HurricaneRainfall({ event }) {
               style={{ transition: 'y 1s ease-out, height 1s ease-out' }}
             />
 
-            {/* Right bar — actual Ian */}
+            {/* Right bar – actual Ian */}
             <rect x={barW + gap} y="0" width={barW} height={barH}
               rx="4" fill="#EEEDFE" stroke="#534AB7" strokeWidth="0.5" />
             <rect
@@ -192,7 +192,7 @@ export default function HurricaneRainfall({ event }) {
             fontSize: 12, color: '#5F5E5A',
             lineHeight: 1.6, maxWidth: 180
           }}>
-            Climate change made Ian's rainfall 18% heavier — far exceeding what basic thermodynamics would predict.
+            Climate change made Ian's rainfall 18% heavier – far exceeding what basic thermodynamics would predict.
           </div>
           <div style={{
             marginTop: 12, padding: '8px 12px',

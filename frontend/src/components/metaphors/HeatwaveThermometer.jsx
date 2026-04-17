@@ -106,7 +106,7 @@ export default function HeatwaveThermometer({ event }) {
           fontSize: 11, color: '#888780', lineHeight: 1.5,
           maxWidth: 200
         }}>
-          The gap between the lines is the climate signal — heat that would not have existed without human emissions.
+          The gap between the lines is the climate signal – heat that would not have existed without human emissions.
         </div>
       </div>
     </div>

@@ -1,0 +1,7 @@
+{"id":"pakistan_floods_2022","name":"Pakistan Floods","year":2022,"country":"Pakistan","hazard_type":"flood","center":[68.0,30.0],"zoom":5},
+{"id":"india_heatwave_2024","name":"Asia Heatwave","year":2024,"country":"India","hazard_type":"heatwave","center":[82.0,22.0],"zoom":4},
+{"id":"hurricane_ian_2022","name":"Hurricane Ian","year":2022,"country":"USA","hazard_type":"hurricane","center":[-82,26.5],"zoom":7},
+{"id":"canada_wildfires_2023","name":"Canada Wildfires","year":2023,"country":"Canada","hazard_type":"wildfire","center":[-95,55],"zoom":4},
+{"id":"horn_of_africa_drought_2022","name":"Horn of Africa Drought","year":2022,"country":"Somalia, Ethiopia, Kenya","hazard_type":"drought","center":[42,5],"zoom":5},
+{"id":"cyclones_ana_batsirai_2022","name":"Cyclones Ana + Batsirai","year":2022,"country":"Madagascar, Mozambique","hazard_type":"cyclone","center":[45,-18],"zoom":5},
+{"id":"uk_heatwave_2022","name":"UK Heatwave","year":2022,"country":"United Kingdom","hazard_type":"heatwave","center":[-1.5,53],"zoom":6}
