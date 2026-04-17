@@ -7,7 +7,7 @@ export function useEvents() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("/api/events")
+    fetch("/events/index.json")
       .then((r) => r.json())
       .then((data) => setEvents(data))
       .catch((e) => setError(e.message))
@@ -24,19 +24,22 @@ export function useFullEvents() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("/api/events")
+    fetch("/events/index.json")
       .then((r) => r.json())
       .then(async (list) => {
-        const stubs = list.filter((e) => e.stub === true);
-        const fullIds = list.filter((e) => !e.stub).map((e) => e.id);
+        const fullIds = list.map((e) => e.id);
 
         const fullEvents = await Promise.all(
           fullIds.map((id) =>
-            fetch(`/api/events/${id}`)
+            fetch(`/events/${id}.json`)
               .then((r) => r.json())
               .catch(() => null)
           )
         );
+
+        const stubs = await fetch("/events/stubs.json")
+          .then((r) => r.json())
+          .catch(() => []);
 
         return [
           ...fullEvents.filter((e) => e && e.center),
@@ -60,7 +63,7 @@ export function useEvent(eventId) {
     if (!eventId) return;
     setLoading(true);
     setError(null);
-    fetch(`/api/events/${eventId}`)
+    fetch(`/events/${eventId}.json`)
       .then((r) => r.json())
       .then((data) => setEvent(data))
       .catch((e) => setError(e.message))

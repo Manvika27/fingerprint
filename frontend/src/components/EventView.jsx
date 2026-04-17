@@ -432,12 +432,8 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
   }, [event.id]);
 
   useEffect(() => {
-    setArticlesLoading(true);
-    fetch(`/api/events/${event.id}/response`)
-      .then(r => r.json())
-      .then(data => setArticles(data.news_articles ?? []))
-      .catch(() => setArticles([]))
-      .finally(() => setArticlesLoading(false));
+    setArticles(event.curated_coverage ?? []);
+    setArticlesLoading(false);
   }, [event.id]);
 
   useEffect(() => {
@@ -459,45 +455,15 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
     return () => el.removeEventListener('scroll', handleScroll);
   }, []);
 
-  async function handleAsk() {
+  function handleAsk() {
     if (!question.trim() || asking) return;
-    const q = question;
     setQuestion("");
-    setAsking(true);
-    setAnswer(null);
-    try {
-      const res = await fetch("/api/ask", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ event_id: event.id, question: q, conversation_history: history }),
-      });
-      const data = await res.json();
-      setAnswer(data);
-      setHistory(data.conversation_history ?? []);
-    } catch {
-      setAnswer({ answer: "Failed to reach the server.", sources: [], confidence: "low" });
-    } finally {
-      setAsking(false);
-    }
+    setAnswer({ disabled: true });
   }
 
-  async function handlePressPackClick() {
+  function handlePressPackClick() {
     setPressPackOpen(true);
-    if (pressPackData) return;
-    setPressPackLoading(true);
-    try {
-      const res = await fetch("/api/press-pack", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ event_id: event.id }),
-      });
-      const data = await res.json();
-      setPressPackData(data);
-    } catch {
-      setPressPackData({ error: "Failed to generate press pack." });
-    } finally {
-      setPressPackLoading(false);
-    }
+    setPressPackData({ disabled: true });
   }
 
   function handleCopyPressPack() {
@@ -1252,15 +1218,23 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
           </div>
           {answer && (
             <div style={{
-              marginTop: 12, padding: "1rem", background: "rgba(255,255,255,0.06)",
+              marginTop: 12, padding: "12px 16px", background: "rgba(255,255,255,0.06)",
               borderRadius: 8, border: "0.5px solid rgba(255,255,255,0.1)",
-              fontSize: 13, color: "rgba(255,255,255,0.8)", lineHeight: 1.65,
+              fontSize: 13, lineHeight: 1.65,
             }}>
-              <div>{answer.answer}</div>
-              {answer.sources?.length > 0 && (
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 8 }}>
-                  Sources: {answer.sources.join(" · ")}
+              {answer.disabled ? (
+                <div style={{ color: "rgba(255,255,255,0.5)", fontStyle: "italic" }}>
+                  AI-powered answers available in the full version. Explore the event data above for attribution science, human impact, and accountability outcomes.
                 </div>
+              ) : (
+                <>
+                  <div style={{ color: "rgba(255,255,255,0.8)" }}>{answer.answer}</div>
+                  {answer.sources?.length > 0 && (
+                    <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 8 }}>
+                      Sources: {answer.sources.join(" · ")}
+                    </div>
+                  )}
+                </>
               )}
             </div>
           )}
@@ -1288,7 +1262,7 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
                 Press pack · {event.name} {event.year}
               </div>
               <div style={{ display: "flex", gap: 8 }}>
-                {pressPackData && !pressPackData.error && (
+                {pressPackData && !pressPackData.error && !pressPackData.disabled && (
                   <button onClick={handleCopyPressPack} style={{
                     fontSize: 11, padding: "5px 12px", borderRadius: 99,
                     background: "#E1F5EE", color: "#0F6E56",
@@ -1303,13 +1277,15 @@ export default function EventView({ event, events, onBack, onSelect, onAbout }) 
               </div>
             </div>
 
-            {pressPackLoading && (
-              <div style={{ color: "#B4B2A9", fontSize: 13 }}>Generating press pack…</div>
+            {pressPackData?.disabled && (
+              <div style={{ color: "#888780", fontSize: 13, fontStyle: "italic", padding: "1rem 0" }}>
+                Press pack generation available in the full version.
+              </div>
             )}
             {pressPackData?.error && (
               <div style={{ color: "#A32D2D", fontSize: 13 }}>{pressPackData.error}</div>
             )}
-            {pressPackData && !pressPackData.error && (
+            {pressPackData && !pressPackData.error && !pressPackData.disabled && (
               <>
                 <div style={{
                   fontFamily: "'Playfair Display', serif",

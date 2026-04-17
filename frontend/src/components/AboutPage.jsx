@@ -150,7 +150,7 @@ export default function AboutPage({ onBack }) {
           {[
             { label: "Suggest an event", href: "mailto:?subject=Fingerprint: suggest an event" },
             { label: "Report an error", href: "mailto:?subject=Fingerprint: error report" },
-            { label: "Download event data", href: "/api/events" },
+            { label: "Download event data", href: "/events/index.json" },
             { label: "GitHub", href: "#" },
           ].map(btn => (
             <a key={btn.label} href={btn.href} target="_blank" rel="noopener noreferrer" style={{
